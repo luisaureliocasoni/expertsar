@@ -4139,18 +4139,18 @@ label {
    ========================================================================== */
 /* Style Placeholders */
 ::-webkit-input-placeholder {
-  color: #d1d1d1; }
+  color: #9e9e9e; }
 
 :-moz-placeholder {
   /* Firefox 18- */
-  color: #d1d1d1; }
+  color: #9e9e9e; }
 
 ::-moz-placeholder {
   /* Firefox 19+ */
-  color: #d1d1d1; }
+  color: #9e9e9e; }
 
 :-ms-input-placeholder {
-  color: #d1d1d1; }
+  color: #9e9e9e; }
 
 /* Text inputs */
 input:not([type]),

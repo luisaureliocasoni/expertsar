@@ -16,6 +16,22 @@ header {
     margin-bottom: 20px; }
 
 .jumbotron {
-  padding: 15px; }
+  padding: 15px;
+  align: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 350%; }
+
+.double {
+  font-size: 2em; }
+
+#contato {
+  margin: 0;
+  padding: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px; }
+
+:placeholder {
+  color: #0000FF; }
 
 /*# sourceMappingURL=theme.css.map */
