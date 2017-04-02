@@ -1,0 +1,18 @@
+header {
+  height: 70px;
+  font-size: 20px; }
+  header h1 {
+    color: #FFFFFF;
+    font-size: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 0;
+    margin-left: 20px;
+    display: inline-block; }
+  header .btn {
+    float: right;
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px; }
+
+/*# sourceMappingURL=theme.css.map */
