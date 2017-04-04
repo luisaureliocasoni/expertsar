@@ -1,0 +1,19 @@
+{
+  "name": "expertsAR",
+  "authors": [
+    "Luís Aurélio Casoni <luis_aurelio96@live.com>"
+  ],
+  "description": "Objeto de Aprendizagem para Álgebra Relacional",
+  "main": "",
+  "keywords": [
+    "algebra",
+    "relacional",
+    "ar",
+    "objeto",
+    "de",
+    "aprendizagem"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true
+}
