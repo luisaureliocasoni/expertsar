@@ -16,7 +16,7 @@
 .materialize-red-text.text-lighten-4 {
   color: #f8c1c3 !important; }
 
-.materialize-red.lighten-3 {
+.materialize-red.lighten-3, code.materialize-red {
   background-color: #f3989b !important; }
 
 .materialize-red-text.text-lighten-3 {
@@ -76,7 +76,7 @@
 .red-text.text-lighten-4 {
   color: #FFCDD2 !important; }
 
-.red.lighten-3 {
+.red.lighten-3, code.red {
   background-color: #EF9A9A !important; }
 
 .red-text.text-lighten-3 {
@@ -160,7 +160,7 @@
 .pink-text.text-lighten-4 {
   color: #f8bbd0 !important; }
 
-.pink.lighten-3 {
+.pink.lighten-3, code.pink {
   background-color: #f48fb1 !important; }
 
 .pink-text.text-lighten-3 {
@@ -244,7 +244,7 @@
 .purple-text.text-lighten-4 {
   color: #e1bee7 !important; }
 
-.purple.lighten-3 {
+.purple.lighten-3, code.purple {
   background-color: #ce93d8 !important; }
 
 .purple-text.text-lighten-3 {
@@ -328,7 +328,7 @@
 .deep-purple-text.text-lighten-4 {
   color: #d1c4e9 !important; }
 
-.deep-purple.lighten-3 {
+.deep-purple.lighten-3, code.deep-purple {
   background-color: #b39ddb !important; }
 
 .deep-purple-text.text-lighten-3 {
@@ -412,7 +412,7 @@
 .indigo-text.text-lighten-4 {
   color: #c5cae9 !important; }
 
-.indigo.lighten-3 {
+.indigo.lighten-3, code.indigo {
   background-color: #9fa8da !important; }
 
 .indigo-text.text-lighten-3 {
@@ -496,7 +496,7 @@
 .blue-text.text-lighten-4 {
   color: #BBDEFB !important; }
 
-.blue.lighten-3 {
+.blue.lighten-3, code.blue {
   background-color: #90CAF9 !important; }
 
 .blue-text.text-lighten-3 {
@@ -580,7 +580,7 @@
 .light-blue-text.text-lighten-4 {
   color: #b3e5fc !important; }
 
-.light-blue.lighten-3 {
+.light-blue.lighten-3, code.light-blue {
   background-color: #81d4fa !important; }
 
 .light-blue-text.text-lighten-3 {
@@ -664,7 +664,7 @@
 .cyan-text.text-lighten-4 {
   color: #b2ebf2 !important; }
 
-.cyan.lighten-3 {
+.cyan.lighten-3, code.cyan {
   background-color: #80deea !important; }
 
 .cyan-text.text-lighten-3 {
@@ -748,7 +748,7 @@
 .teal-text.text-lighten-4 {
   color: #b2dfdb !important; }
 
-.teal.lighten-3 {
+.teal.lighten-3, code.teal {
   background-color: #80cbc4 !important; }
 
 .teal-text.text-lighten-3 {
@@ -832,7 +832,7 @@
 .green-text.text-lighten-4 {
   color: #C8E6C9 !important; }
 
-.green.lighten-3, .lighten-3.cardCompleto {
+.green.lighten-3, .lighten-3.cardCompleto, code.cardCompleto, code.cardCompleto:hover, code.green {
   background-color: #A5D6A7 !important; }
 
 .green-text.text-lighten-3 {
@@ -916,7 +916,7 @@
 .light-green-text.text-lighten-4 {
   color: #dcedc8 !important; }
 
-.light-green.lighten-3 {
+.light-green.lighten-3, code.light-green {
   background-color: #c5e1a5 !important; }
 
 .light-green-text.text-lighten-3 {
@@ -1000,7 +1000,7 @@
 .lime-text.text-lighten-4 {
   color: #f0f4c3 !important; }
 
-.lime.lighten-3 {
+.lime.lighten-3, code.lime {
   background-color: #e6ee9c !important; }
 
 .lime-text.text-lighten-3 {
@@ -1084,7 +1084,7 @@
 .yellow-text.text-lighten-4 {
   color: #fff9c4 !important; }
 
-.yellow.lighten-3 {
+.yellow.lighten-3, code.yellow {
   background-color: #fff59d !important; }
 
 .yellow-text.text-lighten-3 {
@@ -1168,7 +1168,7 @@
 .amber-text.text-lighten-4 {
   color: #ffecb3 !important; }
 
-.amber.lighten-3 {
+.amber.lighten-3, code.amber {
   background-color: #ffe082 !important; }
 
 .amber-text.text-lighten-3 {
@@ -1252,7 +1252,7 @@
 .orange-text.text-lighten-4 {
   color: #ffe0b2 !important; }
 
-.orange.lighten-3 {
+.orange.lighten-3, code.orange {
   background-color: #ffcc80 !important; }
 
 .orange-text.text-lighten-3 {
@@ -1336,7 +1336,7 @@
 .deep-orange-text.text-lighten-4 {
   color: #ffccbc !important; }
 
-.deep-orange.lighten-3 {
+.deep-orange.lighten-3, code.deep-orange {
   background-color: #ffab91 !important; }
 
 .deep-orange-text.text-lighten-3 {
@@ -1420,7 +1420,7 @@
 .brown-text.text-lighten-4 {
   color: #d7ccc8 !important; }
 
-.brown.lighten-3 {
+.brown.lighten-3, code.brown {
   background-color: #bcaaa4 !important; }
 
 .brown-text.text-lighten-3 {
@@ -1480,7 +1480,7 @@
 .blue-grey-text.text-lighten-4 {
   color: #cfd8dc !important; }
 
-.blue-grey.lighten-3 {
+.blue-grey.lighten-3, code.blue-grey {
   background-color: #b0bec5 !important; }
 
 .blue-grey-text.text-lighten-3 {
@@ -1522,61 +1522,61 @@
 .blue-grey-text.text-darken-4 {
   color: #263238 !important; }
 
-.grey, .cardLicao:hover {
+.grey, .cardLicao:hover, code {
   background-color: #9e9e9e !important; }
 
 .grey-text {
   color: #9e9e9e !important; }
 
-.grey.lighten-5, .cardLicao:hover {
+.grey.lighten-5, .cardLicao:hover, code.lighten-5 {
   background-color: #fafafa !important; }
 
 .grey-text.text-lighten-5 {
   color: #fafafa !important; }
 
-.grey.lighten-4, .lighten-4.cardLicao:hover {
+.grey.lighten-4, .lighten-4.cardLicao:hover, code.lighten-4 {
   background-color: #f5f5f5 !important; }
 
 .grey-text.text-lighten-4 {
   color: #f5f5f5 !important; }
 
-.grey.lighten-3, .lighten-3.cardLicao:hover {
+.grey.lighten-3, .lighten-3.cardLicao:hover, code.cardLicao:hover, code {
   background-color: #eeeeee !important; }
 
 .grey-text.text-lighten-3 {
   color: #eeeeee !important; }
 
-.grey.lighten-2, .lighten-2.cardLicao:hover {
+.grey.lighten-2, .lighten-2.cardLicao:hover, code.lighten-2 {
   background-color: #e0e0e0 !important; }
 
 .grey-text.text-lighten-2 {
   color: #e0e0e0 !important; }
 
-.grey.lighten-1, .lighten-1.cardLicao:hover, .cardLicao.cardCompleto:hover, .grey.cardCompleto:hover {
+.grey.lighten-1, .lighten-1.cardLicao:hover, .cardLicao.cardCompleto:hover, .grey.cardCompleto:hover, code.cardCompleto:hover, code.lighten-1 {
   background-color: #bdbdbd !important; }
 
 .grey-text.text-lighten-1 {
   color: #bdbdbd !important; }
 
-.grey.darken-1, .darken-1.cardLicao:hover {
+.grey.darken-1, .darken-1.cardLicao:hover, code.darken-1 {
   background-color: #757575 !important; }
 
 .grey-text.text-darken-1 {
   color: #757575 !important; }
 
-.grey.darken-2, .darken-2.cardLicao:hover {
+.grey.darken-2, .darken-2.cardLicao:hover, code.darken-2 {
   background-color: #616161 !important; }
 
 .grey-text.text-darken-2 {
   color: #616161 !important; }
 
-.grey.darken-3, .darken-3.cardLicao:hover {
+.grey.darken-3, .darken-3.cardLicao:hover, code.darken-3 {
   background-color: #424242 !important; }
 
 .grey-text.text-darken-3 {
   color: #424242 !important; }
 
-.grey.darken-4, .darken-4.cardLicao:hover {
+.grey.darken-4, .darken-4.cardLicao:hover, code.darken-4 {
   background-color: #212121 !important; }
 
 .grey-text.text-darken-4 {
@@ -2435,7 +2435,7 @@ td, th {
 .right-align {
   text-align: right; }
 
-.center, .center-align {
+.center, .center-align, code {
   text-align: center; }
 
 .left {
@@ -6553,6 +6553,10 @@ header {
 
 :placeholder {
   color: #0000FF; }
+
+code {
+  width: 100%;
+  padding: 5px; }
 
 @media only screen and (min-width: 601px) {
   .cardLicao, .cardCompleto {

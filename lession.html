@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Materia+Icons">
+    <link rel="stylesheet" href="css/theme.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ExpertsAR - Projeção e Seleção</title>
+</head>
+<body>
+    <nav class="light-blue darken-3">
+        <div class="nav-wrapper">
+            <ul class="left">
+                <li><a href="" class="btn">Voltar</a></li>
+            </ul>
+            <ul class="right">
+                <li><a href="" class="btn">Avançar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="title center-align">
+            <h3>Projeção e Seleção</h3>
+        </div>
+        <div class="row s12" id="licao">
+            <p>São operadores básicos da Álgebra Relacional, onde você especifica consultas ao Banco de Dados. A operação de busca é dividida em dois operadores:</p>
+            <ul>
+                <li>O operador PROJEÇÃO seleciona as colunas que devem ser exibidas na relação. É representado pelo operador Π (Pi);</li>
+                <li>O operador SELEÇÃO especifica uma condição de seleção, que servirá de filtro das informações a serem exibidas na tabela. É representado pelo operador σ (Sigma). </li>
+            </ul>
+            <h5>Projeção</h5>
+            <p>É representado pela seguinte sintaxe:</p>
+            <code>Π<sub>(coluna1, coluna2, ... colunan)</sub>(Relação)</code>
+            <h5>Seleção</h5>
+            <p>É representado pela seguinte sintaxe:</p>
+            <code>σ<sub>(condicao)</sub>(Relação)</code>
+            <hr>
+            <h5>Exemplos</h5>
+            <p><b>1. Selecione todos os nomes dos clientes da locadora:</b></p>
+            <code>Π<sub>(nomecli)</sub>(cliente)</code>
+            <p>Resultado:</p>
+            <table class="responsible-table striped centered">
+                <thead>
+                    <tr>
+                        <th>nomecli</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>João</td>
+                    </tr>
+                    <tr>
+                        <td>Marcelo</td>
+                    </tr>
+                    <tr>
+                        <td>(...)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="page-footer light-blue darken-3">
+        <div class="footer-copyright">
+            <div class="container">
+                &copy; 2017 - Luís Aurélio Casoni e Ademir Martinez Sanches
+                <a href="github" class="grey-text text-lighten-4 right">Fork no GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/jquery-3.2.0.min.js"></script>
+    <script src="js/..."></script>
+</body>
+</html>

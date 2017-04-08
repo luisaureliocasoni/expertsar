@@ -71,6 +71,12 @@ header{
     @extend .green, .lighten-1;
 }
 
+code{
+    @extend .grey, .lighten-3, .center-align;
+    width: 100%;
+    padding: 5px;
+}
+
 @media #{$small-and-down} {
     // styles for small screens and down
 }
