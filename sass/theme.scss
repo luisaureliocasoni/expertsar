@@ -1,5 +1,5 @@
 @charset "UTF-8";
-
+@import "materialize";
 header{
     height: 70px;
 
@@ -37,6 +37,17 @@ header{
     font-size: 2em;
 }
 
+.lessions{
+    margin: 0;
+
+    padding: 20px;
+
+    h2, h3 , h4{
+        margin: 0;
+        padding: 10px;
+    }
+}
+
 #contato{
     margin: 0;
     padding: 50px;
@@ -46,4 +57,20 @@ header{
 
 :placeholder{
     color: #0000FF;
+}
+
+@media #{$small-and-down} {
+    // styles for small screens and down
+}
+@media #{$medium-and-up} {
+    // styles for medium screens and larger
+}
+@media #{$medium-and-down} {
+    // styles for medium screens and down
+}
+@media #{$large-and-up} {
+    // styles for large screens and up
+}
+@media #{$extra-large-and-up} {
+    // styles for extra large screens and up
 }
