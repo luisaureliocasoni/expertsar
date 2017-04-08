@@ -59,11 +59,26 @@ header{
     color: #0000FF;
 }
 
+.cardLicao:hover{
+    @extend .grey, .lighten-5;
+}
+
+.cardCompleto{
+    @extend .green, .white-text;
+}
+
+.cardCompleto:hover{
+    @extend .green, .lighten-1;
+}
+
 @media #{$small-and-down} {
     // styles for small screens and down
 }
 @media #{$medium-and-up} {
     // styles for medium screens and larger
+    .cardLicao, .cardCompleto{
+        margin: 20px 20px 20px 20px !important;
+    }
 }
 @media #{$medium-and-down} {
     // styles for medium screens and down
