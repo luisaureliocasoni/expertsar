@@ -6538,6 +6538,13 @@ header {
 .double {
   font-size: 2em; }
 
+.final {
+  margin-bottom: 30px; }
+
+.border {
+  border: 1px solid #000;
+  padding: 10px; }
+
 .lessions {
   margin: 0;
   padding: 20px; }
