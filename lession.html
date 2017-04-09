@@ -12,7 +12,7 @@
     <nav class="light-blue darken-3">
         <div class="nav-wrapper">
             <ul class="left">
-                <li><a href="home.html" class="btn">Voltar</a></li>
+                <li><a href="home.html" class="btn" id="voltar">Voltar</a></li>
             </ul>
             <ul class="right">
                 <li><a class="btn" id="next">Avançar</a></li>
@@ -60,6 +60,36 @@
                 </tbody>
             </table>
         </div>
+        <div class="hide pergunta" id="pergunta1">
+            <h3>Exercício 1</h3>
+            <p>Faça uma consulta que retorne o nome e o id de cada fita presente na loja.</p>
+            <div class="row">
+                <div class="col s12">
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel0">Π</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel1">σ</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel2">∪</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel3">∩</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel4">-</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel5">ϒ</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel6">φ</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel7">δ</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel8">⋀</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel9">⋁</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel10">⋈</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel11">⋉</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel12">⋊</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel13">X</button>
+                </div>
+                <div class="col s12">
+                    <textarea id="area1"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="hide pergunta" id="pergunta2">
+            <h3>Exercício 2</h3>
+            <p>Faça uma consulta que retorne o nome, o id e o preço de cada fita presente na loja.</p>
+            <div class="row"></div>
+        </div>
     </div>
 
     <footer class="page-footer light-blue darken-3">
@@ -72,6 +102,7 @@
     </footer>
 
     <script src="js/jquery-3.2.0.min.js"></script>
+    <script src="js/materialize.js"></script>
     <script src="js/lession.js"></script>
 </body>
 </html>

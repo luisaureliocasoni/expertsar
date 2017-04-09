@@ -6554,6 +6554,9 @@ header {
 :placeholder {
   color: #0000FF; }
 
+.minusculo {
+  text-transform: none !important; }
+
 code {
   width: 100%;
   padding: 5px; }

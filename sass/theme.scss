@@ -71,6 +71,10 @@ header{
     @extend .green, .lighten-1;
 }
 
+.minusculo{
+    text-transform: none !important;
+}
+
 code{
     @extend .grey, .lighten-3, .center-align;
     width: 100%;
