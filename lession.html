@@ -12,7 +12,7 @@
     <nav class="light-blue darken-3">
         <div class="nav-wrapper">
             <ul class="left">
-                <li><a href="home.html" class="btn" id="voltar">Voltar</a></li>
+                <li><a class="btn" id="prev">Voltar</a></li>
             </ul>
             <ul class="right">
                 <li><a class="btn" id="next">Avançar</a></li>
@@ -21,10 +21,11 @@
     </nav>
 
     <div class="container">
-        <div class="title center-align" id="title">
-            <h3>Projeção e Seleção</h3>
-        </div>
-        <div class="row s12" id="licao">
+        <!-- O texto da lição recebe a classe atual -->
+        <div class="row s12 atual" data-isstart="yes">
+            <div class="title center-align" id="title">
+                <h3>Projeção e Seleção</h3>
+            </div>
             <p>São operadores básicos da Álgebra Relacional, onde você especifica consultas ao Banco de Dados. A operação de busca é dividida em dois operadores:</p>
             <ul>
                 <li>O operador PROJEÇÃO seleciona as colunas que devem ser exibidas na relação. É representado pelo operador Π (Pi);</li>
@@ -88,7 +89,33 @@
         <div class="hide pergunta" id="pergunta2">
             <h3>Exercício 2</h3>
             <p>Faça uma consulta que retorne o nome, o id e o preço de cada fita presente na loja.</p>
-            <div class="row"></div>
+            <div class="row">
+                <div class="col s12">
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel0">Π</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel1">σ</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel2">∪</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel3">∩</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel4">-</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel5">ϒ</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel6">φ</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel7">δ</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel8">⋀</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel9">⋁</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel10">⋈</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel11">⋉</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel12">⋊</button>
+                    <button class="btn minusculo insert" data-for="#area1" id="btPanel13">X</button>
+                </div>
+                <div class="col s12">
+                    <textarea id="area1"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="hide success center-align jumbotron" data-isfinal="yes">
+            <h3 class="green-text">Perfeito!</h3>
+            <p>Você concluiu a lição!</p>
+            <!-- Aqui registra a lição que foi com êxito -->
+            <a href="home.html" class="btn">Voltar para a Home</a>
         </div>
     </div>
 

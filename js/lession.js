@@ -13,22 +13,49 @@ function defineInsertButtonEvent() {
 }
 
 
-function carregaAnswerPage() {
-    //Oculta o título e o texto da lição
-    $("#title").hide();
-    $("#licao").hide();
+function carregaNextPage() {
+    //Pega a próximo item a ser exibido, o irmão do atual
+    var $next = $(".atual").next();
 
-    //Exibe a pergunta 1
-    $("#pergunta1").removeClass("hide");
-    $("#pergunta1").show();
+    $("#next").addClass("disabled");
+
+    //Oculta o atual
+    $(".atual").hide().addClass("hide").removeClass("atual");
+
+    //Exibe a próxima página
+    $next.removeClass("hide");
+    $next.show();
     //Marca o box como atual
-    $("#pergunta1").addClass("atual");
+    $next.addClass("atual");
+}
 
-    $("#next").click(null).addClass("disabled");
+function carregaPreviousPage() {
+    //Pega a próximo item a ser exibido, o anterior do atual
+    var $prev = $(".atual").prev();
 
+    //Rehabilita o botão de avançar
+    $("#next").removeClass("disabled");
+
+    //Se não houver mais páginas para exibir, volta a página inicial
+    //O primeiro painel a ser exibido recebe a proprieidade data-isstart="yes"
+    if ($(".atual").data() !== 0 && $(".atual").data().isstart === "yes"){
+        //TODO perguntar ao usuário antes de sair
+        window.location = "home.html";
+        return;
+    }
+
+    //Oculta o atual
+    $(".atual").hide().addClass("hide").removeClass("atual");
+
+    //Exibe a página anterior
+    $prev.removeClass("hide");
+    $prev.show();
+    //Marca o box como atual
+    $prev.addClass("atual");
 }
 
 $(document).ready(function(){
-    $("#next").click(carregaAnswerPage);
+    $("#next").click(carregaNextPage);
+    $("#prev").click(carregaPreviousPage);
     defineInsertButtonEvent();
 });
