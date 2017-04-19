@@ -106,10 +106,35 @@ function buildErrorMessage(e) {
       : e.message;
 }
 
-function posProcessamentoQuery(query, map, indexSave = undefined) {
-    var separators = ["UNION", "INTERSECT", "EXCEPT"];
-    if (index = query.indexOf("UNION") !== -1){
-
+//Responsável por armazenar as selects nomeadas
+var querysSalvas = [];
+//Pós-processamento da query processada pelo parser;
+function processaQuery(query) {
+    console.log(typeof query, query);
+    if (typeof query === "string"){
+        //Verifica se a relação anterior é na verdade um identificador
+        //Se for, troca o identificador pela query salva
+        if (querysSalvas[query] !== undefined){
+        	return querysSalvas[query];
+        }else if(query.search("SELECT ") !== 0){
+        	return "SELECT * FROM " + query;
+        }else{
+        	return query;
+        }
+    }else if(typeof query === "object"){
+        if (query.type === "attrib"){
+            //Processa o valor a ser salvo e salva no mapa.
+            querysSalvas[query.id] = processaQuery(query.value);
+            //Processa em chama recursiva o resto da query
+            return processaQuery(query.rest);
+        }else if(query.type === "union"){
+            var esq = processaQuery(query.relacao);
+            return (esq + query.simbolo + processaQuery(query.rest));
+        }else{
+            throw new Error("Tipo incorreto de objeto!");
+        }
+    }else{
+        throw new Error("Tipo incorreto!");
     }
 }
 
@@ -134,34 +159,15 @@ function submitResposta($button) {
         //$(".focus").focus();
     }else{
 
-        var queries = $textarea.val().split("\n");
-        var str = "";
-        var queriesSaved[];
-        for (var i = 0; i < queries.length; i++){
-            try{
-                var tmp;
-                //Procura o sinal de atribuição na linha
-                if (queries[i].indexOf("←") !== -1){ //Se tiver
-                    var query = queries[i].split("←");
-                    //Verifica se há um identificador na query
-                    if (query[0].trim().length === 0){
-                        throw new Error("A query "+query[1]+" requer um identificador!");
-                    }
-                    //Se tudo correr bem, converte a query e joga em um mapa.
-                    queriesSaved[query[0]] = parser.parse(query[1]);
-                }else{
-                    tmp =  parser.parse(queries[i]);
-                    //Pos-processamento
-                }
-
-
-            }catch (e){
-                Materialize.toast("Sua query possui um erro!", 4000);
-                $("#result").html("<p>"+buildErrorMessage(e)+"</p>");
-                return;
-            }
-
+        try{
+            var parsed = parser.parse($textarea.val());
+        }catch (e){
+            Materialize.toast("Sua query possui um erro!", 4000);
+            $("#result").html("<p>"+buildErrorMessage(e)+"</p>");
+            return;
         }
+        //faz o pós processamento da query gerada
+        var str = processaQuery(parsed)+";";
         Materialize.toast("Resposta Incorreta!", 4000);
         $("#result").html("<code>"+str+"</code>");
     }
