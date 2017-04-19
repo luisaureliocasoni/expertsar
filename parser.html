@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Materia+Icons">
+    <link rel="stylesheet" href="css/theme.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ExpertsAR - Projeção e Seleção</title>
+</head>
+<body>
+    <div class="navbar-fixed">
+        <nav class="light-blue darken-3">
+            <!--div class="nav-wrapper">
+                <ul class="left">
+                    <li><a class="btn" id="prev">Voltar</a></li>
+                </ul>
+                <ul class="right">
+                    <li><a class="btn" id="next">Avançar</a></li>
+                </ul>
+            </div-->
+        </nav>
+    </div>
+
+
+    <div class="container">
+        <div class="pergunta" id="pergunta1">
+            <h3>Exercício 1</h3>
+            <p>Faça uma consulta que retorne o nome e o id de cada fita presente na loja.</p>
+            <p><b>Dica:</b> Digite "certo" para passar a próxima página.</p>
+            <div class="row">
+                <div class="col s12 final">
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Projeção" data-for="#area1" id="btPanel0">Π</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Seleção" data-for="#area1" id="btPanel1">σ</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="União" data-for="#area1" id="btPanel2">∪</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Intersecção" data-for="#area1" id="btPanel3">∩</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Diferença" data-for="#area1" id="btPanel4">-</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Agrupamento" data-for="#area1" id="btPanel5">ϒ</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Atribuição" data-for="#area1" id="btPanel6">←</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Eliminador de Duplicatas" data-for="#area1" id="btPanel7">δ</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="E lógico" data-for="#area1" id="btPanel8">⋀</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="OU lógico" data-for="#area1" id="btPanel9">⋁</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Inner Join" data-for="#area1" id="btPanel10">⨝</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Right Outer Join" data-for="#area1" id="btPanel11">⟖</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Left Outer Join" data-for="#area1" id="btPanel12">⟕</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Full Outer Join" id="btPanel13" data-for="#area1">⟗</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Produto Cartesiano" data-for="#area1" id="btPanel14">X</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Junção Natural" id="btPanel15" data-for="#area1">*</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Renomeação" id="btPanel16" data-for="#area1">ρ</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Ordenação" id="btPanel17" data-for="#area1">τ</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Menor Igual a" id="btPanel18" data-for="#area1">≤</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Menor Igual a" id="btPanel19" data-for="#area1">≥</button>
+                    <button class="btn minusculo insert tooltipped" data-tooltip="Diferença" id="btPanel20" data-for="#area1">≠</button>
+                </div>
+                <div class="col s12">
+                    <textarea id="area1"></textarea>
+                </div>
+                <div class="col s12 center-align">
+                    <button data-for="#area1" class="btn blue submit" id="submit">Submeter Resposta</button>
+                </div>
+            </div>
+        </div>
+        <div id="result">
+
+        </div>
+    </div>
+
+    <footer class="page-footer light-blue darken-3">
+        <div class="footer-copyright">
+            <div class="container">
+                &copy; 2017 - Luís Aurélio Casoni e Ademir Martinez Sanches
+                <a href="github" class="grey-text text-lighten-4 right">Fork no GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!--script src="js/peg.js"></script-->
+    <script src="js/parser.js"></script>
+    <script src="js/jquery-3.2.0.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/lession.js"></script>
+
+</body>
+</html>
