@@ -27,46 +27,46 @@
 namespace ExpertsAR;
 
 /**
- * Classe que descreve um Mantenedor no Sistema
+ * Classe que representa uma lição no sistema
  *
- * @author root
+ * @author Luís Aurélio Casoni
  */
-class Mantenedor {
-    public static $table = "Mantenedores";
+class Licao {
+    public static $table = "Licoes";
     
     private $id;
-    private $usuario;
     private $nome;
-    private $email;
-    private $senha;
+    private $slug;
+    private $textoLicao;
+    private $idMantenedorCriou;
+    private $idMantenedorAlterou;
     
     function getId() {
         return $this->id;
-    }
-
-    function getUsuario() {
-        return $this->usuario;
     }
 
     function getNome() {
         return $this->nome;
     }
 
-    function getEmail() {
-        return $this->email;
+    function getSlug() {
+        return $this->slug;
     }
 
-    function getSenha() {
-        return $this->senha;
+    function getTextoLicao() {
+        return $this->textoLicao;
+    }
+
+    function getIdMantenedorCriou() {
+        return $this->idMantenedorCriou;
+    }
+
+    function getIdMantenedorAlterou() {
+        return $this->idMantenedorAlterou;
     }
 
     function setId($id) {
         $this->id = $id;
-        return $this;
-    }
-
-    function setUsuario($usuario) {
-        $this->usuario = $usuario;
         return $this;
     }
 
@@ -75,19 +75,31 @@ class Mantenedor {
         return $this;
     }
 
-    function setEmail($email) {
-        $this->email = $email;
+    function setSlug($slug) {
+        $this->slug = $slug;
         return $this;
     }
 
-    function setSenha($senha) {
-        $this->senha = $senha;
+    function setTextoLicao($textoLicao) {
+        $this->textoLicao = $textoLicao;
+        return $this;
+    }
+
+    function setIdMantenedorCriou($idMantenedorCriou) {
+        $this->idMantenedorCriou = $idMantenedorCriou;
+        return $this;
+    }
+
+    function setIdMantenedorAlterou($idMantenedorAlterou) {
+        $this->idMantenedorAlterou = $idMantenedorAlterou;
         return $this;
     }
     
     function __construct($id) {
         $this->id = $id;
+        return $this;
     }
+
 
 
 }
