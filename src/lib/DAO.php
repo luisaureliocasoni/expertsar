@@ -35,14 +35,19 @@ namespace lib;
 class DAO {
     private static $conn;
     private static $instance;
+    private static $file = "../../assets/conexao.ini";
     
     private function __construct() {
         
     }
     
+    public static function setFilePathConfig($file) {
+        self::$file = $file;
+    }
+        
     private static function initialize() {
         try{
-            $config = parse_ini_file("../../assets/conexao.ini");
+            $config = parse_ini_file(self::$file);
             if ($config === FALSE){
                 throw new \Exception("Não foi possível localizar as configurações do BD.");
             }
@@ -83,16 +88,56 @@ class DAO {
         $query = "INSERT INTO $table (".implode(",", $colunas).")";
         $query .= "VALUES (". implode(",", $valores).";";
         
-        $result = pg_query(self::$conn, $query);
-        if ($result === FALSE){
-            throw new \Exception("Erro na query: "+pg_last_error(self::$conn));
+        self::execute($query);
+    }
+    
+    public static function remove($id, $table){
+        if (self::$conn !== NULL){
+            pg_close(self::$conn);
         }
+        self::initialize();
+        
+        $query = "DELETE FROM $table WHERE id = $id";
+        self::execute($query);
+    }
+    
+    public static function update($obj, $cond, $ignoreNulls = TRUE){
+        if (self::$conn  != NULL){
+            pg_close(self::$conn);
+        }
+        self::initialize();
+        //Pega os dados do objeto, a procura de getters
+        $reflectObj = new \ReflectionClass($obj);
+        $colunas = new \ArrayObject();
+        $valores = new \ArrayObject();
+        foreach ($reflectObj->getMethods() as $method){
+            //Pega todos os métodos, procurando gets
+            if (strpos($method->name, "get") === 0){
+                //Invoca o get
+                $value = $method->invoke($obj);
+                //Remove o get e transforma a primeira letra do atributo em minusculo
+                $attr = lcfirst(str_replace("get", "", $method->name));
+                if ($value !== \NULL || $ignoreNulls === \FALSE ){
+                    $colunas->append($attr);
+                    $valores->append(self::toStr($value));
+                }
+                
+            }
+        }
+        $table = $reflectObj->getProperty("table")->getValue($obj);
+        
+        $query = "UPDATE $table SET ".self::generateSetString($colunas, $valores);
+        $query .= "WHERE $cond;";
+        
+        self::execute($query);
     }
     
     private static function toStr($x){
         $type = gettype($x);
-        if ($type === "string" || $type === "integer" || $type === "double"){
+        if ($type === "integer" || $type === "double"){
             return pg_escape_string($x);
+        }else if ($type === "string"){
+            return "\"".pg_escape_string($x)."\"";
         }else if ($type === "boolean") {
             return ($x ? "TRUE" : "FALSE");
         }else{
@@ -100,4 +145,25 @@ class DAO {
         }
     }
 
+    private static function execute($query) {
+        $result = pg_query(self::$conn, $query);
+        if ($result === FALSE){
+            throw new \Exception("Erro na query: "+pg_last_error(self::$conn));
+        }
+        return $result;
+    }
+
+    private static function generateSetString($colunas, $valores){
+        if ($colunas->count() != $valores->count()){
+            throw new \Exception("O número de colunas e de valores difere!");
+        }
+        $str = "";
+        for ($i = 0; $i < $colunas->count(); $i++){
+            $str .= "{$colunas[$i]}={$valores[$i]}";
+            if ($i + 1 < $colunas->count()){
+                $str .= ",";
+            }
+        }
+        return $str;
+    }
 }
