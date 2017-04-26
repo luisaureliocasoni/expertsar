@@ -33,8 +33,15 @@ namespace lib;
  * @author root
  */
 class DAO {
+    /**
+     * Recurso que representa uma conexão ao Banco de Dados
+     * @var resource
+     */
     private static $conn;
-    private static $instance;
+    /**
+     * Representa um caminho para o arquivo de configurações do sistema
+     * @var string
+     */
     private static $file = "../../assets/conexao.ini";
     
     /**
