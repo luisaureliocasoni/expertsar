@@ -37,14 +37,25 @@ class DAO {
     private static $instance;
     private static $file = "../../assets/conexao.ini";
     
+    /**
+     * Função construtora do sistema
+     */
     private function __construct() {
         
     }
     
+    /**
+     * Seta o path do arquivo de configuração do DAO
+     * @param type $file Path para o arquivo ini de configuração
+     */
     public static function setFilePathConfig($file) {
         self::$file = $file;
     }
-        
+    
+    /**
+     * Inicializa a conexão com o Banco de Dados
+     * @throws \Exception Se o arquivo não for encontrado ou houver erro de conexão ao banco de dados
+     */
     private static function initialize() {
         try{
             $config = parse_ini_file(self::$file);
@@ -60,7 +71,16 @@ class DAO {
         }
     }
     
-    public function insert($obj, $ignoreNulls = TRUE){
+    /**
+     * Insere um objeto no BD
+     * Esse objeto deve se referir a uma tabela no Banco de Dados, através do parâmetro
+     * estático table. E todos atributos que forem acessíveis por get devem estar presentes
+     * na tabela.
+     * @param object $obj Objeto a ser inserido.
+     * @param boolean $ignoreNulls Booleano que indica se é para ignorar valores nulos no objeto
+     * @throws \Exception Caso haja erro na execução do SQL
+     */
+    public function insert($obj, $ignoreNulls = \TRUE){
         if (self::$conn  != NULL){
             pg_close(self::$conn);
         }
@@ -83,6 +103,7 @@ class DAO {
                 
             }
         }
+        //Pega o valor do atributo estático table.
         $table = $reflectObj->getProperty("table")->getValue($obj);
         
         $query = "INSERT INTO $table (".implode(",", $colunas).")";
@@ -91,6 +112,12 @@ class DAO {
         self::execute($query);
     }
     
+    /**
+     * Remove uma tupla de um determinado id da tabela
+     * @param integer $id Id do elemento a ser removido
+     * @param string $table String com a tabela a remover o objeto
+     * @throws \Exception Caso haja erro na execução do SQL
+     */
     public static function remove($id, $table){
         if (self::$conn !== NULL){
             pg_close(self::$conn);
@@ -101,7 +128,14 @@ class DAO {
         self::execute($query);
     }
     
-    public static function update($obj, $cond, $ignoreNulls = TRUE){
+    /**
+     * Atualiza um objeto na tabela
+     * @param object $obj Objeto a ser atualizado no banco
+     * @param string $cond Condição expressa em string sql para parametrizar a atualização
+     * @param bool $ignoreNulls Booleano que indica se é para ignorar valores nulos
+     * @throws \Exception Caso haja erro na execução do SQL
+     */
+    public static function update($obj, $cond, $ignoreNulls = \TRUE){
         if (self::$conn  != NULL){
             pg_close(self::$conn);
         }
@@ -132,6 +166,13 @@ class DAO {
         self::execute($query);
     }
     
+    /**
+     * Verifica uma variável e retorna uma string com o valor SQL válido
+     * Ex: "teste" => "\"teste\""
+     *     TRUE => "TRUE"
+     * @param mixed $x Valor a ser avaliado
+     * @return string A string convertida
+     */
     private static function toStr($x){
         $type = gettype($x);
         if ($type === "integer" || $type === "double"){
@@ -144,7 +185,13 @@ class DAO {
             return $type;
         }
     }
-
+    
+    /**
+     * Executa uma query SQL
+     * @param string $query Query SQL a ser executada
+     * @return resource O resultado da query
+     * @throws \Exception Caso a execução da query termine em falha
+     */
     private static function execute($query) {
         $result = pg_query(self::$conn, $query);
         if ($result === FALSE){
@@ -153,6 +200,15 @@ class DAO {
         return $result;
     }
 
+    /**
+     * Gera uma string para ser usada na clásula SET
+     * Ex: ["id", "nome"] e [99, "Luis"]
+     * Retorna: "id = 99, nome = Luis"
+     * @param \ArrayObject $colunas Colunas da tabela
+     * @param \ArrayObject $valores Valores da tabela
+     * @return string Com os valores convertidos
+     * @throws \Exception Caso o número de colunas e de valores difira.
+     */
     private static function generateSetString($colunas, $valores){
         if ($colunas->count() != $valores->count()){
             throw new \Exception("O número de colunas e de valores difere!");
