@@ -116,4 +116,4 @@ sass/.sass-cache
 images/
 public/
 netbeans/
-assets/conexao.ini
+assets/*.ini
