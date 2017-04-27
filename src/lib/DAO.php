@@ -92,28 +92,13 @@ class DAO {
             pg_close(self::$conn);
         }
         self::initialize();
-        //Pega os dados do objeto, a procura de getters
-        $reflectObj = new \ReflectionClass($obj);
-        $colunas = new \ArrayObject();
-        $valores = new \ArrayObject();
-        foreach ($reflectObj->getMethods() as $method){
-            //Pega todos os métodos, procurando gets
-            if (strpos($method->name, "get") === 0){
-                //Invoca o get
-                $value = $method->invoke($obj);
-                //Remove o get e transforma a primeira letra do atributo em minusculo
-                $attr = lcfirst(str_replace("get", "", $method->name));
-                if ($value !== \NULL || $ignoreNulls === \FALSE ){
-                    $colunas->append($attr);
-                    $valores->append(DAOUtilis::toStr($value));
-                }
-                
-            }
-        }
-        //Pega o valor do atributo estático table.
-        $table = $reflectObj->getProperty("table")->getValue($obj);
         
-        $query = "INSERT INTO $table (".implode(",", $colunas).")";
+        $result = self::extractColunasAndValues($obj);
+        $colunas = $result["colunas"];
+        $valores = $result["valores"];
+        $table = $result["table"];
+        
+        $query = "INSERT INTO \"$table\" (".implode(",", $colunas).")";
         $query .= "VALUES (". implode(",", $valores).";";
         
         self::execute($query);
@@ -125,28 +110,94 @@ class DAO {
      * @param string $table String com a tabela a remover o objeto
      * @throws \Exception Caso haja erro na execução do SQL
      */
-    public static function remove($id, $table){
+    public static function removeById($id, $table){
         if (self::$conn !== NULL){
             pg_close(self::$conn);
         }
         self::initialize();
         
-        $query = "DELETE FROM $table WHERE id = $id";
+        $query = "DELETE FROM \"$table\" WHERE \"id\" = $id;";
+        self::execute($query);
+    }
+    
+    /**
+     * Remove tuplas de acordo com uma condição
+     * @param Condicao $cond Condicao que determina quais elementos serão removidos
+     * @param string $table String com a tabela a remover o objeto
+     * @throws \Exception Caso haja erro na execução do SQL ou $cond não for uma instância de Condicao
+     */
+    public static function remove($cond, $table){
+        if (!($cond instanceof Condicao)){
+            throw new Exception("\$cond deve ser uma instância de condição!");
+        }
+        if (self::$conn !== NULL){
+            pg_close(self::$conn);
+        }
+        self::initialize();
+        
+        $query = "DELETE FROM \"$table\" WHERE ".$cond->toString();
         self::execute($query);
     }
     
     /**
      * Atualiza um objeto na tabela
      * @param object $obj Objeto a ser atualizado no banco
-     * @param string $cond Condição expressa em string sql para parametrizar a atualização
+     * @param Condicao $cond Condição para parametrizar a atualização
      * @param bool $ignoreNulls Booleano que indica se é para ignorar valores nulos
-     * @throws \Exception Caso haja erro na execução do SQL
+     * @throws \Exception Caso haja erro na execução do SQL ou $cond não for uma instância de Condicao.
      */
     public static function update($obj, $cond, $ignoreNulls = \TRUE){
+        if (!($cond instanceof Condicao)){
+            throw new Exception("\$cond deve ser uma instância de condição!");
+        }
         if (self::$conn  != NULL){
             pg_close(self::$conn);
         }
         self::initialize();
+        
+        $result = self::extractColunasAndValues($obj);
+        $colunas = $result["colunas"];
+        $valores = $result["valores"];
+        $table = $result["table"];
+        
+        $query = "UPDATE \"$table\" SET ".self::generateSetString($colunas, $valores);
+        $query .= "WHERE ".$cond->toString().";";
+        
+        self::execute($query);
+    }
+    
+    /**
+     * Atualiza um objeto na tabela pelo id
+     * @param object $obj Objeto a ser atualizado no banco
+     * @param integer $id Condição para parametrizar a atualização
+     * @param bool $ignoreNulls Booleano que indica se é para ignorar valores nulos
+     * @throws \Exception Caso haja erro na execução do SQL ou $cond não for uma instância de Condicao.
+     */
+    public static function updateById($obj, $id, $ignoreNulls = \TRUE){
+        if (self::$conn  != NULL){
+            pg_close(self::$conn);
+        }
+        self::initialize();
+        
+        $result = self::extractColunasAndValues($obj);
+        $colunas = $result["colunas"];
+        $valores = $result["valores"];
+        $table = $result["table"];
+        
+        $query = "UPDATE \"$table\" SET ".self::generateSetString($colunas, $valores);
+        $query .= "WHERE \"id\" = $id;";
+        
+        self::execute($query);
+    }
+    
+    
+    /**
+     * Extrai, via reflexão, as colunas e os valores de um objeto, e a sua tabela associada
+     * @param object $obj Objeto a ser analisado
+     * @return array Com os indices: <b>colunas</b>, um ArrayObject com os nomes dos atributos,
+     * <b>valores</b>, um ArrayObject com os valores dos atributos e <b>table</b>, o nome da tabela associada.
+     */
+    private static function extractColunasAndValues($obj){
         //Pega os dados do objeto, a procura de getters
         $reflectObj = new \ReflectionClass($obj);
         $colunas = new \ArrayObject();
@@ -159,20 +210,19 @@ class DAO {
                 //Remove o get e transforma a primeira letra do atributo em minusculo
                 $attr = lcfirst(str_replace("get", "", $method->name));
                 if ($value !== \NULL || $ignoreNulls === \FALSE ){
-                    $colunas->append($attr);
+                    $colunas->append("\"$attr\"");
                     $valores->append(DAOUtilis::toStr($value));
                 }
                 
             }
         }
         $table = $reflectObj->getProperty("table")->getValue($obj);
-        
-        $query = "UPDATE $table SET ".self::generateSetString($colunas, $valores);
-        $query .= "WHERE $cond;";
-        
-        self::execute($query);
+        $result = [];
+        $result["colunas"] = $colunas;
+        $result["valores"] = $valores;
+        $result["table"] = $table;
+        return $result;
     }
-    
     
     
     /**
