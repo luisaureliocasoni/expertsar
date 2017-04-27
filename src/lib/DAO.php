@@ -140,6 +140,29 @@ class DAO {
     }
     
     /**
+     * Faz um select no banco de dados de acordo com uma condicao
+     * @param string $class Nome da classe a ser instanciada
+     * @param string $table Nome da tabela a ser consultada
+     * @param Condicao $cond Condicao de parâmetro de seleção das colunas
+     * @return \ArrayObject Com o resultado
+     * @throws Exception Caso dê erro de instanciação de classe ou no SQL
+     */
+    public static function select($class, $table, $cond){
+        if (!($cond instanceof Condicao)){
+            throw new Exception("\$cond deve ser uma instância de condição!");
+        }
+        $query = "SELECT * FROM \"$table\" WHERE \"id\" = ".$cond->toString().";";
+        $result = self::execute($query);
+        
+        $objs = new \ArrayObject();
+        while ($arr = pg_fetch_array($result, null, PGSQL_ASSOC)){
+            $objs->append(self::transformArrayInObject($arr, $class));
+        }
+        
+        return $objs;
+    }
+    
+    /**
      * Atualiza um objeto na tabela
      * @param object $obj Objeto a ser atualizado no banco
      * @param Condicao $cond Condição para parametrizar a atualização
@@ -260,5 +283,30 @@ class DAO {
             }
         }
         return $str;
+    }
+    
+    /**
+     * Transforma um array associativo em um objeto
+     * @param Array $array Array associativo com os valores a serem salvos
+     * @param string $className Nome da classe da instância a ser criada
+     * @return object Objeto instanciado e com os valores inseridos
+     * @throws Exception Caso dê um ReflectionException: Classe ou método não existem
+     */
+    private static function transformArrayInObject($array, $className){
+        try{
+            $class = new \ReflectionClass($className);
+            $instance = $class->newInstance(array($array["id"]));
+
+            foreach ($arr as $key => $value) {
+                if ($key !== "id"){
+                    $setMethod = "set".ucfirst($key);
+                    $class->getMethod($setMethod)->invoke($instance, $value);
+                }
+            }
+            
+        } catch (Exception $ex) {
+            throw new Exception("Houve um erro na criação da classe: ".$ex->getMessage());
+        }
+        return $instance;
     }
 }
