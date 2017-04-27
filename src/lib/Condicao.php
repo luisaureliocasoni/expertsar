@@ -85,13 +85,13 @@ class Condicao {
         if ($this->esquerdo instanceof Condicao){
             $strEsq = $this->esquerdo->toString();
         }else{
-            $strEsq = $this->esquerdo;
+            $strEsq = DAOUtilis::toStr($this->esquerdo);
         }
         
         if ($this->direito instanceof Condicao){
             $strDir = $this->direito->toString();
         }else{
-            $strDir = $this->direito;
+            $strDir = DAOUtilis::toStr($this->direito);
         }
         
         return "(".$strEsq." ".$this->operador." ".$strDir.")";

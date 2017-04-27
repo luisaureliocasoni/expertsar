@@ -105,7 +105,7 @@ class DAO {
                 $attr = lcfirst(str_replace("get", "", $method->name));
                 if ($value !== \NULL || $ignoreNulls === \FALSE ){
                     $colunas->append($attr);
-                    $valores->append(self::toStr($value));
+                    $valores->append(DAOUtilis::toStr($value));
                 }
                 
             }
@@ -160,7 +160,7 @@ class DAO {
                 $attr = lcfirst(str_replace("get", "", $method->name));
                 if ($value !== \NULL || $ignoreNulls === \FALSE ){
                     $colunas->append($attr);
-                    $valores->append(self::toStr($value));
+                    $valores->append(DAOUtilis::toStr($value));
                 }
                 
             }
@@ -173,25 +173,7 @@ class DAO {
         self::execute($query);
     }
     
-    /**
-     * Verifica uma variável e retorna uma string com o valor SQL válido
-     * Ex: "teste" => "\"teste\""
-     *     TRUE => "TRUE"
-     * @param mixed $x Valor a ser avaliado
-     * @return string A string convertida
-     */
-    private static function toStr($x){
-        $type = gettype($x);
-        if ($type === "integer" || $type === "double"){
-            return pg_escape_string($x);
-        }else if ($type === "string"){
-            return "\"".pg_escape_string($x)."\"";
-        }else if ($type === "boolean") {
-            return ($x ? "TRUE" : "FALSE");
-        }else{
-            return $type;
-        }
-    }
+    
     
     /**
      * Executa uma query SQL
