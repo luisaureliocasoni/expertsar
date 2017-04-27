@@ -87,7 +87,7 @@ class DAO {
      * @param boolean $ignoreNulls Booleano que indica se é para ignorar valores nulos no objeto
      * @throws \Exception Caso haja erro na execução do SQL
      */
-    public function insert($obj, $ignoreNulls = \TRUE){
+    public static function insert($obj, $ignoreNulls = \TRUE){
         if (self::$conn  != NULL){
             pg_close(self::$conn);
         }

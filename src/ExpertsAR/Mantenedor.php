@@ -85,7 +85,7 @@ class Mantenedor {
         return $this;
     }
     
-    function __construct($id) {
+    function __construct($id = NULL) {
         $this->id = $id;
     }
 

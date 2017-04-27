@@ -95,7 +95,7 @@ class Licao {
         return $this;
     }
     
-    function __construct($id) {
+    function __construct($id = NULL) {
         $this->id = $id;
         return $this;
     }
