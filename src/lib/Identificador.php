@@ -27,10 +27,28 @@
 namespace lib;
 
 /**
- * Description of Identificador
+ * Representa um indentificador no sistema.
+ * Um identificador tem um papel importante no sistema, pois representa o nome 
+ * de uma coluna no sistema.
+ * 
+ * Nas queries do PostgreSQL, eles são representados por aspas duplas, não por aspas simples.
  *
  * @author luisca
  */
 class Identificador {
-    //put your code here
+    /*
+     * Representa um identificador
+     * @var string
+     */
+    private $nomeOriginal;
+    public $nome = NULL;
+    
+    /**
+     * Construtor
+     * @param string $nome Uma string com o nome do identificador
+     */
+    function __construct(string $nome) {
+        $this->nomeOriginal = $nome;
+        $this->nome = "\"$nome\"";
+    }
 }

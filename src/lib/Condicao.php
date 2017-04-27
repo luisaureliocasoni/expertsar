@@ -77,6 +77,10 @@ class Condicao {
         $this->direito = $direito;
     }
     
+    /**
+     * Transforma a condição em string SQL
+     * @return string String com a condição SQL
+     */
     public function toString(){
         if ($this->esquerdo instanceof Condicao){
             $strEsq = $this->esquerdo->toString();
@@ -90,7 +94,7 @@ class Condicao {
             $strDir = $this->direito;
         }
         
-        return $strEsq.$this->operador.$strDir;
+        return "(".$strEsq." ".$this->operador." ".$strDir.")";
     }
     
     
