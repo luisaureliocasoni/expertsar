@@ -142,7 +142,7 @@ class DAO {
         if (!($cond instanceof Condicao)){
             throw new Exception("\$cond deve ser uma instância de condição!");
         }
-        $query = "SELECT * FROM \"$table\" WHERE \"id\" = ".$cond->toString().";";
+        $query = "SELECT * FROM \"$table\" WHERE ".$cond->toString().";";
         $result = self::execute($query);
         
         $objs = new \ArrayObject();
@@ -302,9 +302,9 @@ class DAO {
     private static function transformArrayInObject($array, $className){
         try{
             $class = new \ReflectionClass($className);
-            $instance = $class->newInstance(array($array["id"]));
+            $instance = $class->newInstance($array["id"]);
 
-            foreach ($arr as $key => $value) {
+            foreach ($array as $key => $value) {
                 if ($key !== "id"){
                     $setMethod = "set".ucfirst($key);
                     $class->getMethod($setMethod)->invoke($instance, $value);

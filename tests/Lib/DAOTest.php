@@ -38,37 +38,26 @@ use PHPUnit\Framework\TestCase as PHPUnit;
 class DAOTest extends PHPUnit{
     public static function setUpBeforeClass() {
         parent::setUpBeforeClass();
+        DAO::setFilePathConfig("assets/conexaoTest.ini");
+        self::truncateTable();
     }
     
     protected function setUp() {
         parent::setUp();
-        DAO::setFilePathConfig("assets/conexaoTest.ini");
-        DAO::execute("TRUNCATE TABLE \"Mantenedores\" RESTART IDENTITY CASCADE;");
-        DAO::execute("TRUNCATE TABLE \"Licoes\" RESTART IDENTITY CASCADE;");
-        DAO::execute("TRUNCATE TABLE \"Perguntas\" RESTART IDENTITY CASCADE;");
+        self::truncateTable();
     }
     
     protected function tearDown() {
         parent::tearDown();
     }
     
-    public static function tearDownAfterClass() {
-        parent::tearDownAfterClass();
+    public static function truncateTable(){
+        DAO::execute("TRUNCATE TABLE \"Mantenedores\" RESTART IDENTITY CASCADE;");
+        DAO::execute("TRUNCATE TABLE \"Licoes\" RESTART IDENTITY CASCADE;");
+        DAO::execute("TRUNCATE TABLE \"Perguntas\" RESTART IDENTITY CASCADE;");
     }
     
-    public function testInsertOne(){
-        $teste = new \ExpertsAR\Mantenedor();
-        $teste->setEmail("luis@luis.com")->setNome("Fulano");
-        $teste->setSenha("senha")->setUsuario("fulano95");
-        
-        DAO::insert($teste);
-        
-        $result = DAO::execute("SELECT * FROM \"Mantenedores\";");
-        
-        $this->assertEquals(1, pg_affected_rows($result));
-    }
-    
-    public function testInsertionMore(){
+    public static function insert() {
         $teste = new \ExpertsAR\Mantenedor();
         $teste->setEmail("abc@abc.com")->setNome("Fulano");
         $teste->setSenha("senha")->setUsuario("fulano95ABC");
@@ -98,6 +87,26 @@ class DAOTest extends PHPUnit{
         DAO::insert($licao2);
         DAO::insert($ask1);
         DAO::insert($ask2);
+    }
+    
+    public static function tearDownAfterClass() {
+        parent::tearDownAfterClass();
+    }
+    
+    public function testInsertOne(){
+        $teste = new \ExpertsAR\Mantenedor();
+        $teste->setEmail("luis@luis.com")->setNome("Fulano");
+        $teste->setSenha("senha")->setUsuario("fulano95");
+        
+        DAO::insert($teste);
+        
+        $result = DAO::execute("SELECT * FROM \"Mantenedores\";");
+        
+        $this->assertEquals(1, pg_affected_rows($result));
+    }
+    
+    public function testInsertionMore(){
+        self::insert();
         
         $result = DAO::execute("SELECT * FROM \"Mantenedores\";");
         $this->assertEquals(2, pg_affected_rows($result));
@@ -109,5 +118,22 @@ class DAOTest extends PHPUnit{
         $this->assertEquals(2, pg_affected_rows($result));
     }
     
+    public function testSelectUmObjeto() {
+        self::insert();
+        
+
+        $cond = new Condicao(new Identificador("id"), "=", 1);
+        
+        $result = DAO::select("ExpertsAR\Mantenedor", "Mantenedores", $cond);
+        
+        $this->assertInstanceOf("ArrayObject", $result);
+        $this->assertInstanceOf("ExpertsAR\Mantenedor", $result[0]);
+        //ele espera 1, pois pedi pelo ID
+        $this->assertEquals(1, $result->count());
+        $this->assertEquals(1, $result[0]->getId());        
+    }
+
+    
+
 }
     
