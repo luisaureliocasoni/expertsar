@@ -24,31 +24,36 @@
  * THE SOFTWARE.
  * */
 
-namespace lib;
+namespace Lib;
 
 /**
- * Representa um indentificador no sistema.
- * Um identificador tem um papel importante no sistema, pois representa o nome 
- * de uma coluna no sistema.
- * 
- * Nas queries do PostgreSQL, eles são representados por aspas duplas, não por aspas simples.
+ * Renderiza um templata Twig
  *
- * @author luisca
+ * @author Luís Aurélio Casoni
  */
-class Identificador {
-    /*
-     * Representa um identificador
-     * @var string
-     */
-    private $nomeOriginal;
-    public $nome = NULL;
+class RenderTemplate{
+    private $loader;
+    private $twig;
     
     /**
-     * Construtor
-     * @param string $nome Uma string com o nome do identificador
+     * Construtor da classe
+     * @param string $path Path para encontrar a pasta de templates HTML do Twig
      */
-    function __construct(string $nome) {
-        $this->nomeOriginal = $nome;
-        $this->nome = "\"$nome\"";
+    public function __construct($path = '../view'){
+        $this->loader = new \Twig_Loader_Filesystem($path);
+        $this->twig = new \Twig_Environment($this->loader, array());
+    }
+    
+    /**
+     * Renderiza o template
+     * @param string $page String com o nome da página a ser renderizada
+     * @param array $array Array com os dados a serem exibidos na página
+     */
+    public function render(string $page, array $array = null){
+        if ($array == null){
+            echo $this->twig->render($page);
+        }else{
+            echo $this->twig->render($page, $array);
+        }
     }
 }

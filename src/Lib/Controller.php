@@ -24,36 +24,16 @@
  * THE SOFTWARE.
  * */
 
-namespace lib;
+namespace Lib;
 
 /**
- * Renderiza um templata Twig
- *
+ * Interface que representa um controller no sistema
  * @author Luís Aurélio Casoni
  */
-class RenderTemplate{
-    private $loader;
-    private $twig;
-    
+interface Controller {
     /**
-     * Construtor da classe
-     * @param string $path Path para encontrar a pasta de templates HTML do Twig
+     * Executa o controller
+     * @param \lib\ArgsBuilder $args Argumentos a serem usados para a execução
      */
-    public function __construct($path = '../view'){
-        $this->loader = new \Twig_Loader_Filesystem($path);
-        $this->twig = new \Twig_Environment($this->loader, array());
-    }
-    
-    /**
-     * Renderiza o template
-     * @param string $page String com o nome da página a ser renderizada
-     * @param array $array Array com os dados a serem exibidos na página
-     */
-    public function render(string $page, array $array = null){
-        if ($array == null){
-            echo $this->twig->render($page);
-        }else{
-            echo $this->twig->render($page, $array);
-        }
-    }
+    function execute(ArgsBuilder $args);
 }

@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  * */
 
-namespace lib;
+namespace Lib;
 
 
 /**

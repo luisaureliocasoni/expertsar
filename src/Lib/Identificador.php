@@ -24,16 +24,31 @@
  * THE SOFTWARE.
  * */
 
-namespace lib;
+namespace Lib;
 
 /**
- * Interface que representa um controller no sistema
- * @author Luís Aurélio Casoni
+ * Representa um indentificador no sistema.
+ * Um identificador tem um papel importante no sistema, pois representa o nome 
+ * de uma coluna no sistema.
+ * 
+ * Nas queries do PostgreSQL, eles são representados por aspas duplas, não por aspas simples.
+ *
+ * @author luisca
  */
-interface Controller {
-    /**
-     * Executa o controller
-     * @param \lib\ArgsBuilder $args Argumentos a serem usados para a execução
+class Identificador {
+    /*
+     * Representa um identificador
+     * @var string
      */
-    function execute(ArgsBuilder $args);
+    private $nomeOriginal;
+    public $nome = NULL;
+    
+    /**
+     * Construtor
+     * @param string $nome Uma string com o nome do identificador
+     */
+    function __construct(string $nome) {
+        $this->nomeOriginal = $nome;
+        $this->nome = "\"$nome\"";
+    }
 }

@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  * */
 
-namespace lib;
+namespace Lib;
 
 /**
  * Construtor de argumentos para o controller
