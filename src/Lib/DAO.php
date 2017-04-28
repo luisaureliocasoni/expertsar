@@ -172,6 +172,24 @@ class DAO {
     }
     
     /**
+     * Busca todos os objetos de uma tabela
+     * @param string $class Classe a ser instanciada
+     * @param string $table Tabela a ser procurada
+     * @return \ArrayObject Um array com todos os objetos encontrados
+     */
+    public static function selectAll(string $class, string $table){
+        $query = "SELECT * FROM \"$table\";";
+        $result = self::execute($query);
+        
+        $objs = new \ArrayObject();
+        while ($arr = pg_fetch_array($result, null, PGSQL_ASSOC)){
+            $objs->append(self::transformArrayInObject($arr, $class));
+        }
+        
+        return $objs;
+    }
+    
+    /**
      * Atualiza um objeto na tabela
      * @param object $obj Objeto a ser atualizado no banco
      * @param Condicao $cond Condição para parametrizar a atualização

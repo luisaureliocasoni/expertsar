@@ -136,22 +136,28 @@ class DAOTest extends PHPUnit{
     }
     
     public function testSelectVariosObjetos() {
-        $this->markTestIncomplete();
         self::insert();
         $teste = new \ExpertsAR\Mantenedor();
         $teste->setEmail("luis@luis.com")->setNome("luis");
         $teste->setSenha("senha")->setUsuario("luisaureliocasoni");
+        DAO::insert($teste);
         
-        $cond = new Condicao(new Identificador("id"), "=", 1);
-        
-        $result = DAO::select("ExpertsAR\Mantenedor", "Mantenedores", $cond);
+        $result = DAO::selectAll("ExpertsAR\Mantenedor", "Mantenedores");
         
         $this->assertInstanceOf("ArrayObject", $result);
+        //são três que estão na tabela, então deve reportar tres
+        $this->assertEquals(3, $result->count());
+        
         $this->assertInstanceOf("ExpertsAR\Mantenedor", $result[0]);
-        //ele espera 1, pois pedi pelo ID
-        $this->assertEquals(1, $result->count());
-        $this->assertEquals(1, $result[0]->getId());      
+        $this->assertInstanceOf("ExpertsAR\Mantenedor", $result[1]);
+        $this->assertInstanceOf("ExpertsAR\Mantenedor", $result[2]);
+        
+        $this->assertEquals(1, $result[0]->getId());
+        $this->assertEquals("luis@luis.com", $result[2]->getEmail());
+        $this->assertEquals("luisaureliocasoni", $result[2]->getUsuario());
+        $this->assertEquals("senha", $result[2]->getSenha());
     }
+    
 
 }
     
