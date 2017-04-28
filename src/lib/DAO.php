@@ -53,9 +53,13 @@ class DAO {
     
     /**
      * Seta o path do arquivo de configuração do DAO
+     * Aviso: Caso haja uma conexão existente, ela será fechada
      * @param type $file Path para o arquivo ini de configuração
      */
     public static function setFilePathConfig($file) {
+        if (self::$conn !== NULL){
+            pg_close(self::$conn);
+        }
         self::$file = $file;
     }
     
@@ -88,11 +92,6 @@ class DAO {
      * @throws \Exception Caso haja erro na execução do SQL
      */
     public static function insert($obj, $ignoreNulls = \TRUE){
-        if (self::$conn  != NULL){
-            pg_close(self::$conn);
-        }
-        self::initialize();
-        
         $result = self::extractColunasAndValues($obj);
         $colunas = $result["colunas"];
         $valores = $result["valores"];
@@ -111,11 +110,6 @@ class DAO {
      * @throws \Exception Caso haja erro na execução do SQL
      */
     public static function removeById($id, $table){
-        if (self::$conn !== NULL){
-            pg_close(self::$conn);
-        }
-        self::initialize();
-        
         $query = "DELETE FROM \"$table\" WHERE \"id\" = $id;";
         self::execute($query);
     }
@@ -130,10 +124,6 @@ class DAO {
         if (!($cond instanceof Condicao)){
             throw new Exception("\$cond deve ser uma instância de condição!");
         }
-        if (self::$conn !== NULL){
-            pg_close(self::$conn);
-        }
-        self::initialize();
         
         $query = "DELETE FROM \"$table\" WHERE ".$cond->toString();
         self::execute($query);
@@ -162,6 +152,7 @@ class DAO {
         return $objs;
     }
     
+    
     /**
      * Atualiza um objeto na tabela
      * @param object $obj Objeto a ser atualizado no banco
@@ -173,10 +164,6 @@ class DAO {
         if (!($cond instanceof Condicao)){
             throw new Exception("\$cond deve ser uma instância de condição!");
         }
-        if (self::$conn  != NULL){
-            pg_close(self::$conn);
-        }
-        self::initialize();
         
         $result = self::extractColunasAndValues($obj);
         $colunas = $result["colunas"];
@@ -197,11 +184,6 @@ class DAO {
      * @throws \Exception Caso haja erro na execução do SQL ou $cond não for uma instância de Condicao.
      */
     public static function updateById($obj, $id, $ignoreNulls = \TRUE){
-        if (self::$conn  != NULL){
-            pg_close(self::$conn);
-        }
-        self::initialize();
-        
         $result = self::extractColunasAndValues($obj);
         $colunas = $result["colunas"];
         $valores = $result["valores"];
@@ -254,12 +236,26 @@ class DAO {
      * @return resource O resultado da query
      * @throws \Exception Caso a execução da query termine em falha
      */
-    private static function execute($query) {
+    public static function execute($query) {
+        if (self::$conn  != NULL){
+            pg_close(self::$conn);
+        }
+        self::initialize();
+        
         $result = pg_query(self::$conn, $query);
         if ($result === FALSE){
             throw new \Exception("Erro na query: "+pg_last_error(self::$conn));
         }
         return $result;
+    }
+    
+    /**
+     * Retorna uma string escapada
+     * @param string $str String a ser escapada
+     * @return string String escapada
+     */
+    public static function escapeString($str){
+        return pg_escape_string($str);
     }
 
     /**
