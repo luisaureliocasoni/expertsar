@@ -59,6 +59,7 @@ class DAO {
     public static function setFilePathConfig($file) {
         if (self::$conn !== NULL){
             pg_close(self::$conn);
+            self::$conn = NULL;
         }
         self::$file = $file;
     }
@@ -73,7 +74,7 @@ class DAO {
             if ($config === FALSE){
                 throw new \Exception("Não foi possível localizar as configurações do BD.");
             }
-            self:$conn = pg_connect("host={$config["server"]} dbname={$config["database"]} user={$config["user"]} password={$config["password"]}");
+            self::$conn = pg_connect("host={$config["server"]} dbname={$config["database"]} user={$config["user"]} password={$config["password"]}");
             if (self::$conn === FALSE){
                 throw new \Exception("Não foi possível conectar ao Banco de Dados");
             }
@@ -91,14 +92,14 @@ class DAO {
      * @param boolean $ignoreNulls Booleano que indica se é para ignorar valores nulos no objeto
      * @throws \Exception Caso haja erro na execução do SQL
      */
-    public static function insert($obj, $ignoreNulls = \TRUE){
-        $result = self::extractColunasAndValues($obj);
+    public static function insert($obj, $ignoreNulls = TRUE){
+        $result = self::extractColunasAndValues($obj, $ignoreNulls);
         $colunas = $result["colunas"];
         $valores = $result["valores"];
         $table = $result["table"];
         
         $query = "INSERT INTO \"$table\" (".implode(",", $colunas).")";
-        $query .= "VALUES (". implode(",", $valores).";";
+        $query .= "VALUES (". implode(",", $valores).");";
         
         self::execute($query);
     }
@@ -165,7 +166,7 @@ class DAO {
             throw new Exception("\$cond deve ser uma instância de condição!");
         }
         
-        $result = self::extractColunasAndValues($obj);
+        $result = self::extractColunasAndValues($obj, $ignoreNulls);
         $colunas = $result["colunas"];
         $valores = $result["valores"];
         $table = $result["table"];
@@ -184,7 +185,7 @@ class DAO {
      * @throws \Exception Caso haja erro na execução do SQL ou $cond não for uma instância de Condicao.
      */
     public static function updateById($obj, $id, $ignoreNulls = \TRUE){
-        $result = self::extractColunasAndValues($obj);
+        $result = self::extractColunasAndValues($obj, $ignoreNulls);
         $colunas = $result["colunas"];
         $valores = $result["valores"];
         $table = $result["table"];
@@ -202,11 +203,12 @@ class DAO {
      * @return array Com os indices: <b>colunas</b>, um ArrayObject com os nomes dos atributos,
      * <b>valores</b>, um ArrayObject com os valores dos atributos e <b>table</b>, o nome da tabela associada.
      */
-    private static function extractColunasAndValues($obj){
+    private static function extractColunasAndValues($obj, $ignoreNulls){
         //Pega os dados do objeto, a procura de getters
         $reflectObj = new \ReflectionClass($obj);
-        $colunas = new \ArrayObject();
-        $valores = new \ArrayObject();
+        $colunas = [];
+        $valores = [];
+        $i = 0;
         foreach ($reflectObj->getMethods() as $method){
             //Pega todos os métodos, procurando gets
             if (strpos($method->name, "get") === 0){
@@ -215,8 +217,9 @@ class DAO {
                 //Remove o get e transforma a primeira letra do atributo em minusculo
                 $attr = lcfirst(str_replace("get", "", $method->name));
                 if ($value !== \NULL || $ignoreNulls === \FALSE ){
-                    $colunas->append("\"$attr\"");
-                    $valores->append(DAOUtilis::toStr($value));
+                    $colunas[$i] = "\"$attr\"";
+                    $valores[$i] = DAOUtilis::toStr($value);
+                    $i++;
                 }
                 
             }
@@ -237,12 +240,20 @@ class DAO {
      * @throws \Exception Caso a execução da query termine em falha
      */
     public static function execute($query) {
-        if (self::$conn  != NULL){
+        if (self::$conn  !== NULL){
             pg_close(self::$conn);
         }
         self::initialize();
         
-        $result = pg_query(self::$conn, $query);
+        if (self::$conn === FALSE){
+            throw new Exception("A conexão com o Banco de Dados foi mal-sucedida!");
+        }
+        try{
+            $result = pg_query(self::$conn, $query);
+        } catch (Exception $ex) {
+            throw new Exception("Erro na query: " + $ex);
+        }
+        
         if ($result === FALSE){
             throw new \Exception("Erro na query: "+pg_last_error(self::$conn));
         }

@@ -33,7 +33,7 @@ namespace ExpertsAR;
  */
 class Pergunta {
     
-    private static $table = "Perguntas";
+    public static $table = "Perguntas";
     
     private $id;
     private $enunciado;
