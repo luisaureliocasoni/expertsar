@@ -76,7 +76,7 @@ class DAOTest extends PHPUnit{
         
         
         $ask1 = new \ExpertsAR\Pergunta();
-        $ask1->setIdLicao(1)->setEnunciado("Teste")->setResposta("Resposta");
+        $ask1->setIdLicao(1)->setEnunciado("Quantas pessoas tem na canoa?")->setResposta("Resposta");
         
         $ask2 = new \ExpertsAR\Pergunta();
         $ask2->setIdLicao(1)->setEnunciado("Teste2")->setResposta("Resposta");
@@ -121,7 +121,27 @@ class DAOTest extends PHPUnit{
     public function testSelectUmObjeto() {
         self::insert();
         
-
+        
+        $result = DAO::selectById("ExpertsAR\Mantenedor", "Mantenedores", 1);
+        $this->assertInstanceOf("ExpertsAR\Mantenedor", $result);
+        $this->assertEquals(1, $result->getId());
+        
+        $result = DAO::selectById("ExpertsAR\Licao", "Licoes", 2);
+        $this->assertInstanceOf("ExpertsAR\Licao", $result);
+        $this->assertEquals(2, $result->getId());
+        
+        $result = DAO::selectById("ExpertsAR\Pergunta", "Perguntas", 1);
+        $this->assertInstanceOf("ExpertsAR\Pergunta", $result);
+        $this->assertEquals("Quantas pessoas tem na canoa?", $result->getEnunciado());
+    }
+    
+    public function testSelectVariosObjetos() {
+        $this->markTestIncomplete();
+        self::insert();
+        $teste = new \ExpertsAR\Mantenedor();
+        $teste->setEmail("luis@luis.com")->setNome("luis");
+        $teste->setSenha("senha")->setUsuario("luisaureliocasoni");
+        
         $cond = new Condicao(new Identificador("id"), "=", 1);
         
         $result = DAO::select("ExpertsAR\Mantenedor", "Mantenedores", $cond);
@@ -130,10 +150,8 @@ class DAOTest extends PHPUnit{
         $this->assertInstanceOf("ExpertsAR\Mantenedor", $result[0]);
         //ele espera 1, pois pedi pelo ID
         $this->assertEquals(1, $result->count());
-        $this->assertEquals(1, $result[0]->getId());        
+        $this->assertEquals(1, $result[0]->getId());      
     }
-
-    
 
 }
     

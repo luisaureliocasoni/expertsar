@@ -153,6 +153,23 @@ class DAO {
         return $objs;
     }
     
+    /**
+     * Pega um objeto pelo ID do objeto
+     * @param string $class Nome da classe a ser criada
+     * @param string $table Nome da tabela
+     * @param int $id Id a ser achado
+     * @return Object Se o objeto for instanciado com êxito
+     * @throws \Exception Caso dê erro na instanciação ou na query
+     */
+    public static function selectById(string $class, string $table, int $id){
+        $query = "SELECT * FROM \"$table\" WHERE \"id\" = ".$id.";";
+        $result = self::execute($query);
+        
+        $arr = pg_fetch_array($result, null, PGSQL_ASSOC);
+        $object = self::transformArrayInObject($arr, $class);
+        
+        return $object;
+    }
     
     /**
      * Atualiza um objeto na tabela
