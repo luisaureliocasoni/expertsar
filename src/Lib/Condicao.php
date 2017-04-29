@@ -66,7 +66,7 @@ class Condicao {
         $this->esquerdo = $esquerdo;
         if (array_search($operador, self::operadores) !== FALSE){
             if ($operador === "AND" || $operador === "OR"){
-                if (!($esquerdo instanceof Condicao) && !($direito instanceof Condicao)){
+                if (!($esquerdo instanceof Condicao && $direito instanceof Condicao)){
                     throw new \Exception("Operador AND ou OR só pode ser usado diante de duas condições!");
                 }
             }
