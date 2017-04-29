@@ -81,7 +81,7 @@ class CondicaoTest extends PHPUnit{
         $condicao2 = new Condicao(new Identificador("nome"), "<>", "Silva");
         $condicao = new Condicao($condicao1, "AND", $condicao2);
         
-        $this->assertEquals("(('Guilherme' = 25) AND (\"nome\" <> 'Silva'))", 
+        $this->assertEquals("((\"Guilherme\" = 25) AND (\"nome\" <> 'Silva'))", 
                 $condicao->toString());
     }
     
@@ -90,7 +90,7 @@ class CondicaoTest extends PHPUnit{
         $condicao2 = new Condicao(new Identificador("nome"), "<>", "Silva");
         $condicao = new Condicao($condicao1, "OR", $condicao2);
         
-        $this->assertEquals("(('Guilherme' = 25) OR (\"nome\" <> 'Silva'))", 
+        $this->assertEquals("((\"Guilherme\" = 25) OR (\"nome\" <> 'Silva'))", 
                 $condicao->toString());
     }
     

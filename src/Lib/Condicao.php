@@ -57,13 +57,12 @@ class Condicao {
     
     /**
      * Construtor
-     * @param mixed $esquerdo Parâmetro esquerdo da condição, podendo ser outra condição
+     * @param Condicao|Identificador|string $esquerdo Parâmetro esquerdo da condição, podendo ser outra condição
      * @param type $operador Operador da condição
      * @param mixed $direito Parâmetro direito da condição, podendo ser outra condição
      * @throws \Exception Caso haja um uso incorreto do operador AND ou OR ou se operador utilizado não estiver na lista de permitidos
      */
     function __construct($esquerdo, $operador, $direito) {
-        $this->esquerdo = $esquerdo;
         if (array_search($operador, self::operadores) !== FALSE){
             if ($operador === "AND" || $operador === "OR"){
                 if (!($esquerdo instanceof Condicao && $direito instanceof Condicao)){
@@ -74,6 +73,14 @@ class Condicao {
         }else{
             throw new \Exception("Operador usado é inválido!");
         }
+        if ($esquerdo instanceof Condicao){
+            $this->esquerdo = $esquerdo;
+        }else if ($esquerdo instanceof Identificador){
+            $this->esquerdo = $esquerdo;
+        }else{
+            $this->esquerdo = new Identificador($esquerdo);
+        }
+        
         $this->direito = $direito;
     }
     
@@ -90,10 +97,15 @@ class Condicao {
         
         if ($this->direito instanceof Condicao){
             $strDir = $this->direito->toString();
+        }else if ($this->direito === NULL){
+            $strDir = "IS NULL";
         }else{
             $strDir = DAOUtilis::toStr($this->direito);
         }
         
+        if ($strDir === "IS NULL"){
+            return "(".$strEsq." IS NULL)";
+        }
         return "(".$strEsq." ".$this->operador." ".$strDir.")";
     }
     
