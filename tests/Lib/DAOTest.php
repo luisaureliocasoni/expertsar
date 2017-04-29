@@ -158,6 +158,54 @@ class DAOTest extends PHPUnit{
         $this->assertEquals("senha", $result[2]->getSenha());
     }
     
-
+    public function testUpdate() {
+        self::insert();
+        $cond = new Condicao(new Identificador("id"), "=", 2);
+        
+        $mantenedor = new \ExpertsAR\Mantenedor();
+        $mantenedor->setUsuario("xicosa");
+        $mantenedor->setEmail("xicosa@chico.com");
+        $mantenedor->setSenha("Senha que todo mundo sabe");
+        
+        $result = DAO::update($mantenedor, $cond);
+        
+        
+        $salvo = DAO::selectById("ExpertsAR\Mantenedor", "Mantenedores", 2);
+        $this->assertEquals("xicosa", $salvo->getUsuario());
+        $this->assertEquals("xicosa@chico.com", $salvo->getEmail());
+        $this->assertEquals(2, $salvo->getId());
+        $this->assertEquals("Senha que todo mundo sabe", $salvo->getSenha());
+        $this->assertEquals("Xico Sa", $salvo->getNome());
+    }
+    
+    public function testUpdateById() {
+        self::insert();
+        
+        $mantenedor = new \ExpertsAR\Mantenedor();
+        $mantenedor->setUsuario("xicosa");
+        $mantenedor->setEmail("xicosa@chico.com");
+        $mantenedor->setSenha("Senha que todo mundo sabe");
+        
+        $result = DAO::updateById($mantenedor, 2);
+        
+        
+        $salvo = DAO::selectById("ExpertsAR\Mantenedor", "Mantenedores", 2);
+        $this->assertEquals("xicosa", $salvo->getUsuario());
+        $this->assertEquals("xicosa@chico.com", $salvo->getEmail());
+        $this->assertEquals(2, $salvo->getId());
+        $this->assertEquals("Senha que todo mundo sabe", $salvo->getSenha());
+        $this->assertEquals("Xico Sa", $salvo->getNome());
+    }
+    
+    public function testRemoveById() {
+        self::insert();
+        
+        DAO::removeById(1, "Mantenedores");
+        
+        $result = DAO::selectById("ExpertsAR\Mantenedor", "Mantenedores", 1);
+        
+        $this->assertEquals(NULL, $result);
+        
+    }
 }
     

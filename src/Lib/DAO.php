@@ -135,7 +135,7 @@ class DAO {
      * @param string $class Nome da classe a ser instanciada
      * @param string $table Nome da tabela a ser consultada
      * @param Condicao $cond Condicao de parâmetro de seleção das colunas
-     * @return \ArrayObject Com o resultado
+     * @return \ArrayObject|\NULL ArrayObject com o resultado ou NULL caso nada for retornado
      * @throws Exception Caso dê erro de instanciação de classe ou no SQL
      */
     public static function select($class, $table, $cond){
@@ -144,6 +144,10 @@ class DAO {
         }
         $query = "SELECT * FROM \"$table\" WHERE ".$cond->toString().";";
         $result = self::execute($query);
+        
+        if (pg_affected_rows($result) === 0){
+            return NULL;
+        }
         
         $objs = new \ArrayObject();
         while ($arr = pg_fetch_array($result, null, PGSQL_ASSOC)){
@@ -165,6 +169,10 @@ class DAO {
         $query = "SELECT * FROM \"$table\" WHERE \"id\" = ".$id.";";
         $result = self::execute($query);
         
+        if (pg_affected_rows($result) === 0){
+            return NULL;
+        }
+        
         $arr = pg_fetch_array($result, null, PGSQL_ASSOC);
         $object = self::transformArrayInObject($arr, $class);
         
@@ -175,11 +183,15 @@ class DAO {
      * Busca todos os objetos de uma tabela
      * @param string $class Classe a ser instanciada
      * @param string $table Tabela a ser procurada
-     * @return \ArrayObject Um array com todos os objetos encontrados
+     * @return \ArrayObject|\NULL Um array com todos os objetos encontrados ou NULL caso nada for retornado
      */
     public static function selectAll(string $class, string $table){
         $query = "SELECT * FROM \"$table\";";
         $result = self::execute($query);
+        
+        if (pg_affected_rows($result) === 0){
+            return NULL;
+        }
         
         $objs = new \ArrayObject();
         while ($arr = pg_fetch_array($result, null, PGSQL_ASSOC)){
@@ -194,6 +206,7 @@ class DAO {
      * @param object $obj Objeto a ser atualizado no banco
      * @param Condicao $cond Condição para parametrizar a atualização
      * @param bool $ignoreNulls Booleano que indica se é para ignorar valores nulos
+     * Quando um valor nulo é ignorado, não entra na query.
      * @throws \Exception Caso haja erro na execução do SQL ou $cond não for uma instância de Condicao.
      */
     public static function update($obj, $cond, $ignoreNulls = \TRUE){
@@ -308,19 +321,19 @@ class DAO {
      * Gera uma string para ser usada na clásula SET
      * Ex: ["id", "nome"] e [99, "Luis"]
      * Retorna: "id = 99, nome = Luis"
-     * @param \ArrayObject $colunas Colunas da tabela
-     * @param \ArrayObject $valores Valores da tabela
+     * @param array $colunas Colunas da tabela
+     * @param array $valores Valores da tabela
      * @return string Com os valores convertidos
-     * @throws \Exception Caso o número de colunas e de valores difira.
+     * 
      */
-    private static function generateSetString($colunas, $valores){
-        if ($colunas->count() != $valores->count()){
+    private static function generateSetString(array $colunas, array $valores){
+        if (count($colunas) != count($valores)){
             throw new \Exception("O número de colunas e de valores difere!");
         }
         $str = "";
-        for ($i = 0; $i < $colunas->count(); $i++){
+        for ($i = 0; $i < count($colunas); $i++){
             $str .= "{$colunas[$i]}={$valores[$i]}";
-            if ($i + 1 < $colunas->count()){
+            if ($i + 1 < count($colunas)){
                 $str .= ",";
             }
         }
