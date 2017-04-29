@@ -207,5 +207,48 @@ class DAOTest extends PHPUnit{
         $this->assertEquals(NULL, $result);
         
     }
+    
+    public function testRemoveByCondition(){
+        $mantenedor = new \ExpertsAR\Mantenedor();
+        $mantenedor->setNome("Luis")->setSenha("senha")->setUsuario("luisac");
+        $mantenedor->setEmail("root@luisaurelio");
+        DAO::insert($mantenedor);
+        
+        $mantenedor = new \ExpertsAR\Mantenedor();
+        $mantenedor->setNome("Rodrigo")->setSenha("senha")->setUsuario("rodrigo");
+        $mantenedor->setEmail("root@luisaurelio");
+        DAO::insert($mantenedor);
+        
+        $licao1 = new \ExpertsAR\Licao();
+        $licao1->setNome("Projecao")->setSlug("projecao")->setTextoLicao("umtexto")
+                ->setIdMantenedorCriou(1);
+        $licao2 = new \ExpertsAR\Licao();
+        $licao2->setNome("Selecao")->setSlug("selecao")->setTextoLicao("umtexto")
+                ->setIdMantenedorCriou(2);
+        $licao3 = new \ExpertsAR\Licao();
+        $licao3->setNome("Funcoes")->setSlug("funcoes")->setTextoLicao("umtexto")
+                ->setIdMantenedorCriou(1);
+        $licao4 = new \ExpertsAR\Licao();
+        $licao4->setNome("Mais Funcoes")->setSlug("mais-funcoes")->setTextoLicao("umtexto")
+                ->setIdMantenedorCriou(1);
+        $licao5 = new \ExpertsAR\Licao();
+        $licao5->setNome("Alberto")->setSlug("alberto")->setTextoLicao("umtexto")
+                ->setIdMantenedorCriou(2);
+        DAO::insert($licao1);
+        DAO::insert($licao2);
+        DAO::insert($licao3);
+        DAO::insert($licao4);
+        DAO::insert($licao5);
+        
+        $cond = new Condicao(new Identificador("idMantenedorCriou"), "=", 1);
+        DAO::remove($cond, "Licoes");
+        
+        $this->assertEquals(NULL, DAO::select("\ExpertsAR\Licao", "Licoes", $cond));
+        
+        $result = DAO::selectAll("\ExpertsAR\Licao", "Licoes");
+        $this->assertEquals(2, $result->count());
+        
+        
+    }
 }
     
