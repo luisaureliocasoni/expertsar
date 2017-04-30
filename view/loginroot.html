@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/icon?family=Materia+Icons">
+  <link rel="stylesheet" type="text/css" href="/css/theme.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ExpertsAR - Painel de Administração</title>
+</head>
+<body>
+  <header class="light-blue darken-3">
+      <h1>ExpertsAR</h1>
+  </header>
+
+  <div class="content">
+    <div class="row">
+      <div class="col s12 m6 offset-m3 l4 offset-l4">
+        {% if informacao is not null %}
+            <div class="card orange lighten-2">
+                <p>{{informacao}}</p>
+            </div>
+        {% endif %}
+        <div class="card green lighten-5"> 
+          <form action="login.php" method="post">
+            <div class="card-content">
+              <span class="card-title">Login no Manager</span>
+              <div class="input-field">
+                <input type="text" placeholder="Usuário" id="user" name="user" class="validate">
+                <label for="user">Usuario</label>
+              </div>
+              <div class="input-field">
+                <input type="password" placeholder="Senha" id="senha" name="senha" class="validate">
+                <label for="senha">Senha</label>
+              </div>
+            </div>
+            <div class="card-action center-align transparent">
+              <button class="btn" type="submit">Login</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/jquery-3.2.0.min.js"></script>
+  <script src="/js/materialize.min.js"></script>
+</body>
+</html>
