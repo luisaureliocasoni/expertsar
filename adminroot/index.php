@@ -26,11 +26,16 @@
 
 require_once("../vendor/autoload.php");
 
-if (session_status() === PHP_SESSION_NONE){
+session_name(md5('rootAlgebra'.$_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']));
+session_start();
+
+if (isset($_SESSION["logado"])){
+    $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
+    $info["nome"] = $_SESSION["nome"];
+    $info["email"] = $_SESSION["email"];
+    $render = new Lib\RenderTemplate();
+    $render->render("root/home.html", $info);
+}else{
     $render = new Lib\RenderTemplate();
     $render->render("loginroot.html");
-}else if (session_status() === PHP_SESSION_ACTIVE){
-    echo "Logado!";
-}else{
-    throw new Exception("Erro ao verificar status da sessão!");
 }

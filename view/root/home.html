@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/icon?family=Materia+Icons">
+    <link rel="stylesheet" type="text/css" href="/css/theme.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ExpertsAR - Página Inicial</title>
+</head>
+<body>
+    <nav>
+    <div class="nav-wrapper light-blue darken-3">
+        <a href="#!" class="brand-logo">ExpertsAR</a>
+        <a href="#" data-activates="navbar" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a class="btn" id="btMenu">Olá {{primeiroNome}}</a></li>
+        </ul>
+        <ul id="navbar" class="side-nav">
+            <li><div class="userView">
+                <div class="background">
+                    <img src="/images/office.jpg">
+                </div>
+                <a href="#!name"><span class="white-text name">{{nome}}</span></a>
+                <a href="#!email"><span class="white-text email">{{email}}</span></a>
+            </div></li>
+            <li><div class="divider"></div></li>
+            <li><a class="waves-effect" href="profile.html">Editar perfil</a></li>
+            <li><a class="waves-effect" href="index.html">Sair</a></li>
+         </ul>
+    </div>
+    </nav>
+
+    <section class="green lighten-5 lessions">
+        <div class="container">
+            <h4>Suas lições:</h4>
+            <div class="row">
+                <div class="card col s12 m5 cardCompleto">
+                    <div class="card-content">
+                        <span class="flow-text double">Lição 1</span>
+                        <p class="flow-text">Projeção e Seleção</p>
+                        <div class="card-action"><a href="lession.html">Refazer a Lição</a></div>
+                    </div>
+                </div>
+                <div class="card col s12 m5 cardLicao">
+                    <div class="card-content blue-text">
+                        <span class="flow-text double">Lição 2</span>
+                        <p class="flow-text">Joins</p>
+                        <div class="card-action"><a href="lession.html">Ir para a Lição</a></div>
+                    </div>
+                </div>
+                <div class="card col s12 m5 cardLicao">
+                    <div class="card-content blue-text">
+                        <span class="flow-text double">Lição 3</span>
+                        <p class="flow-text">Muitas outras perguntas</p>
+                        <div class="card-action"><a href="lession.html">Ir para a Lição</a></div>
+                    </div>
+                </div>
+                <div class="card col s12 m5 cardLicao">
+                    <div class="card-content blue-text">
+                        <span class="flow-text double">Lição 4</span>
+                        <p class="flow-text">Muitas outras perguntas</p>
+                        <div class="card-action"><a href="lession.html">Ir para a Lição</a></div>
+                    </div>
+                </div>
+            </div>
+            <!--div class="center-align"><a href="lession.html" class="btn">Refazer Lições</a></div-->
+        </div>
+    </section>
+
+    <footer class="page-footer light-blue darken-3">
+        <div class="container">
+            <div class="row">
+                <div class="col 16 s12">
+                    <h5 class="white-text">ExpertsAR</h5>
+                    <p class="grey-text text-lighten-4">Um objeto de aprendizagem desenvolvido para o ensino de Álgebra Relacional.</p>
+                </div>
+                <div class="col 14 offset-12 s12">
+                    <h5 class="white-text">Links</h5>
+                    <ul>
+                        <li><a href="#!">Artigos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                &copy; 2017 - Luís Aurélio Casoni e Ademir Martinez Sanches
+                <a href="github" class="grey-text text-lighten-4 right">Fork no GitHub</a>
+            </div>
+        </div>
+    </footer>
+    <script src="/js/jquery-3.2.0.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
+    <script src="/js/home.js"></script>
+</body>
+</html>

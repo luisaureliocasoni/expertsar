@@ -75,12 +75,16 @@ class DAOUtilis {
         $simb = '!@#$%*-';
         $retorno = '';
         $caracteres = '';
-
         $caracteres .= $lmin;
-        if ($maiusculas) $caracteres .= $lmai;
-        if ($numeros) $caracteres .= $num;
-        if ($simbolos) $caracteres .= $simb;
-
+        if ($maiusculas) {
+            $caracteres .= $lmai;
+        }
+        if ($numeros) {
+            $caracteres .= $num;
+        }
+        if ($simbolos) {
+            $caracteres .= $simb;
+        }
         $len = strlen($caracteres);
         for ($n = 1; $n <= $tamanho; $n++) {
             $rand = mt_rand(1, $len);
@@ -89,9 +93,15 @@ class DAOUtilis {
         return $retorno;
     }
     
-    public static function criptografaSenha($pass){
-        $salt = '$'.geraSenha(22).'$';
-        $hash = crypt($pass, '$rC$' . '92' . $salt);
+    /**
+     * Criptografa uma senha, pelo algoritmo bluefish
+     * Retorna sempre uma string de <b>60</b> caracteres.
+     * @param string $pass Senha a ser criptografada
+     * @return string Senha criptografada
+     */
+    public static function criptografaSenha(string $pass){
+        $salt = '$o2L4XFMrexe0OW1R1r6uff$';
+        $hash = crypt($pass, '$2a$' . '10' . $salt);
         return $hash;
     }
 }

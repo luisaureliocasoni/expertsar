@@ -25,7 +25,7 @@
  **/
 
 require_once '../vendor/autoload.php';
-error_reporting(0);
+//error_reporting(0);
 
 try{
     //Verifica se preencheu o usuário e a senha
@@ -36,12 +36,30 @@ try{
         $mantenedor = Lib\DAO::select("\ExpertsAR\Mantenedor", "Mantenedores", $cond);
         if ($mantenedor === NULL){
             $render = new Lib\RenderTemplate();
-            $array["informacao"] = "Usuário não encontrado!";
+            $array["informacao"] = "Usuário ou senha incorretos.";
             $render->render("loginroot.html", $array);
             die();
         }
         
-
+        $senhaDigitada = Lib\DAOUtilis::criptografaSenha($_POST["senha"]);
+        if ($senhaDigitada === $mantenedor[0]->getSenha()){
+            echo "Conseguiu";
+            //inicia a sessão
+            session_name(md5('rootAlgebra'.$_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']));
+            session_start();
+            $_SESSION["logado"] = TRUE;
+            $_SESSION["usuario"] = $mantenedor[0]->getUsuario();
+            $_SESSION["nome"] = $mantenedor[0]->getNome();
+            $_SESSION["email"] = $mantenedor[0]->getEmail();
+            header("Location: index.php");
+            die();
+        }else{
+            $render = new Lib\RenderTemplate();
+            $array["informacao"] = "Usuário ou senha incorretos.";
+            $render->render("loginroot.html", $array);
+            die();
+        }
+        
     }else{
         $render = new Lib\RenderTemplate();
         $array["informacao"] = "Você deve preencher os dois campos!";
