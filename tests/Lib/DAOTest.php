@@ -354,8 +354,8 @@ class DAOTest extends PHPUnit{
     }
     
     /**A seguir, testes que não testam um comportamento do código, e sim do banco
-     * Espera que fica NULO**/
-    /*public function testRemoveMantenedorCascade(){
+     * Espera que apaga tudo**/
+    public function testRemovePerguntaCascade(){
         $mantenedor = new \ExpertsAR\Mantenedor();
         $mantenedor->setNome("Luis")->setSenha("senha")->setUsuario("luisac");
         $mantenedor->setEmail("root@luisaurelio");
@@ -381,25 +381,25 @@ class DAOTest extends PHPUnit{
         $licao5 = new \ExpertsAR\Licao();
         $licao5->setNome("Alberto")->setSlug("alberto")->setTextoLicao("umtexto")
                 ->setIdMantenedorCriou(2);
+        
+        $pergunta = new \ExpertsAR\Pergunta();
+        $pergunta->setEnunciado("Teste")->setResposta("r")->setIdLicao(5);
+        
         DAO::insert($licao1);
         DAO::insert($licao2);
         DAO::insert($licao3);
         DAO::insert($licao4);
         DAO::insert($licao5);
+        DAO::insert($pergunta);
         
-        DAO::removeById(1, "Mantenedores");
+        DAO::removeById(5, "Licoes");
         
-        $this->assertEquals(NULL, DAO::selectById("\ExpertsAR\Mantenedor", "Mantenedores", 1));
+        $this->assertEquals(NULL, DAO::selectById("\ExpertsAR\Licao", "Licoes", 5));
         
-        $cond = new Condicao(new Identificador("idMantenedorCriou"), "=", 1);       
-        $this->assertEquals(NULL, DAO::select("\ExpertsAR\Licao", "Licoes", $cond));
+        $cond = new Condicao(new Identificador("idLicao"), "=", 5);       
+        $this->assertEquals(NULL, DAO::select("\ExpertsAR\Pergunta", "Perguntas", $cond));
         
-        $cond = new Condicao(new Identificador("idMantenedorCriou"), "=", NULL);
-        $result = DAO::select("\ExpertsAR\Licao", "Licoes", $cond);
-        $this->assertEquals(3, $result->count());
-        
-        $result = DAO::selectAll("\ExpertsAR\Licao", "Licoes");
-        $this->assertEquals(5, $result->count());  
+        $this->assertEquals(NULL, DAO::selectAll("\ExpertsAR\Pergunta", "Perguntas"));
     }
     
     /** Espera alterar nas perguntas**/
