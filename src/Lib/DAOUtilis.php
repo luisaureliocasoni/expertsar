@@ -88,4 +88,10 @@ class DAOUtilis {
         }
         return $retorno;
     }
+    
+    public static function criptografaSenha($pass){
+        $salt = '$'.geraSenha(22).'$';
+        $hash = crypt($pass, '$rC$' . '92' . $salt);
+        return $hash;
+    }
 }
