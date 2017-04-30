@@ -33,17 +33,28 @@
 
   <div class="content">
     <div class="row">
+        {% if error is not null%}
+            <div class="col s12 orange card">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+        {% if success is not null%}
+            <div class="col s12 green card">
+                <p>{{ success }}</p>
+            </div>
+        {% endif %}
       <div class="col s12">
           <form action="adicionarlicao.php" method="post">
               <h4>Adicionar uma lição</h4>
               <input type="hidden" name="creator" value="{{ id }}">
               <div class="input-field">
                 <label for="nome">Nome da Licao</label>
-                <input type="text" id="nome" class="validate">
+                <input type="text" id="nome" name="nome" class="validate">
               </div>
               <label>Texto da lição</label>
               <textarea id="texto" name="texto"></textarea>
               <button class="btn" type="submit">Inserir</button>
+              <a href="verLicoes.php" class="btn red">Cancelar e voltar para Lições</a>
           </form>
       </div>
     </div>

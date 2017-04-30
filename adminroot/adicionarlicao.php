@@ -29,20 +29,52 @@ try{
 
     session_name(md5('rootAlgebra'.$_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']));
     session_start();
+    
+    Lib\DAO::setFilePathConfig("../assets/conexao.ini");
 
     if (isset($_SESSION["logado"])){
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
         $info["nome"] = $_SESSION["nome"];
         $info["email"] = $_SESSION["email"];
         $info["id"] = $_SESSION["id"];
-        $info["tinyMceBox"] = "#text";
         
-        if (isset($_POST["insert"])){
+        if (isset($_POST["nome"]) && isset($_POST["texto"]) && isset($_POST["creator"])){
+            $errors = FALSE;
+            $info["error"] = "";
+            if(strlen($_POST["nome"]) === 0){
+                $info["error"] .= "O campo nome deve ser preenchido!";
+                $errors = TRUE;
+            }
+            if(strlen($_POST["texto"]) === 0){
+                $info["error"] .= " O texto da lição deve ser preenchido!";
+                $errors = TRUE;
+            }
             
-        }else{
-            $render = new Lib\RenderTemplate("../view/root/");
-            $render->render("addLicao.html", $info);
+            //Verificacao se a slug gerada sera a mesma de outra slug presente no sistema
+            $slug = Lib\Slugger::geraSlug(Lib\DAO::escapeString($_POST["nome"]));
+            $cond = new Lib\Condicao("slug", "=", $slug);
+            
+            if(Lib\DAO::select("\ExpertsAR\Licao", "Licoes", $cond) !== NULL){
+                $info["error"] .= " Já existe uma lição do mesmo nome ({$_POST["nome"]}) no sistema!";
+                $errors = TRUE;
+            }
+            
+            //Se tiver erros manda corrigir, se não salva o dado
+            if($errors !== TRUE){
+                $licao = new \ExpertsAR\Licao();
+                $licao->setIdMantenedorCriou($_POST["creator"]);
+                $licao->setNome(Lib\DAO::escapeString($_POST["nome"]));
+                $licao->setSlug($slug);
+                $licao->setTextoLicao(Lib\DAO::escapeString($_POST["texto"]));
+                
+                Lib\DAO::insert($licao);
+                
+                $info["success"] = "A lição foi salva com êxito!";
+            }
         }
+        
+        $render = new Lib\RenderTemplate("../view/root/");
+        $render->render("addLicao.html", $info);
         
         
     }else{
