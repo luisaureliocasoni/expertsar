@@ -1,0 +1,63 @@
+
+        <footer class="page-footer light-blue darken-3">
+        <div class="container">
+            <div class="row">
+                <div class="col 16 s12">
+                    <h5 class="white-text">ExpertsAR</h5>
+                    <p class="grey-text text-lighten-4">Um objeto de aprendizagem desenvolvido para o ensino de Álgebra Relacional.</p>
+                </div>
+                <div class="col 14 offset-12 s12">
+                    <h5 class="white-text">Links</h5>
+                    <ul>
+                        <li><a href="#!">Artigos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                &copy; 2017 - Luís Aurélio Casoni e Ademir Martinez Sanches
+                <a href="github" class="grey-text text-lighten-4 right">Fork no GitHub</a>
+            </div>
+        </div>
+    </footer>
+    <script src="/js/jquery-3.2.0.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
+    <script src="/js/home.js"></script>
+    <script src="/js/tinymce/tinymce.min.js"></script>
+    <script src="/js/tinymce/jquery.tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#texto',
+            plugins: 'table image wordcount link code',
+            menubar: false,
+            //Define-se o tema da parte do container
+            content_css: "/css/theme.css",
+            //Define-se a língua
+            language: "pt_BR",
+            //Inclui-se aqui os botoes do toolbar, inclusive os gerados
+            toolbar: [
+                'copy cut paste | undo redo | styleselect | bold italic underline sup sub pre | justifyleft justifycenter justifyright justifyfull | h2 h3 h4 | p blockquote code | link image | alignleft aligncenter alignright',
+                'bts0 bts1 bts2 bts3 bts4 bts5 bts6 bts7 bts8 bts9 bts10 bts11 bts12 bts13 bts14 bts15'
+            ],
+            setup: function (editor) {
+                //gera os botoes do toolbar dinamicamente, de um array de simbolos de álgebra relacional
+                var bts = ["Π", "σ", "∪", "∩", "-", "ϒ", "φ", "δ", "⋀", "⋁", "X", "⨝", "⟗", "⟖", "⟕", "*"];
+                for (var i = 0; i < bts.length; i++) {
+                    editor.addButton('bts'+i, {
+                        text: bts[i],
+                        icon: false,
+                        tooltip: "Clique para inserir "+bts[i]+ " no texto" ,
+                        onclick: function () {
+                            //this retorna o botao clicado
+                            //que tem a proprieidade settings.text que retorna o texto do botão.
+                            console.log(this);
+                            editor.insertContent(this.settings.text);
+                        }
+                    });
+                }
+            },
+        });
+    </script>
+</body>
+</html>

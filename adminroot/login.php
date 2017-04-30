@@ -51,6 +51,7 @@ try{
             $_SESSION["usuario"] = $mantenedor[0]->getUsuario();
             $_SESSION["nome"] = $mantenedor[0]->getNome();
             $_SESSION["email"] = $mantenedor[0]->getEmail();
+            $_SESSION["id"] = $mantenedor[0]->getId();
             header("Location: index.php");
             die();
         }else{
