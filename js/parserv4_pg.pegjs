@@ -153,7 +153,7 @@ Relacao
  / _ nome:Identifier _ "X" _ rel:Relacao _
    {return nome+","+rel}
  //Join: Cliente ⟗ (idcli = idcliloc) Resto
- / _ nome1:Identifier _ symb:SimboloJoin _ "(" _ col1:Identifier _ "=" _ col2:Identifier _ ")" _ rel:Relacao _
+ / _ nome1:Identifier _ symb:SimboloJoin _ "(" _ col1:SuperIdentifier _ "=" _ col2:SuperIdentifier _ ")" _ rel:Relacao _
    {return "("+nome1+symb+rel+" ON "+col1+" = "+col2+")";}
  //Cliente * Resto
  / _ nome1:Identifier _ "*" _ rel:Relacao _
@@ -193,7 +193,6 @@ Condicao
 //Um dos tipos existentes
 Tipo
  = SuperIdentifier
- / Identifier
  / Float
  / Integer
  / String
@@ -243,6 +242,11 @@ Colunas "lista de colunas"
  = _ id:IdentifierExtended _ "," _ resto:Colunas {return id+","+resto; }
  / _ id:IdentifierExtended _ {return id;}
 
+//Representa um qualificador nomedatabela.tabela
+SuperIdentifier "identificador"
+ = _ table:Identifier _ "." _ id:Identifier _ {return table+"."+id;}
+ / _ id:Identifier _ {return id;}
+
 Identifier "identificador"
  //Um identificador inicia-se com letra ou underscore, e pode ser seguido de letra, underscore, sifrao ou dígito
  //Captura um array de caracteres, a função join junta em uma string
@@ -255,13 +259,9 @@ IdentifierExtended "identificador, função agregada, operação matemática em 
  //Razao: permitir o uso de funcoes agregadas. \- == -
  //SUM[teste] => SUM(TESTE)
  = _ op:FuncaoAgregada _ "[" _ id:Identifier _ "]" _ {return op+"("+id+")";}
- / _ sup:SuperIdentifier _ {return sup;}
- / _ id:Identifier _ symb:[+\-*/] _ num:Number _ {return id+" "+symb+" "+num;}
- / _ id:Identifier _ {return id;}
+ / _ id:SuperIdentifier _ symb:[+\-*/] _ num:Number _ {return id+" "+symb+" "+num;}
+ / _ id:SuperIdentifier _ {return id;}
 
-//Representa um qualificador nomedatabela.tabela
-SuperIdentifier "identificador"
- = _ table:Identifier _ "." _ id:Identifier _ {return table+"."+id;}
 
 Number "float ou inteiro"
  = Float
