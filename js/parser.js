@@ -2816,8 +2816,7 @@
                 }
                 var str = "";
             	for (var i = 0; i < listaColunasAtual.length; i++){
-                	//colunas = põe aspas duplas entre os dois
-                	str += ("\"" + listaColunasAtual[i] + "\" AS \"" +  listaColunasNovas[i] + "\"");
+                	str += (listaColunasAtual[i] + " AS " +  listaColunasNovas[i]);
                     if (i+1 < listaColunasAtual.length){
                     	str += ",";
                     }

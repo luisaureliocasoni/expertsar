@@ -24,24 +24,26 @@
  * THE SOFTWARE.
  **/
 
-//este arquivo faz a interpretação de uma query no banco de dados de teste e devolve a 
+//este arquivo faz a interpretação de uma query no banco de dados de teste e devolve a
 // resposta ou o erro.
 
 require_once "../vendor/autoload.php";
+
+//error_reporting(0);
 
 if (isset($_POST["query"])){
     \Lib\DAO::setFilePathConfig("../assets/conexaoLoc.ini");
     $query = $_POST["query"];
     $query = trim($query);
-    
+
     $illegalOperators = ["INSERT", "DROP", "DELETE", "UPDATE"];
-    
+
     if (strpos($query, "SELECT") !== 0){
         http_response_code(400);
         echo "ERRO: Uso ilegal da query. Somente são permitidas operações de SELECT.";
         die();
     }
-    
+
     foreach ($illegalOperators as $illegalOperator) {
         if (strpos($query, $illegalOperator) !== FALSE){
             http_response_code(400);
@@ -49,21 +51,21 @@ if (isset($_POST["query"])){
             die();
         }
     }
-    
+
     try{
         $result = Lib\DAO::execute($query);
         $array = \Lib\DAO::transformResourceInArray($result);
-        
+
         echo json_encode($array);
     } catch (Exception $ex) {
         http_response_code(500);
         echo "Erro: {$ex->getMessage()}";
         die();
     }
-    
-    
-    
-    
+
+
+
+
 }else{
     http_response_code(405); //Method not Allowed
 }
