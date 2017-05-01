@@ -1,5 +1,4 @@
 /*Parser para Álgebra Relacional - Luís A. C. 01/05/2017
-  Versão 4 adaptada para PostgreSQL
   Para compilar: pegjs --format globals  --export-var parser parser.pegjs
   Para converter a String de Álgebra Relacional para SQL: parser.parse(str);
   Use o PEG.js para compilar (pegjs.org)*/
@@ -80,8 +79,7 @@
             }
             var str = "";
         	for (var i = 0; i < listaColunasAtual.length; i++){
-            	//colunas = põe aspas duplas entre os dois
-            	str += ("\"" + listaColunasAtual[i] + "\" AS \"" +  listaColunasNovas[i] + "\"");
+            	str += (listaColunasAtual[i] + " AS " +  listaColunasNovas[i]);
                 if (i+1 < listaColunasAtual.length){
                 	str += ",";
                 }
