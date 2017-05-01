@@ -41,11 +41,11 @@
             {% else %}
                 {% for licao in licoes %}
                     <div class="card col s12">
-                        <div class="card-content">
+                        <div class="card-content" id="{{licao.slug}}">
                             <span class="flow-text double">{{licao.nome}}</span>
                             <div>
                                 <a href="verLicao.php?id={{licao.id}}" class="btn blue white-text">Ver Lição</a>
-                                <a class="btn orange white-text">Alterar Lição</a>
+                                <a href="updateLicao.php?id={{licao.id}}" class="btn orange white-text">Alterar Lição</a>
                                 <a class="btn red white-text">Remover Lição</a>
                             </div>
                         </div>

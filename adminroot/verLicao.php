@@ -51,8 +51,11 @@ try{
         $cond = new \Lib\Condicao("idLicao", "=", $id);
         $perguntas = \Lib\DAO::select("\ExpertsAR\Pergunta", "Perguntas", $cond);
         
-        $licao->setTextoLicao(html_entity_decode($licao->getTextoLicao()));
-        $licao->setTextoLicao(htmlspecialchars_decode($licao->getTextoLicao()));
+        if ($licao !== NULL){
+            $licao->setTextoLicao(html_entity_decode($licao->getTextoLicao()));
+            $licao->setTextoLicao(htmlspecialchars_decode($licao->getTextoLicao()));
+        }
+        
         $info["licao"] = $licao;
         $info["perguntas"] = $perguntas;
         

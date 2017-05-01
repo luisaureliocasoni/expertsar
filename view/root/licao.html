@@ -46,8 +46,8 @@
                 {{ licao.textoLicao }}
             </div>
             <div>
-                <a class="btn orange white-text">Alterar Lição</a>
-                <a class="btn red white-text">Remover Lição</a>
+                <a href="updateLicao.php?id={{licao.id}}" class="btn orange white-text">Alterar Lição</a>
+                <a class="btn red white-text bt-remove" data-type="Lição" data-id="{{licao.id}}" data-page="removeLicao.php">Remover Lição</a>
             </div>
             <h5>Perguntas atreladas a lição {{licao.nome}}</h5>
             <p>
