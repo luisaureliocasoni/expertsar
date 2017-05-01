@@ -192,7 +192,8 @@ Condicao
 
 //Um dos tipos existentes
 Tipo
- = Identifier
+ = SuperIdentifier
+ / Identifier
  / Float
  / Integer
  / String
@@ -242,20 +243,25 @@ Colunas "lista de colunas"
  = _ id:IdentifierExtended _ "," _ resto:Colunas {return id+","+resto; }
  / _ id:IdentifierExtended _ {return id;}
 
-
 Identifier "identificador"
  //Um identificador inicia-se com letra ou underscore, e pode ser seguido de letra, underscore, sifrao ou dígito
  //Captura um array de caracteres, a função join junta em uma string
- = inicio:[a-zA-Z_]fim:[a-zA-Z0-9_.$]+ {return "\""+inicio+fim.join("")+"\""; }
+ = inicio:[a-zA-Z_]fim:[a-zA-Z0-9_$]+ {return "\""+inicio+fim.join("")+"\""; }
  / caract:[a-zA-Z_] {return "\""+caract+"\"";}
+
 
 IdentifierExtended "identificador, função agregada, operação matemática em um identificador"
  //Um identificador estendido é um identificador que permite o uso de parentesis e simbolos de matematica
  //Razao: permitir o uso de funcoes agregadas. \- == -
  //SUM[teste] => SUM(TESTE)
  = _ op:FuncaoAgregada _ "[" _ id:Identifier _ "]" _ {return op+"("+id+")";}
+ / _ sup:SuperIdentifier _ {return sup;}
  / _ id:Identifier _ symb:[+\-*/] _ num:Number _ {return id+" "+symb+" "+num;}
  / _ id:Identifier _ {return id;}
+
+//Representa um qualificador nomedatabela.tabela
+SuperIdentifier "identificador"
+ = _ table:Identifier _ "." _ id:Identifier _ {return table+"."+id;}
 
 Number "float ou inteiro"
  = Float
