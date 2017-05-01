@@ -146,8 +146,10 @@ function submitResposta($button) {
     $("#result").html("<p>Aguarde...</p><div class=\"progress\"><div class=\"indeterminate\"></div></div>");
 
     var $textarea = $($button.data().for);
+    $textarea.removeClass("invalid");
 
     if ($textarea.val() === "certo"){
+        $textarea.addClass("valid");
         $("#next").removeClass("disabled");
         var $append = $(document.createElement("div"));
         $append.addClass("col s12 focus");
@@ -172,7 +174,7 @@ function submitResposta($button) {
         var str = processaQuery(parsed)+";";
 
 
-        $.ajax("api/api.php", {
+        $.ajax("/api/api.php", {
             method: "POST",
             success: function(objs){
                 $("#result").html("<div class=\"card final\"><p>Sua query:</p><code>"+str+"</code></div>");
@@ -220,6 +222,7 @@ function submitResposta($button) {
             },
 
         });
+        $textarea.addClass("invalid");
     }
 
 }
