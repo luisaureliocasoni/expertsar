@@ -143,6 +143,8 @@ function submitResposta($button) {
         throw "Qual textarea devo consultar? Deve ser definido a proprieidade data-for no botao. Nada Feito.";
     }
 
+    $("#result").html("<p>Aguarde...</p><div class=\"progress\"><div class=\"indeterminate\"></div></div>");
+
     var $textarea = $($button.data().for);
 
     if ($textarea.val() === "certo"){
@@ -168,11 +170,12 @@ function submitResposta($button) {
         }
         //faz o pós processamento da query gerada
         var str = processaQuery(parsed)+";";
-        $("#result").html("<code>"+str+"</code>");
+
 
         $.ajax("api/api.php", {
             method: "POST",
             success: function(objs){
+                $("#result").html("<div class=\"card final\"><p>Sua query:</p><code>"+str+"</code></div>");
                 window.objs = objs;
                 Materialize.toast("Resposta Incorreta!", 4000);
                 if (objs === null){
@@ -181,7 +184,7 @@ function submitResposta($button) {
                 }
                 //Se não for null, cria a tabela
                 //Primeiro, pega os cabecalhos do objeto
-                var table = "<table><thead><tr>";
+                var table = "<div class=\"card final\"><table class=\"responsive-table centered striped\"><thead><tr>";
                 for (var key in objs[0]) {
                     if (objs[0].hasOwnProperty(key)) {
                         table += "<th>"+key+"</th>";
@@ -203,12 +206,13 @@ function submitResposta($button) {
                         table += "</tr>";
                     }
                 }
-                table += "</tbody></table>";
+                table += "</tbody></table></div>";
                 $("#result").append(table);
             },
             data: {query: str},
             dataType: "json",
             error: function(msg){
+                $("#result").html("<p>Sua query:</p><code>"+str+"</code>");
                 Materialize.toast("Houve um erro!", 4000);
                 Materialize.toast("Verifique sua query e tente novamente!", 4000);
                 $("#result").append("<p>"+msg.responseText+"</p>");
