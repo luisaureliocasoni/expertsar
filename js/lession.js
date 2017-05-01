@@ -174,9 +174,9 @@ function submitResposta($button) {
         var str = processaQuery(parsed)+";";
 
 
-        $.ajax("/api/api.php", {
+        var test = $.ajax("/api/api.php", {
             method: "POST",
-            success: function(objs){
+            success: function(objs, textStatus, xhr){
                 $("#result").html("<div class=\"card final\"><p>Sua query:</p><code>"+str+"</code></div>");
                 window.objs = objs;
                 Materialize.toast("Resposta Incorreta!", 4000);
@@ -210,6 +210,11 @@ function submitResposta($button) {
                 }
                 table += "</tbody></table></div>";
                 $("#result").append(table);
+
+                //Pega o texto original do resultado da consulta
+                var resposta = xhr.responseText;
+                console.log(resposta);
+
             },
             data: {query: str},
             dataType: "json",
@@ -223,6 +228,7 @@ function submitResposta($button) {
 
         });
         $textarea.addClass("invalid");
+
     }
 
 }
