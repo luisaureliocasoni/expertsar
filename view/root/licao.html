@@ -1,0 +1,77 @@
+<html lang="pt-br">
+<head>
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/icon?family=Materia+Icons">
+  <link rel="stylesheet" type="text/css" href="/css/theme.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ExpertsAR root panel</title>
+</head>
+<body>
+  <nav>
+    <div class="nav-wrapper light-blue darken-3">
+        <a href="#!" class="brand-logo">ExpertsAR</a>
+        <a href="#" data-activates="navbar" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a class="btn" id="btMenu">Olá {{primeiroNome}}</a></li>
+        </ul>
+        <ul id="navbar" class="side-nav">
+            <li><div class="userView">
+                <div class="background">
+                    <img src="/images/office.jpg">
+                </div>
+                <a href="#!name"><span class="white-text name">{{nome}}</span></a>
+                <a href="#!email"><span class="white-text email">{{email}}</span></a>
+            </div></li>
+            <li><div class="divider"></div></li>
+            <li><a class="waves-effect" href="profile.html">Editar perfil</a></li>
+            <li><a class="waves-effect" href="exit.php">Sair</a></li>
+         </ul>
+    </div>
+    </nav>
+
+  <div class="content">
+    <div class="row">
+      <div class="col s12">
+          <p>
+              <a href="verLicoes.php" class="btn">Voltar para a página de lições</a>
+          </p>
+      </div>
+      <div class="col s12">
+          {% if licao is null %}
+            <p>A lição não foi encontrada.</p>
+          {% else %}
+            <h3>{{licao.nome}}</h3>
+            <div>
+                {{ licao.textoLicao }}
+            </div>
+            <div>
+                <a class="btn orange white-text">Alterar Lição</a>
+                <a class="btn red white-text">Remover Lição</a>
+            </div>
+            <h5>Perguntas atreladas a lição {{licao.nome}}</h5>
+            <p>
+              <a href="verLicoes.php" class="btn">Adicionar uma pergunta</a>
+            </p>
+            {% if perguntas is null %}
+                <h6>Ainda não há perguntas</h6>
+            {% else %}
+                {% for pergunta in perguntas %}
+                    <div class="card col s12">
+                        <div class="card-content">
+                            <span class="flow-text">{{pergunta.enunciado}}</span>
+                            <div>
+                                <a href="verLicao.php?id={{pergunta.id}}" class="btn blue white-text">Ver Pergunta</a>
+                                <a class="btn orange white-text">Alterar Pergunta</a>
+                                <a class="btn red white-text">Remover Pergunta</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+          {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% include 'footer.html' %}

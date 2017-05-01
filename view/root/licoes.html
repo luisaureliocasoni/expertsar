@@ -34,7 +34,7 @@
     <section class="green lighten-5 lessions">
         <div class="container">
             <h4>Lições</h4>
-            <a href="adicionarlicao.php" class="btn green">Adicionar Lição</a>
+            <p><a href="adicionarlicao.php" class="btn green">Adicionar Lição</a></p>
             <div class="row">
             {% if licoes is null %}
                 <p>Não temos lições cadastradas no sistema.</p>
@@ -43,8 +43,11 @@
                     <div class="card col s12">
                         <div class="card-content">
                             <span class="flow-text double">{{licao.nome}}</span>
-                            <a class="btn orange white-text">Alterar Lição</a>
-                            <a class="btn red white-text">Remover Lição</a>
+                            <div>
+                                <a href="verLicao.php?id={{licao.id}}" class="btn blue white-text">Ver Lição</a>
+                                <a class="btn orange white-text">Alterar Lição</a>
+                                <a class="btn red white-text">Remover Lição</a>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
