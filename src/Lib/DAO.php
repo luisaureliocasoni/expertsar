@@ -364,4 +364,22 @@ class DAO {
         }
         return $instance;
     }
+    
+    /**
+     * Transforma um recurso em um array associativo
+     * @param resource $resource Um recurso do SGBD com os resultados
+     * @return \ArrayObject|NULL ArrayObject com o array transformado ou NULL caso nada for encontrado
+     */
+    public static function transformResourceInArray($resource){
+        if (pg_affected_rows($resource) === 0){
+            return NULL;
+        }
+        
+        $array = new \ArrayObject();
+        while ($arr = pg_fetch_array($resource, null, PGSQL_ASSOC)){
+            $array->append($arr);
+        }
+        
+        return $array;
+    }
 }

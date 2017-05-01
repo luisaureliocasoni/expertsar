@@ -251,6 +251,24 @@ class DAOTest extends PHPUnit{
         
     }
     
+    public function testTransformResourceInArray(){
+        self::insert();
+        $resource = DAO::execute("SELECT * FROM \"Mantenedores\";");
+        $array = DAO::transformResourceInArray($resource);
+        
+        $this->assertInstanceOf("\ArrayObject", $array);
+        $this->assertEquals("Fulano", $array[0]["nome"]);
+        $this->assertEquals("Xico Sa", $array[1]["nome"]);
+    }
+    
+    public function testTransformResourceInArrayNull(){
+        self::insert();
+        $resource = DAO::execute("SELECT * FROM \"Mantenedores\" WHERE \"id\" = 50;");
+        $array = DAO::transformResourceInArray($resource);
+        
+        $this->assertEquals(NULL, $array);
+    }
+    
     /**A seguir, testes que não testam um comportamento do código, e sim do banco
      * Espera que fica NULO**/
     public function testRemoveMantenedorCascade(){
