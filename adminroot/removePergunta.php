@@ -38,7 +38,14 @@ try{
             Lib\DAO::removeById($_GET["id"], "Perguntas");
         }
         
-        header("Location: verLicoes.php");
+        //Redirecionamento para a página de lição idL ou para a página de lições
+        if (isset($_GET["idL"]) && Lib\DAOUtilis::isIntString($_GET["idL"])){
+            header("Location: verLicao.php?id=".$_GET["idL"]);
+        }else{
+            header("Location: verLicoes.php");
+        }
+        
+        
     }else{
         $render = new Lib\RenderTemplate();
         $render->render("loginroot.html");
