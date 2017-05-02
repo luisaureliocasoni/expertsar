@@ -70,7 +70,7 @@
         {% else %}
             <div class="col s12">
                 <form action="addPergunta.php" method="post">
-                    <h4>Adicionar uma lição</h4>
+                    <h4>Adicionar uma pergunta</h4>
                     <input type="hidden" name="idLicao" value="{{ id }}">
                     <div class="input-field">
                       <label for="enunciado">Enunciado da Pergunta</label>
@@ -79,14 +79,15 @@
                     <div class="border final">
                         <label>Resposta</label>
                         <p>Insira a query em Álgebra Relacional correspondente
-                        aos dados esperados da resposta</p>
+                        aos dados esperados da resposta.</p>
+                        <p>Você não poderá inserir a pergunta, enquanto não fornecer uma resposta.</p>
 
                         {% include 'parser.html' %}
                     </div>
                     <input type="hidden" name="resposta" id="resposta">
                     <div class="row">
                         <button class="btn disabled" id="submitPergunta" type="submit">Inserir Pergunta</button>
-                        <a href="verLicoes.php" class="btn red">Cancelar e voltar para Lições</a>
+                        <a href="verLicao.php?id={{id}}" class="btn red">Cancelar e voltar para a Lição</a>
                     </div>
                 </form>
             </div>

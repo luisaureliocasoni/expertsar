@@ -59,7 +59,9 @@ try{
                 $info["error"] .= "<p>Você deve fornecer uma query!</p>";
                 $errors = TRUE;
             }
-
+            
+            $info["id"] = $_POST["idLicao"];
+            
             //Se tiver erros manda corrigir, se não salva o dado
             if($errors !== TRUE){
                 $info["error"] = NULL;
@@ -72,10 +74,8 @@ try{
                 Lib\DAO::insert($pergunta);
 
                 $info["success"] = "A lição foi salva com êxito!";  
-            }else{
-                //Tem problemas, carrega a licao novamente para corrigir
-                $info["id"] = $_POST["idLicao"];
             }
+            
             $render = new Lib\RenderTemplate("../view/root/");
             $render->render("addPergunta.html", $info);
         }else{
