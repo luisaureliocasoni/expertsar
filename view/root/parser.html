@@ -22,9 +22,15 @@
             <button class="btn minusculo insert tooltipped" data-tooltip="Menor Igual a" id="btPanel19" data-for="#area1">≥</button>
             <button class="btn minusculo insert tooltipped" data-tooltip="Diferença" id="btPanel20" data-for="#area1">≠</button>
         </div>
+        {% if query is not null %}
+        <div class="col s12 input-field">
+            <textarea id="area1" name="query" placeholder="Digite aqui sua query" class="materialize-textarea validate">{{query}}</textarea>
+        </div>
+        {% else %}
         <div class="col s12 input-field">
             <textarea id="area1" name="query" placeholder="Digite aqui sua query" class="materialize-textarea validate"></textarea>
         </div>
+        {% endif %}
         <div class="col s12 center-align">
             <button data-for="#area1" class="btn blue submit" id="submit">Submeter Resposta</button>
         </div>

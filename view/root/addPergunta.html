@@ -44,21 +44,29 @@
             </div>
         {% endif %}
         {% if update is not null %}
-            <!--div class="col s12">
-                <form action="updateLicao.php" method="post">
-                    <h4>Atualizar uma lição</h4>
-                    <input type="hidden" name="updater" value="{{ id }}">
-                    <input type="hidden" name="idLicao" value="{{ licaoId }}">
+            <div class="col s12">
+                <form action="updatePergunta.php" method="post">
+                    <h4>Atualizar uma pergunta</h4>
+                    <input type="hidden" name="idLicao" value="{{ idLicao }}">
+                    <input type="hidden" name="idPergunta" value="{{ idPergunta }}">
                     <div class="input-field">
-                      <label for="nome">Nome da lição</label>
-                      <input type="text" id="nome" name="nome" value="{{licaoNome}}" class="validate">
+                      <label for="enunciado">Enunciado da Pergunta</label>
+                      <input type="text" id="enunciado" name="enunciado" autofocus="" class="validate" value="{{enunciado}}">
                     </div>
-                    <label>Texto da lição</label>
-                    <textarea id="texto" name="texto">{{licaoTexto}}</textarea>
-                    <button class="btn" type="submit">Atualizar</button>
-                    <a href="verLicoes.php" class="btn red">Cancelar e voltar para Lições</a>
+                    <div class="border final">
+                        <label>Resposta</label>
+                        <p>Insira a query em Álgebra Relacional correspondente
+                        aos dados esperados da resposta</p>
+
+                        {% include 'parser.html' %}
+                    </div>
+                    <input type="hidden" name="resposta" id="resposta" value="{{resposta}}">
+                    <div class="row">
+                        <button class="btn" id="submitPergunta" type="submit">Atualizar Pergunta</button>
+                        <a href="verLicao.php?id={{idLicao}}" class="btn red">Cancelar e voltar para a Lição</a>
+                    </div>
                 </form>
-            </div-->
+            </div>
         {% else %}
             <div class="col s12">
                 <form action="addPergunta.php" method="post">
