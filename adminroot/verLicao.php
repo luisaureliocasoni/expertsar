@@ -33,7 +33,8 @@ session_start();
 try{
     Lib\DAO::setFilePathConfig("../assets/conexao.ini");
     
-    if (!(isset($_GET["id"]))){
+    //Verifica se o id foi preenchido e se o tipo é realmente um inteiro
+    if ((isset($_GET["id"]) === FALSE) || (Lib\DAOUtilis::isIntString($_GET["id"]) === FALSE)){
         header("Location: verLicoes.php");
         die();
     }else{
