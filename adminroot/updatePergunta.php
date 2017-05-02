@@ -52,7 +52,7 @@ try{
         $info["update"] = TRUE;
         $render = new Lib\RenderTemplate("../view/root/");
 
-        if (isset($_GET["idPergunta"])){
+        if (isset($_GET["idPergunta"]) && Lib\DAOUtilis::isIntString($_GET["idPergunta"])){
             try{
                 loadPergunta($_GET["idPergunta"], $info);
             } catch (RuntimeException $ex) {
