@@ -83,7 +83,7 @@ class Pergunta {
 
     function setRespostaAlgebra($respostaAlgebra) {
         $this->respostaAlgebra = $respostaAlgebra;
-        return this;
+        return $this;
     }
 
         
