@@ -6,7 +6,11 @@ $(document).ready(function() {
         var resposta;
         resposta = window.confirm("Tem certeza que deseja remover esta "+type+"?\nA ação não pode ser revertida!");
         if (resposta === true){
-            window.location = page+"?id="+id;
+            if (page.endsWith(".php")){
+                window.location = page+"?id="+id;
+            }else{
+                window.location = page+"&id="+id;
+            }
         }
     });
     //Ativa o sideNav na página
