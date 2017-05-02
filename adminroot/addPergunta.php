@@ -24,6 +24,11 @@
  * THE SOFTWARE.
  **/
 
+function loadNomeLicao($idLicao){
+    $licao = Lib\DAO::selectById("\ExpertsAR\Licao", "Licoes", $idLicao);
+    return $licao->getNome();
+}
+
 
 try{
     require_once("../vendor/autoload.php");
@@ -41,9 +46,11 @@ try{
 
         if (isset($_GET["id"])){
             $info["id"] = $_GET["id"];
+            $info["nomeLicao"] = loadNomeLicao($_GET["id"]);
             $render = new Lib\RenderTemplate("../view/root/");
             $render->render("addPergunta.html", $info);
         }else if (isset($_POST["enunciado"]) && isset($_POST["resposta"]) && isset($_POST["idLicao"]) && isset($_POST["query"])){
+            $info["nomeLicao"] = loadNomeLicao($_POST["idLicao"]);
             $errors = FALSE;
             $info["error"] = "";
 
@@ -73,7 +80,7 @@ try{
 
                 Lib\DAO::insert($pergunta);
 
-                $info["success"] = "A lição foi salva com êxito!";  
+                $info["success"] = "A pergunta foi salva com êxito!";  
             }
             
             $render = new Lib\RenderTemplate("../view/root/");
