@@ -49,7 +49,7 @@ try{
         $info["email"] = $_SESSION["email"];
         $info["id"] = $_SESSION["id"];
         
-        if (isset($_GET["id"])){
+        if (isset($_GET["id"]) && Lib\DAOUtilis::isIntString($_GET["id"])){
             try{
                 carregaLicao($_GET["id"], $info);
             } catch (RuntimeException $ex) {
@@ -83,12 +83,13 @@ try{
                 //Tem problemas, carrega a licao novamente para corrigir
                 carregaLicao($_POST["idLicao"], $info);
             }
+        }else{
+            header("Location: index.php");
+            die();
         }
         
         $render = new Lib\RenderTemplate("../view/root/");
         $render->render("addLicao.html", $info);
-        
-        
     }else{
         $render = new Lib\RenderTemplate();
         $render->render("loginroot.html");
