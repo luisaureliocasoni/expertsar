@@ -104,4 +104,15 @@ class DAOUtilis {
         $hash = crypt($pass, '$2a$' . '10' . $salt);
         return $hash;
     }
+    
+    /**
+     * Verifica se uma string é um inteiro de fato
+     * @param string $str String a ser testada
+     * @return boolean TRUE se for um inteiro, FALSE se não for
+     */
+    public static function isIntString($str){
+        $result = preg_match("/[0-9]+/", $str);
+        //A função retorna 1 se o padrão bate, assim, basta este teste de retorno.
+        return $result === 1; 
+    }
 }
