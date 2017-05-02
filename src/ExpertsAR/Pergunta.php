@@ -39,6 +39,7 @@ class Pergunta {
     private $enunciado;
     private $resposta;
     private $idLicao;
+    private $respostaAlgebra;
     
     function getId() {
         return $this->id;
@@ -76,6 +77,16 @@ class Pergunta {
         return $this;
     }
     
+    function getRespostaAlgebra() {
+        return $this->respostaAlgebra;
+    }
+
+    function setRespostaAlgebra($respostaAlgebra) {
+        $this->respostaAlgebra = $respostaAlgebra;
+        return this;
+    }
+
+        
     function __construct($id = NULL) {
         $this->id = $id;
         return $this;
