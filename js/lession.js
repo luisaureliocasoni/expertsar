@@ -42,7 +42,8 @@ function insertAtCaret(areaId, text) {
 
 function defineInsertButtonEvent() {
     //Evento de clique do botao de inserção no painel
-    $(".insert").click(function() {
+    $(".insert").click(function(e) {
+        e.preventDefault();
         //Acessa a proprieidade data do botão
         var dataFor = $(this).data().for.slice(1);
         //console.log(dataFor);
@@ -138,6 +139,18 @@ function processaQuery(query) {
     }
 }
 
+function tratarResultado(exito, $textarea, resposta){
+    if (exito === true){
+        $textarea.addClass("valid");
+        $("input#resposta").val(resposta);
+        $("#submitPergunta").removeClass("disabled");
+    }else{
+        $textarea.addClass("invalid");
+        $("input#resposta").val(null);
+        $("#submitPergunta").addClass("disabled");
+    }
+}
+
 function submitResposta($button) {
     if ($button.data() === 0 || $button.data().for === undefined){
         throw "Qual textarea devo consultar? Deve ser definido a proprieidade data-for no botao. Nada Feito.";
@@ -146,9 +159,9 @@ function submitResposta($button) {
     $("#result").html("<p>Aguarde...</p><div class=\"progress\"><div class=\"indeterminate\"></div></div>");
 
     var $textarea = $($button.data().for);
-    $textarea.removeClass("invalid");
+    $textarea.removeClass("invalid valid");
 
-    if ($textarea.val() === "certo"){
+    /*if ($textarea.val() === "certo"){
         $textarea.addClass("valid");
         $("#next").removeClass("disabled");
         var $append = $(document.createElement("div"));
@@ -160,83 +173,77 @@ function submitResposta($button) {
         $(".atual").data("concluido", "yes");
         Materialize.toast("Resposta Correta!", 4000);
         $button.addClass("disabled");
-        //$(".focus").focus();
-    }else{
+        //$(".focus").focus();*/
 
-        try{
-            var parsed = parser.parse($textarea.val());
-        }catch (e){
-            Materialize.toast("Sua query possui um erro!", 4000);
-            $("#result").html("<p>"+buildErrorMessage(e)+"</p>");
-            return;
-        }
+    try{
+        var parsed = parser.parse($textarea.val());
         //faz o pós processamento da query gerada
         var str = processaQuery(parsed)+";";
-
-
-        var test = $.ajax("/api/api.php", {
-            method: "POST",
-            success: function(objs, textStatus, xhr){
-                $("#result").html("<div class=\"card final\"><p>Sua query:</p><code>"+str+"</code></div>");
-                window.objs = objs;
-                Materialize.toast("Resposta Incorreta!", 4000);
-                if (objs === null){
-                    $("#result").append("<p>0 linhas afetadas. Nada a exibir.</p>");
-                    return;
-                }
-                //Se não for null, cria a tabela
-                //Primeiro, pega os cabecalhos do objeto
-                var table = "<div class=\"card final\"><table class=\"responsive-table centered striped\"><thead><tr>";
-                for (var key in objs[0]) {
-                    if (objs[0].hasOwnProperty(key)) {
-                        table += "<th>"+key+"</th>";
-                    }
-                }
-                table += "</tr></thead><tbody>";
-                //Corpo da tabela
-                //Itera nas proprieidades do superobjeto
-                for (var indice in objs) {
-                    if (objs.hasOwnProperty(indice)) {
-                        var obj = objs[indice];
-                        table += "<tr>";
-                        //Itera nas proprieidades do objeto
-                        for (var key in obj) {
-                            if (obj.hasOwnProperty(key)) {
-                                table += "<td>"+obj[key]+"</td>";
-                            }
-                        }
-                        table += "</tr>";
-                    }
-                }
-                table += "</tbody></table></div>";
-                $("#result").append(table);
-
-                //Pega o texto original do resultado da consulta
-                var resposta = xhr.responseText;
-                console.log(resposta);
-
-            },
-            data: {query: str},
-            dataType: "json",
-            error: function(msg){
-                $("#result").html("<p>Sua query:</p><code>"+str+"</code>");
-                Materialize.toast("Houve um erro!", 4000);
-                Materialize.toast("Verifique sua query e tente novamente!", 4000);
-                $("#result").append("<p>"+msg.responseText+"</p>");
-                console.log(msg);
-            },
-
-        });
-        $textarea.addClass("invalid");
-
+    }catch (e){
+        Materialize.toast("Sua query possui um erro!", 4000);
+        $("#result").html("<p>"+buildErrorMessage(e)+"</p>");
+        tratarResultado(false, $textarea);
+        return;
     }
 
+
+
+    var test = $.ajax("/api/api.php", {
+        method: "POST",
+        success: function(objs, textStatus, xhr){
+            $("#result").html("<div class=\"card final\"><p>Sua query:</p><code>"+str+"</code></div>");
+            if (objs === null){
+                $("#result").append("<p>0 linhas afetadas. Nada a exibir.</p>");
+                return;
+            }
+            //Se não for null, cria a tabela
+            //Primeiro, pega os cabecalhos do objeto
+            var table = "<div class=\"card final\"><table class=\"responsive-table centered striped\"><thead><tr>";
+            for (var key in objs[0]) {
+                if (objs[0].hasOwnProperty(key)) {
+                    table += "<th>"+key+"</th>";
+                }
+            }
+            table += "</tr></thead><tbody>";
+            //Corpo da tabela
+            //Itera nas proprieidades do superobjeto
+            for (var indice in objs) {
+                if (objs.hasOwnProperty(indice)) {
+                    var obj = objs[indice];
+                    table += "<tr>";
+                    //Itera nas proprieidades do objeto
+                    for (var key in obj) {
+                        if (obj.hasOwnProperty(key)) {
+                            table += "<td>"+obj[key]+"</td>";
+                        }
+                    }
+                    table += "</tr>";
+                }
+            }
+            table += "</tbody></table></div>";
+            $("#result").append(table);
+
+            //Pega o texto original do resultado da consulta e coloca como a resposta
+            tratarResultado(true, $textarea, xhr.responseText);
+            //this.resposta = xhr.responseText;
+        },
+        data: {query: str},
+        dataType: "json",
+        error: function(msg){
+            Materialize.toast("Houve um erro na interpretação SQL da Query!", 4000);
+            $("#result").html("<p>Sua query:</p><code>"+str+"</code>");
+            $("#result").append("<p>"+msg.responseText+"</p>");
+            tratarResultado(false, $textarea);
+        },
+
+    });
 }
 
 $(document).ready(function(){
     $("#next").click(carregaNextPage);
     $("#prev").click(carregaPreviousPage);
-    $(".submit").click(function () {
+    $(".submit").click(function (e) {
+        e.preventDefault();
         submitResposta($(this));
     });
     defineInsertButtonEvent();
