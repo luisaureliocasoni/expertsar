@@ -55,6 +55,10 @@ try{
                 $info["error"] .= "<p>Você deve fornecer uma resposta!</p>";
                 $errors = TRUE;
             }
+            if(strlen($_POST["query"]) === 0){
+                $info["error"] .= "<p>Você deve fornecer uma query!</p>";
+                $errors = TRUE;
+            }
 
             //Se tiver erros manda corrigir, se não salva o dado
             if($errors !== TRUE){
