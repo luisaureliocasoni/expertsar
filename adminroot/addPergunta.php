@@ -62,6 +62,7 @@ try{
 
             //Se tiver erros manda corrigir, se não salva o dado
             if($errors !== TRUE){
+                $info["error"] = NULL;
                 $pergunta = new \ExpertsAR\Pergunta();
                 $pergunta->setEnunciado(Lib\DAO::escapeString($_POST["enunciado"]));
                 $pergunta->setResposta(Lib\DAO::escapeString($_POST["resposta"]));
