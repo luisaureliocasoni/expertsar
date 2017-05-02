@@ -44,6 +44,7 @@
                         <div class="card-content" id="{{licao.slug}}">
                             <span class="flow-text double">{{licao.nome}}</span>
                             <div>
+                                <a href="addPergunta.php?id={{licao.id}}" class="btn cyan white-text">Adicionar uma pergunta</a>
                                 <a href="verLicao.php?id={{licao.id}}" class="btn blue white-text">Ver Lição</a>
                                 <a href="updateLicao.php?id={{licao.id}}" class="btn orange white-text">Alterar Lição</a>
                                 <a class="btn red white-text bt-remove" data-type="Lição" data-id="{{licao.id}}" data-page="removeLicao.php">Remover Lição</a>
