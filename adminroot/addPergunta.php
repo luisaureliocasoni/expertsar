@@ -43,7 +43,7 @@ try{
             $info["id"] = $_GET["id"];
             $render = new Lib\RenderTemplate("../view/root/");
             $render->render("addPergunta.html", $info);
-        }else if (isset($_POST["enunciado"]) && isset($_POST["resposta"]) && isset($_POST["idLicao"])){
+        }else if (isset($_POST["enunciado"]) && isset($_POST["resposta"]) && isset($_POST["idLicao"]) && isset($_POST["query"])){
             $errors = FALSE;
             $info["error"] = "";
 
@@ -62,6 +62,7 @@ try{
                 $pergunta->setEnunciado(Lib\DAO::escapeString($_POST["enunciado"]));
                 $pergunta->setResposta(Lib\Slugger::geraSlug($_POST["resposta"]));
                 $pergunta->setIdLicao($_POST["idLicao"]);
+                $pergunta->setRespostaAlgebra(Lib\DAO::escapeString($_POST["query"]));
 
                 Lib\DAO::insert($pergunta);
 
