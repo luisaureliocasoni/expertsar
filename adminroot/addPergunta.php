@@ -41,40 +41,40 @@ try{
 
         if (isset($_GET["id"])){
             $info["id"] = $_GET["id"];
+            $render = new Lib\RenderTemplate("../view/root/");
+            $render->render("addPergunta.html", $info);
         }else if (isset($_POST["enunciado"]) && isset($_POST["resposta"]) && isset($_POST["idLicao"])){
-            /*$errors = FALSE;
+            $errors = FALSE;
             $info["error"] = "";
 
-            if(strlen($_POST["nome"]) === 0){
-                $info["error"] .= "O campo nome deve ser preenchido!";
+            if(strlen($_POST["enunciado"]) === 0){
+                $info["error"] .= "<p>O campo enunciado deve ser preenchido!</p>";
                 $errors = TRUE;
             }
-            if(strlen($_POST["texto"]) === 0){
-                $info["error"] .= " O texto da lição deve ser preenchido!";
+            if(strlen($_POST["resposta"]) === 0){
+                $info["error"] .= "<p>Você deve fornecer uma resposta!</p>";
                 $errors = TRUE;
             }
 
             //Se tiver erros manda corrigir, se não salva o dado
             if($errors !== TRUE){
-                $licao = new \ExpertsAR\Licao();
-                $licao->setIdMantenedorAlterou($_POST["updater"]);
-                $licao->setNome(Lib\DAO::escapeString($_POST["nome"]));
-                $licao->setSlug(Lib\Slugger::geraSlug($_POST["nome"]));
-                $licao->setTextoLicao(Lib\DAO::escapeString($_POST["texto"]));
+                $pergunta = new \ExpertsAR\Pergunta();
+                $pergunta->setEnunciado(Lib\DAO::escapeString($_POST["enunciado"]));
+                $pergunta->setResposta(Lib\Slugger::geraSlug($_POST["resposta"]));
+                $pergunta->setIdLicao($_POST["idLicao"]);
 
-                Lib\DAO::updateById($licao, $_POST["idLicao"]);
+                Lib\DAO::insert($pergunta);
 
-                header("Location: verLicao.php?id=".$_POST["idLicao"]);
+                $info["success"] = "A lição foi salva com êxito!";  
             }else{
                 //Tem problemas, carrega a licao novamente para corrigir
-                carregaLicao($_POST["idLicao"], $info);
-            }*/
+                $info["id"] = $_POST["idLicao"];
+            }
+            $render = new Lib\RenderTemplate("../view/root/");
+            $render->render("addPergunta.html", $info);
+        }else{
+            header("Location: verLicoes.php");
         }
-
-        $render = new Lib\RenderTemplate("../view/root/");
-        $render->render("addPergunta.html", $info);
-
-
     }else{
         $render = new Lib\RenderTemplate();
         $render->render("loginroot.html");
