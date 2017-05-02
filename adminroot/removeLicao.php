@@ -34,7 +34,7 @@ try{
 
     if (isset($_SESSION["logado"]) && isset($_SESSION["nome"])){
         
-        if (isset($_GET["id"])){
+        if (isset($_GET["id"]) && Lib\DAOUtilis::isIntString($_GET["id"])){
             Lib\DAO::removeById($_GET["id"], "Licoes");
         }
         
