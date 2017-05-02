@@ -61,6 +61,7 @@ try{
             
             //Se tiver erros manda corrigir, se não salva o dado
             if($errors !== TRUE){
+                $info["error"] = NULL;
                 $licao = new \ExpertsAR\Licao();
                 $licao->setIdMantenedorCriou($_POST["creator"]);
                 $licao->setNome(Lib\DAO::escapeString($_POST["nome"]));
