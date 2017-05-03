@@ -33,8 +33,8 @@ if (isset($_SESSION["logado"])){
     $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
     $info["nome"] = $_SESSION["nome"];
     $info["email"] = $_SESSION["email"];
-    $render = new Lib\RenderTemplate();
-    $render->render("root/home.html", $info);
+    $render = new Lib\RenderTemplate("../view/root");
+    $render->render("home.html", $info);
 }else{
     $render = new Lib\RenderTemplate();
     $render->render("loginroot.html");
