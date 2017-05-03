@@ -60,11 +60,11 @@ try{
             $errors = FALSE;
             $info["error"] = "";
             if(strlen($_POST["nome"]) === 0){
-                $info["error"] .= "O campo nome deve ser preenchido!";
+                $info["error"] .= "<p>O campo nome deve ser preenchido!</p>";
                 $errors = TRUE;
             }
             if(strlen($_POST["texto"]) === 0){
-                $info["error"] .= " O texto da lição deve ser preenchido!";
+                $info["error"] .= "<p>O texto da lição deve ser preenchido!</p>";
                 $errors = TRUE;
             }
             

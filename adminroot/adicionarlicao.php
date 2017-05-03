@@ -42,11 +42,11 @@ try{
             $errors = FALSE;
             $info["error"] = "";
             if(strlen($_POST["nome"]) === 0){
-                $info["error"] .= "O campo nome deve ser preenchido!";
+                $info["error"] .= "<p>O campo nome deve ser preenchido!</p>";
                 $errors = TRUE;
             }
             if(strlen($_POST["texto"]) === 0){
-                $info["error"] .= " O texto da lição deve ser preenchido!";
+                $info["error"] .= "<p>O texto da lição deve ser preenchido!</p>";
                 $errors = TRUE;
             }
             
@@ -55,7 +55,7 @@ try{
             $cond = new Lib\Condicao("slug", "=", $slug);
             
             if(Lib\DAO::select("\ExpertsAR\Licao", "Licoes", $cond) !== NULL){
-                $info["error"] .= " Já existe uma lição do mesmo nome ({$_POST["nome"]}) no sistema!";
+                $info["error"] .= "<p>Já existe uma lição do mesmo nome ({$_POST["nome"]}) no sistema!</p>";
                 $errors = TRUE;
             }
             
@@ -70,7 +70,7 @@ try{
                 
                 Lib\DAO::insert($licao);
                 
-                $info["success"] = "A lição foi salva com êxito!";
+                $info["success"] = "<p>A lição foi salva com êxito!</p>";
             }
         }
         
