@@ -2,16 +2,18 @@
 
   <div class="content">
     <div class="row">
-        {% if error is not null%}
-            <div class="col s12 orange card">
-                <p>{{ error }}</p>
-            </div>
-        {% endif %}
-        {% if success is not null%}
-            <div class="col s12 green card">
-                <p>{{ success }}</p>
-            </div>
-        {% endif %}
+        {% autoescape false %}
+            {% if error is not null%}
+                <div class="col s12 orange card">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+            {% if success is not null%}
+                <div class="col s12 green card white-text">
+                    <p>{{ success }}</p>
+                </div>
+            {% endif %}
+        {% endautoescape %}
         {% if update is not null %}
             <div class="col s12">
                 <form action="updatePergunta.php" method="post">
