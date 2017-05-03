@@ -48,6 +48,7 @@ try{
             session_name(md5('rootAlgebra'.$_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']));
             session_start();
             $_SESSION["logado"] = TRUE;
+            $_SESSION["managerRoot"] = md5('rootAlgebra'.$_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']);
             $_SESSION["usuario"] = $mantenedor[0]->getUsuario();
             $_SESSION["nome"] = $mantenedor[0]->getNome();
             $_SESSION["email"] = $mantenedor[0]->getEmail();

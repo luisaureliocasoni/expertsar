@@ -33,7 +33,7 @@ session_start();
 try{
     Lib\DAO::setFilePathConfig("../assets/conexao.ini");
 
-    if (isset($_SESSION["logado"])){
+    if (isset($_SESSION["logado"]) && isset($_SESSION["managerRoot"])){
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
         $info["nome"] = $_SESSION["nome"];
         $info["email"] = $_SESSION["email"];

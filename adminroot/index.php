@@ -29,7 +29,7 @@ require_once("../vendor/autoload.php");
 session_name(md5('rootAlgebra'.$_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']));
 session_start();
 
-if (isset($_SESSION["logado"])){
+if (isset($_SESSION["logado"]) && isset($_SESSION["managerRoot"])){
     $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
     $info["nome"] = $_SESSION["nome"];
     $info["email"] = $_SESSION["email"];
