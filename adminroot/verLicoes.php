@@ -46,11 +46,10 @@ try{
             $info["licoes"] = $licoes;
         }
         
-        $render = new Lib\RenderTemplate();
-        $render->render("root/licoes.html", $info);
+        $render = new Lib\RenderTemplate("../view/root/");
+        $render->render("licoes.html", $info);
     }else{
-        $render = new Lib\RenderTemplate();
-        $render->render("loginroot.html");
+        header("Location: index.php");
     }
 } catch (Exception $ex) {
     http_response_code(500);

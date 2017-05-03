@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/icon?family=Materia+Icons">
-    <link rel="stylesheet" type="text/css" href="/css/theme.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ExpertsAR - Página Inicial</title>
-</head>
-<body>
-    <nav>
-    <div class="nav-wrapper light-blue darken-3">
-        <a href="#!" class="brand-logo">ExpertsAR</a>
-        <a href="#" data-activates="navbar" class="button-collapse"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
-            <li><a class="btn" id="btMenu">Olá {{primeiroNome}}</a></li>
-        </ul>
-        <ul id="navbar" class="side-nav">
-            <li><div class="userView">
-                <div class="background">
-                    <img src="/images/office.jpg">
-                </div>
-                <a href="#!name"><span class="white-text name">{{nome}}</span></a>
-                <a href="#!email"><span class="white-text email">{{email}}</span></a>
-            </div></li>
-            <li><div class="divider"></div></li>
-            <li><a class="waves-effect" href="profile.html">Editar perfil</a></li>
-            <li><a class="waves-effect" href="exit.php">Sair</a></li>
-         </ul>
-    </div>
-    </nav>
+    {% include 'header.html' %}
 
     <section class="green lighten-5 lessions">
         <div class="container">
