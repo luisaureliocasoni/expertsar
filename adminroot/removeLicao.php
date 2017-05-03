@@ -40,8 +40,7 @@ try{
         
         header("Location: verLicoes.php");
     }else{
-        $render = new Lib\RenderTemplate();
-        $render->render("loginroot.html");
+        header("Location: index.php");
     }
 } catch (Exception $ex) {
     http_response_code(500);
