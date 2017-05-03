@@ -42,9 +42,12 @@
             <p>A lição não foi encontrada.</p>
           {% else %}
             <h3>{{licao.nome}}</h3>
+            {#Desabilita o autoescape, para mostrar o texto html do enunciado#}
+            {% autoescape false %}
             <div class="card row">
                 {{ licao.textoLicao }}
             </div>
+            {% endautoescape %}
             <div>
                 <a href="updateLicao.php?id={{licao.id}}" class="btn orange white-text">Alterar Lição</a>
                 <a class="btn red white-text bt-remove" data-type="Lição" data-id="{{licao.id}}" data-page="removeLicao.php">Remover Lição</a>
