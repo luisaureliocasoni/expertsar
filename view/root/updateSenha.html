@@ -1,0 +1,39 @@
+{% include 'header.html' %}
+  <div class="content">
+    <div class="row">
+        {% autoescape false %}
+            {% if error is not null%}
+                <div class="col s12 orange card">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+            {% if success is not null%}
+                <div class="col s12 green card white-text">
+                    <p>{{ success }}</p>
+                </div>
+            {% endif %}
+        {% endautoescape %}
+        <div class="col s12">
+            <form action="alteraSenha.php" method="post">
+                <h4>Alterar a sua senha</h4>
+                <div class="input-field">
+                  <label for="nome">Sua senha anterior</label>
+                  <input type="password" id="senhaAnterior" name="senhaAnterior" class="validate">
+                </div>
+                <div class="input-field">
+                  <label for="nome">Sua senha nova</label>
+                  <input type="password" id="senhaNova" name="senhaNova" class="validate">
+                </div>
+                <div class="input-field">
+                  <label for="nome">Sua senha nova (de novo)</label>
+                  <input type="password" id="senhaNovaConfirm" name="senhaNovaConfirm" class="validate">
+                </div>
+                <button class="btn" type="submit">Mudar senha</button>
+                <a href="index.php" class="btn red">Cancelar e voltar para a home</a>
+            </form>
+        </div>
+      
+    </div>
+  </div>
+
+  {% include 'footer.html' %}
