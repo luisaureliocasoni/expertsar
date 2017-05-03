@@ -80,7 +80,7 @@ try{
 
                 Lib\DAO::insert($pergunta);
 
-                $info["success"] = "A pergunta foi salva com êxito!";  
+                $info["success"] = "<p>A pergunta foi salva com êxito!</p>";  
             }
             
             $render = new Lib\RenderTemplate("../view/root/");
