@@ -89,7 +89,12 @@ try{
                 $corpo .= "<p>Atenciosamente</p><p>Equipe ExpertsAR - OA para Álgebra Relacional </p>";
                 
                 $email = new \Lib\Email($mantenedor->getEmail(), $mantenedor->getNome(), $titulo, $corpo);
-                $email->enviar();
+                $resposta = $email->enviar();
+                
+                
+                if ($resposta === FALSE){
+                    $info["error"] = "<p>O email não foi enviado. Mensagem: {$email->getMessage()} </p>";
+                }
                 
                 $info["success"] = "<p>O usuário foi criado com êxito!</p>";
             }
