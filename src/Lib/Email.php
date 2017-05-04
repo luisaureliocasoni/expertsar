@@ -10,8 +10,9 @@ namespace Lib;
 
 class Email
 {
-    private $destinatario = "dezmedidas@aureliocasoni.xyz";
-    private $senha = "isHY5HzRbA";
+    private static $filePathConfig = "../assets/configEmail.ini";
+    private $destinatario;
+    private $senha;
     private $remetente;
     private $titulo;
     private $corpo;
@@ -19,52 +20,33 @@ class Email
     private $nome;
 
     /**
-     * Email constructor.
-     * @param $remetente
-     * @param $titulo
-     * @param $corpo
+     * Representa um e-mail no sistema
+     * @param string $destinatario
+     * @param string $nome
+     * @param string $titulo
+     * @param string $corpo
      */
-    public function __construct($remetente, $nome, $titulo, $corpo)
+    public function __construct(string $destinatario, string $nome, string $titulo, string $corpo)
     {
-        $this->remetente = $remetente;
+        $this->destinatario = $destinatario;
         $this->titulo = $titulo;
         $this->nome = $nome;
         $this->corpo = $corpo;
-        $this->phpMailer = new \PHPMailer();
-        $this->phpMailer->isSMTP();
-        $this->phpMailer->CharSet = 'UTF-8';
-        //Enable SMTP debugging
-        // 0 = off (for production use)
-        // 1 = client messages
-        // 2 = client and server messages
-        $this->phpMailer->SMTPDebug = 0;
-        //Ask for HTML-friendly debug output
-        $this->phpMailer->Debugoutput = 'html';
-        //$this->phpMailer->i
-        //Set the hostname of the mail server
-        $this->phpMailer->Host = 'mx1.hostinger.com.br';
-        // use $this->phpMailer->Host = gethostbyname('smtp.gmail.com');
-        // if your network does not support SMTP over IPv6
-        //Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
-        $this->phpMailer->Port = 587;
-        //Set the encryption system to use - ssl (deprecated) or tls
-        $this->phpMailer->SMTPSecure = 'tls';
-        //Whether to use SMTP authentication
-        $this->phpMailer->SMTPAuth = true;
-        //Username to use for SMTP authentication - use full email address for gmail
-        $this->phpMailer->Username = $this->destinatario;
-        //Password to use for SMTP authentication
-        $this->phpMailer->Password = $this->senha;
-        //Set who the message is to be sent from
-        $this->phpMailer->setFrom($this->destinatario, 'Administrador - 10 Medidas Sim');
+        try{
+            $this->phpMailer = $this->readConfiguration();
+        } catch (Exception $ex) {
+            throw $ex;
+        }
         //Set who the message is to be sent to
-        $this->phpMailer->addAddress($this->remetente, $this->nome);
+        $this->phpMailer->addAddress($this->destinatario, $this->nome);
         //Set the subject line
         $this->phpMailer->Subject = $this->titulo;
     }
 
-    //esta funcao faz enviar um e-mail para o destinatario informado com os dados pedidos de contato
-    //retorna true se foi enviado com êxito, retorna false se foi enviado com erros
+    /**
+     * Esta funcao faz enviar um e-mail para o destinatario informado com os dados pedidos de contato
+     * @return boolean Retorna TRUE se foi enviado com êxito, retorna FALSE se foi enviado com erros
+     */
     function enviar(){
         //Read an HTML message body from an external file, convert referenced images to embedded,
         //convert HTML into a basic plain-text alternative body
@@ -80,10 +62,61 @@ class Email
             return TRUE;
         }
     }
-
+    
+    /**
+     * Retorna a mensagem de erro, caso a operação de envio falhe
+     * @return string A mensagem de erro
+     */
     public function getMessage()
     {
         return $this->phpMailer->ErrorInfo;
     }
-
+    
+    /**
+     * Seta o caminho para buscar as configurações de e-mail
+     * @param string $newFilePath O novo caminho a ser salvo
+     */
+    public static function setFilePathConfig(string $newFilePath) {
+        self::$filePathConfig = $newFilePath;
+    }
+    
+    /**
+     * Lê o arquivo de configurações e prepara o PHPMailer
+     * @return object 
+     * @throws \RuntimeException Caso o arquivo não seja encontrado
+     */
+    private function readConfiguration(){
+        $data = parse_ini_file(self::$filePathConfig);
+        if ($data === FALSE){
+            throw new \RuntimeException("Arquivo ini de configurações de e-mail não foi encontrado!");
+        }
+        $mailer = new \PHPMailer();
+        $mailer->isSMTP();
+        $mailer->CharSet = 'UTF-8';
+        //Enable SMTP debugging
+        // 0 = off (for production use)
+        // 1 = client messages
+        // 2 = client and server messages
+        $mailer->SMTPDebug = 0;
+        //Ask for HTML-friendly debug output
+        $mailer->Debugoutput = 'html';
+        //$this->phpMailer->i
+        //Set the hostname of the mail server
+        $mailer->Host = $data["host"];
+        // use $this->phpMailer->Host = gethostbyname('smtp.gmail.com');
+        // if your network does not support SMTP over IPv6
+        //Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
+        $mailer->Port = $data["porta"];
+        //Set the encryption system to use - ssl (deprecated) or tls
+        $mailer->SMTPSecure = $data["criptografia"];
+        //Whether to use SMTP authentication
+        $mailer->SMTPAuth = true;
+        //Username to use for SMTP authentication - use full email address for gmail
+        $mailer->Username = $data["username"];
+        //Password to use for SMTP authentication
+        $mailer->Password = $data["senha"];
+        //Set who the message is to be sent from
+        $mailer->setFrom($data["remetente"], $data["identificacao"]);
+        return $mailer;
+    }
 }
