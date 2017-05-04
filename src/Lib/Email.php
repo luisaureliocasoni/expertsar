@@ -30,7 +30,7 @@ class Email
         $this->titulo = $titulo;
         $this->nome = $nome;
         $this->corpo = $corpo;
-        $this->phpMailer = new PHPMailer();
+        $this->phpMailer = new \PHPMailer();
         $this->phpMailer->isSMTP();
         $this->phpMailer->CharSet = 'UTF-8';
         //Enable SMTP debugging
