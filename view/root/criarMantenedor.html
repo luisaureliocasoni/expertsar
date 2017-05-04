@@ -1,0 +1,40 @@
+{% include 'header.html' %}
+  <div class="content">
+    <div class="row">
+        {% autoescape false %}
+            {% if error is not null%}
+                <div class="col s12 orange card">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+            {% if success is not null%}
+                <div class="col s12 green card white-text">
+                    <p>{{ success }}</p>
+                </div>
+            {% endif %}
+        {% endautoescape %}
+        <div class="col s12">
+            <form action="criarMantenedor.php" method="post">
+                <h4>Criar um usuário</h4>
+                <p>A senha será enviada por e-mail, ao usuário, antes de ser criptografada</p>
+                <div class="input-field">
+                  <label for="nome">Nome real do usuário</label>
+                  <input type="text" id="nome" name="nome" class="validate">
+                </div>
+                <div class="input-field">
+                  <label for="nome">Nome do usuário</label>
+                  <input type="text" id="usuario" name="usuario" class="validate">
+                </div>
+                <div class="input-field">
+                  <label for="nome">E-mail</label>
+                  <input type="email" id="email" name="email" class="validate">
+                </div>
+                <button class="btn" type="submit">Criar esse usuário</button>
+                <a href="verLicoes.php" class="btn red">Cancelar e voltar para Lições</a>
+            </form>
+        </div>
+      
+    </div>
+  </div>
+
+  {% include 'footer.html' %}
