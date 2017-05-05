@@ -28,6 +28,17 @@
                 <input type="password" pattern=".{8,}" placeholder="Sua senha (novamente)" required="" id="senhaConfirm" name="senhaConfirm" class="validate">
                 <label for="senhaConfirm">Sua senha (novamente)</label>
               </div>
+              <div class="input-field">
+                <input type="hidden" name="operando1" value="{{op1}}" />
+                <input type="hidden" name="operando2" value="{{op2}}" />
+                <input type="hidden" name="operador" value="{{operador}}" />
+                <input type="text" pattern="[\-0-9]+" placeholder="{{op1 ~ operador ~ op2}}" required="" id="captcha" name="captcha" class="validate">
+                <label for="valida">{{op1 ~ operador ~ op2}}</label>
+              </div>
+              <div class="input-field">
+                  <input type="checkbox" name="aceitaTermos" value="sim" id="aceitaTermos" /> 
+                  <label for="aceitaTermos">Eu li e concordo com os <a href="">Termos de Uso e Privacidade do Site</a></label>. 
+              </div>
             </div>
             <div class="card-action center-align" class="transparent">
               <button class="btn" type="submit">Criar uma conta</button>
