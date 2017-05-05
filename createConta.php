@@ -40,5 +40,6 @@ try{
     $render->render("createConta.html");
     
 } catch (Exception $ex) {
-    echo $ex;
+    $handler = new \Lib\ExceptionHandler($ex, "createConta.php");
+    $handler->run();
 }
