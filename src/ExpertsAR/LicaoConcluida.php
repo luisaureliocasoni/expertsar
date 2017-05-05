@@ -32,12 +32,14 @@ namespace ExpertsAR;
  * @author Luís Aurélio Casoni
  */
 class LicaoConcluida {
+    const MYSQL = 50;
+    const POSTGRESQL = 51;
+    
     public static $table = "UsuariosLicoes";
     
     private $id;
     private $idUsuario;
     private $idLicao;
-    private $dataConclusao;
     
     function __construct($id = NULL) {
         $this->id = $id;
@@ -55,10 +57,7 @@ class LicaoConcluida {
         return $this->idLicao;
     }
 
-    function getDataConclusao() {
-        return $this->dataConclusao;
-    }
-
+    
     function setId($id) {
         $this->id = $id;
         return $this;
@@ -71,11 +70,6 @@ class LicaoConcluida {
 
     function setIdLicao($idLicao) {
         $this->idLicao = $idLicao;
-        return $this;
-    }
-
-    function setDataConclusao($dataConclusao) {
-        $this->dataConclusao = $dataConclusao;
         return $this;
     }
 
