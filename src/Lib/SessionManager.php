@@ -39,10 +39,14 @@ class SessionManager {
         session_name(md5($this->salt.$_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']));
         session_start();
         $this->arr = [];
+        foreach ($_SESSION as $key => $value) {
+            $this->arr[$key] = $value;
+        }
     }
     
     function destroy(){
         session_destroy();
+        $arr = [];
     }
     
     function addKey($chave, $valor){
