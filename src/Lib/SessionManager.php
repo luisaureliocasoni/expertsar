@@ -50,5 +50,9 @@ class SessionManager {
     function getKey($chave){
         return $_SESSION[$chave];
     }
+    
+    function keyExists($chave){
+        return isset($_SESSION[$chave]);
+    }
 
 }
