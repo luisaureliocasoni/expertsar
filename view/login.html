@@ -7,15 +7,15 @@
       {% include 'exibeInfo.html' %}
       <div class="col s12 m6 offset-m3 l4 offset-l4">
         <div class="card green lighten-5">
-          <form action="#">
+          <form action="login.php" method="post">
             <div class="card-content">
               <span class="card-title">Login</span>
               <div class="input-field">
-                <input type="email" placeholder="E-mail" id="email" class="validate">
+                <input type="email" placeholder="E-mail" id="email" required="" name="email" class="validate">
                 <label for="email">E-mail</label>
               </div>
               <div class="input-field">
-                <input type="password" placeholder="Senha" id="senha" class="validate">
+                <input type="password" placeholder="Senha" id="senha" required="" name="senha" class="validate">
                 <label for="senha">Senha</label>
               </div>
             </div>
