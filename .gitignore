@@ -117,3 +117,4 @@ images/
 public/
 netbeans/
 assets/*.ini
+assets/*.log
