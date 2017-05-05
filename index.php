@@ -24,4 +24,19 @@
  * THE SOFTWARE.
  **/
 
-include("view/index.html");
+
+try{
+    require_once("vendor/autoload.php");
+    
+    $sessao = new \Lib\SessionManager();
+    $render = new Lib\RenderTemplate("view/");
+    
+    if ($sessao->keyExists("logado")){
+        echo "Logado!";
+    }else{
+        $render->render("index.html");
+    }
+} catch (Exception $ex) {
+    $handler = new \Lib\ExceptionHandler($ex, basename($_SERVER['PHP_SELF']));
+    $handler->run();
+}
