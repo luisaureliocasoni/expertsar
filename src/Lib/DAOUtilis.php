@@ -93,6 +93,26 @@ class DAOUtilis {
         return $retorno;
     }
     
+    public static function sorteiaNumero($tamanho = 2)
+    {
+        $caracteres = "0123456789";
+        $retorno = '';
+        $len = strlen($caracteres);
+        for ($n = 1; $n <= $tamanho; $n++) {
+            $rand = mt_rand(1, $len);
+            $retorno .= $caracteres[$rand-1];
+        }
+        return $retorno;
+    }
+    
+    public static function sorteiaOperador()
+    {
+        $caracteres = "-+";
+        $len = strlen($caracteres);
+        $rand = mt_rand(1, $len);
+        return $caracteres[$rand-1];
+    }
+    
     /**
      * Criptografa uma senha, pelo algoritmo bluefish
      * Retorna sempre uma string de <b>60</b> caracteres.
