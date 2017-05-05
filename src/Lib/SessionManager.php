@@ -33,10 +33,12 @@ namespace Lib;
  */
 class SessionManager {
     private $salt = "algebraExpertsAR";
+    private $arr;
     
     function __construct() {
         session_name(md5($this->salt.$_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']));
         session_start();
+        $this->arr = [];
     }
     
     function destroy(){
@@ -45,6 +47,7 @@ class SessionManager {
     
     function addKey($chave, $valor){
         $_SESSION[$chave] = $valor;
+        $this->arr[$chave] = $valor;
     }
     
     function getKey($chave){
@@ -55,4 +58,7 @@ class SessionManager {
         return isset($_SESSION[$chave]);
     }
 
+    function getAllKeys(){
+        return $this->arr;
+    }
 }
