@@ -12,19 +12,20 @@
             <div class="card-content">
               <span class="card-title">Criar uma conta</span>
               <div class="input-field">
-                <input type="text" placeholder="Seu nome" id="nome" name="nome" class="validate">
+                <input type="text" pattern="[a-zA-Z \.]+" placeholder="Seu nome" required="" id="nome" name="nome" class="validate">
                 <label for="nome">Seu nome</label>
               </div>
               <div class="input-field">
-                <input type="email" placeholder="Seu e-mail" id="email" name="email" class="validate">
+                <input type="email" placeholder="Seu e-mail" required="" id="email" name="email" class="validate">
                 <label for="email">Seu e-mail</label>
               </div>
               <div class="input-field">
-                <input type="password" placeholder="Sua senha" id="senha" name="senha" class="validate">
-                <label for="senha">Sua senha</label>
+                {# pattern=".{8,}" = Qualquer sequencia que tenha oito caracteres ou mais #}
+                <input type="password" pattern=".{8,}" placeholder="Sua senha (mínimo 8 caracteres)" required="" id="senha" name="senha" class="validate">
+                <label for="senha">Sua senha (mínimo 8 caracteres)</label>
               </div>
               <div class="input-field">
-                <input type="password" placeholder="Sua senha (novamente)" id="senhaConfirm" name="senhaConfirm" class="validate">
+                <input type="password" pattern=".{8,}" placeholder="Sua senha (novamente)" required="" id="senhaConfirm" name="senhaConfirm" class="validate">
                 <label for="senhaConfirm">Sua senha (novamente)</label>
               </div>
             </div>
