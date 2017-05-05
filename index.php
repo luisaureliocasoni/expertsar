@@ -30,9 +30,12 @@ try{
     
     $sessao = new \Lib\SessionManager();
     $render = new Lib\RenderTemplate("view/");
+    $info = [];
     
     if ($sessao->keyExists("logado")){
-        echo "Logado!";
+        $info = $info + $sessao->getAllKeys();
+        $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
+        $render->render("home.html", $info);
     }else{
         $render->render("index.html");
     }
