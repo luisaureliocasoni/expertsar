@@ -1,7 +1,7 @@
 {% autoescape false %}
-    {% if error is not null%}
+    {% if errors is not null%}
         <div class="col s12 orange card">
-            <p>{{ error }}</p>
+            <p>{{ errors }}</p>
         </div>
     {% endif %}
     {% if success is not null%}
