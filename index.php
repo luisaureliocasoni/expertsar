@@ -24,4 +24,4 @@
  * THE SOFTWARE.
  **/
 
-include("index.html");
+include("view/index.html");
