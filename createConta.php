@@ -26,6 +26,7 @@
 
 try{
     require_once("vendor/autoload.php");
+    Lib\DAO::setFilePathConfig("assets/conexao.ini");
     $render = new \Lib\RenderTemplate("view/");
     $sessao = new \Lib\SessionManager();
     $info = [];
@@ -56,20 +57,20 @@ try{
         }
         
         if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) === FALSE){
-            $info["errors"] = "<p>O e-mail fornecido é inválido!</p>";
+            $info["errors"] .= "<p>O e-mail fornecido é inválido!</p>";
         }
         
         if (filter_var($_POST["captcha"], FILTER_VALIDATE_INT) === FALSE){
-            $info["errors"] = "<p>A resposta do desafio fornecido é inválido!</p>";
+            $info["errors"] .= "<p>A resposta do desafio fornecido é inválido!</p>";
         }
         
         $eq = $_POST["operando1"].$_POST["operador"].$_POST["operando2"];
         if ($_POST["captcha"] != jlawrence\eos\Parser::solve($eq)){
-            $info["errors"] = "<p>A resposta do desafio fornecido é incorreta!</p>";
+            $info["errors"] .= "<p>A resposta do desafio fornecido é incorreta!</p>";
         }
         
-        if(!(isset($_POST["aceitaTermos"])) && ($_POST["aceitaTermos"] !== "sim")){
-            $info["errors"] = "<p>Por favor, aceite nossos termos de uso para prosseguir.</p>";
+        if(!(isset($_POST["aceitaTermos"]))){
+            $info["errors"] .= "<p>Por favor, aceite nossos termos de uso para prosseguir.</p>";
         }
         
         
