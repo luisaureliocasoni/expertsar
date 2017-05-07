@@ -26,12 +26,11 @@
             {% endautoescape %}
         </div>
         {% for pergunta in perguntas %}
-            <div class="hide pergunta" id="pergunta1">
-            <h3>Exercício {{loop.index}}</h3>
+            <div class="hide pergunta" id="pergunta{{loop.index}}">
+                <h3>Exercício {{loop.index}}</h3>
                 <p>{{pergunta.enunciado}}</p>
                 <input type="hidden" id="resp{{loop.index}}" value="{{pergunta.resposta}}"/>
                 {% include 'root/parser.html' %}
-                </div>
             </div>
         {% endfor %}
         
