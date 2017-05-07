@@ -139,15 +139,37 @@ function processaQuery(query) {
     }
 }
 
-function tratarResultado(exito, $textarea, resposta){
-    if (exito === true){
-        $textarea.addClass("valid");
-        $("input#resposta").val(resposta);
-        $("#submitPergunta").removeClass("disabled");
+/*Função que trata o resultado*/
+function tratarResultado(exito, $textarea, $button, resposta){
+    if (exito === true){ //Se foi considerado um exito
+        //verifica se estamos em uma pergunta
+        if ($button.data().ispergunta === 1){
+            //pega a resposta correta
+            var correto = $($button.data().fieldcheck).val();
+            //verifica se a resposta bate
+            if (correto === resposta){
+                Materialize.toast("A resposta está correta!");
+                $textarea.addClass("valid");
+                $button.addClass("disabled");
+                $(".atual").data("concluido", "yes"); //marca o painel como concluido
+                $("#next").removeClass("disabled"); //ativa o botão do proximo
+            }else{
+                Materialize.toast("A resposta está incorreta!");
+                $textarea.addClass("invalid");
+            }
+        }else{ //Se não está, estamos em uma edição
+            $textarea.addClass("valid");
+            $("input#resposta").val(resposta);
+            $("#submitPergunta").removeClass("disabled");
+        }
     }else{
         $textarea.addClass("invalid");
-        $("input#resposta").val(null);
-        $("#submitPergunta").addClass("disabled");
+        //verifica se não estamos em uma pergunta
+        if ($button.data().ispergunta !== 1){
+            $("input#resposta").val(null);
+            $("#submitPergunta").addClass("disabled");
+        }
+        
     }
 }
 
@@ -155,8 +177,10 @@ function submitResposta($button) {
     if ($button.data() === 0 || $button.data().for === undefined){
         throw "Qual textarea devo consultar? Deve ser definido a proprieidade data-for no botao. Nada Feito.";
     }
-
-    $("#result").html("<p>Aguarde...</p><div class=\"progress\"><div class=\"indeterminate\"></div></div>");
+    
+    var $resultPanel = $($button.data().showon);
+    
+    $resultPanel.html("<p>Aguarde...</p><div class=\"progress\"><div class=\"indeterminate\"></div></div>");
 
     var $textarea = $($button.data().for);
     $textarea.removeClass("invalid valid");
@@ -181,8 +205,8 @@ function submitResposta($button) {
         var str = processaQuery(parsed)+";";
     }catch (e){
         Materialize.toast("Sua query possui um erro!", 4000);
-        $("#result").html("<p>"+buildErrorMessage(e)+"</p>");
-        tratarResultado(false, $textarea);
+        $resultPanel.html("<p>"+buildErrorMessage(e)+"</p>");
+        tratarResultado(false, $textarea, $button);
         return;
     }
 
@@ -191,9 +215,9 @@ function submitResposta($button) {
     var test = $.ajax("/api/api.php", {
         method: "POST",
         success: function(objs, textStatus, xhr){
-            $("#result").html("<div class=\"card final\"><p>Sua query:</p><code>"+str+"</code></div>");
+            $resultPanel.html("<div class=\"card final\"><p>Sua query:</p><code>"+str+"</code></div>");
             if (objs === null){
-                $("#result").append("<p>0 linhas afetadas. Nada a exibir.</p>");
+                $resultPanel.append("<p>0 linhas afetadas. Nada a exibir.</p>");
                 return;
             }
             //Se não for null, cria a tabela
@@ -221,19 +245,19 @@ function submitResposta($button) {
                 }
             }
             table += "</tbody></table></div>";
-            $("#result").append(table);
+            $resultPanel.append(table);
 
             //Pega o texto original do resultado da consulta e coloca como a resposta
-            tratarResultado(true, $textarea, xhr.responseText);
+            tratarResultado(true, $textarea, $button, xhr.responseText);
             //this.resposta = xhr.responseText;
         },
         data: {query: str},
         dataType: "json",
         error: function(msg){
             Materialize.toast("Houve um erro na interpretação SQL da Query!", 4000);
-            $("#result").html("<p>Sua query:</p><code>"+str+"</code>");
-            $("#result").append("<p>"+msg.responseText+"</p>");
-            tratarResultado(false, $textarea);
+            $resultPanel.html("<p>Sua query:</p><code>"+str+"</code>");
+            $resultPanel.append("<p>"+msg.responseText+"</p>");
+            tratarResultado(false, $textarea, $button);
         },
 
     });

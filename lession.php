@@ -48,7 +48,7 @@ try{
         
         //Busca pelas perguntas
         $cond = new \Lib\Condicao("idLicao", "=", $_GET["id"]);
-        $perguntas = \Lib\DAO::select("\ExpertsAR\Pergunta", "Pergunta", $cond);
+        $perguntas = \Lib\DAO::select("\ExpertsAR\Pergunta", "Perguntas", $cond);
         
         $info["perguntas"] = $perguntas;
         

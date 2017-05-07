@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Materia+Icons">
-    <link rel="stylesheet" href="css/theme.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ExpertsAR - Projeção e Seleção</title>
-</head>
+{% include 'header.html' %}
+{% set isPergunta = TRUE %}
 <body>
     <div class="navbar-fixed">
         <nav class="light-blue darken-3">
@@ -27,100 +19,22 @@
         <!-- O texto da lição recebe a classe atual -->
         <div class="row s12 atual" data-isstart="yes">
             <div class="title center-align" id="title">
-                <h3>Projeção e Seleção</h3>
+                <h3>{{licao.nome}}</h3>
             </div>
-            <p>São operadores básicos da Álgebra Relacional, onde você especifica consultas ao Banco de Dados. A operação de busca é dividida em dois operadores:</p>
-            <ul>
-                <li>O operador PROJEÇÃO seleciona as colunas que devem ser exibidas na relação. É representado pelo operador Π (Pi);</li>
-                <li>O operador SELEÇÃO especifica uma condição de seleção, que servirá de filtro das informações a serem exibidas na tabela. É representado pelo operador σ (Sigma). </li>
-            </ul>
-            <h5>Projeção</h5>
-            <p>É representado pela seguinte sintaxe:</p>
-            <code>Π<sub>(coluna1, coluna2, ... colunan)</sub>(Relação)</code>
-            <h5>Seleção</h5>
-            <p>É representado pela seguinte sintaxe:</p>
-            <code>σ<sub>(condicao)</sub>(Relação)</code>
-            <hr>
-            <h5>Exemplos</h5>
-            <p><b>1. Selecione todos os nomes dos clientes da locadora:</b></p>
-            <code>Π<sub>(nomecli)</sub>(cliente)</code>
-            <p>Resultado:</p>
-            <table class="responsible-table striped centered">
-                <thead>
-                    <tr>
-                        <th>nomecli</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>João</td>
-                    </tr>
-                    <tr>
-                        <td>Marcelo</td>
-                    </tr>
-                    <tr>
-                        <td>(...)</td>
-                    </tr>
-                </tbody>
-            </table>
+            {% autoescape false %}
+                {{licao.textoLicao}}
+            {% endautoescape %}
         </div>
-        <div class="hide pergunta" id="pergunta1">
-            <h3>Exercício 1</h3>
-            <p>Faça uma consulta que retorne o nome e o id de cada fita presente na loja.</p>
-            <p><b>Dica:</b> Digite "certo" para passar a próxima página.</p>
-            <div class="row">
-                <div class="col s12 final">
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel0">Π</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel1">σ</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel2">∪</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel3">∩</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel4">-</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel5">ϒ</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel6">φ</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel7">δ</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel8">⋀</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel9">⋁</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel10">⋈</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel11">⋉</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel12">⋊</button>
-                    <button class="btn minusculo insert" data-for="#area1" id="btPanel13">X</button>
-                </div>
-                <div class="col s12">
-                    <textarea id="area1" class="materialize-textarea validate"></textarea>
-                </div>
-                <div class="col s12 center-align">
-                    <button data-for="#area1" class="btn blue submit" id="submit">Submeter Resposta</button>
+        {% for pergunta in perguntas %}
+            <div class="hide pergunta" id="pergunta1">
+            <h3>Exercício {{loop.index}}</h3>
+                <p>{{pergunta.enunciado}}</p>
+                <input type="hidden" id="resp{{loop.index}}" value="{{pergunta.resposta}}"/>
+                {% include 'root/parser.html' %}
                 </div>
             </div>
-        </div>
-        <div class="hide pergunta" id="pergunta2">
-            <h3>Exercício 2</h3>
-            <p>Faça uma consulta que retorne o nome, o id e o preço de cada fita presente na loja.</p>
-            <div class="row">
-                <div class="col s12 final">
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel0">Π</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel1">σ</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel2">∪</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel3">∩</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel4">-</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel5">ϒ</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel6">φ</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel7">δ</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel8">⋀</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel9">⋁</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel10">⋈</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel11">⋉</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel12">⋊</button>
-                    <button class="btn minusculo insert" data-for="#area2" id="btPanel13">X</button>
-                </div>
-                <div class="col s12">
-                    <textarea id="area2" class="materialize-textarea validate"></textarea>
-                </div>
-                <div class="col s12 center-align">
-                    <button data-for="#area2" class="btn blue submit" id="submit">Submeter Resposta</button>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
+        
         <div class="hide success center-align jumbotron" data-isfinal="yes">
             <h3 class="green-text">Perfeito!</h3>
             <p>Você concluiu a lição!</p>
@@ -133,12 +47,13 @@
         <div class="footer-copyright">
             <div class="container">
                 &copy; 2017 - Luís Aurélio Casoni e Ademir Martinez Sanches
-                <a href="github" class="grey-text text-lighten-4 right">Fork no GitHub</a>
+                <a href="https://github.com/luisaureliocasoni/expertsar" class="grey-text text-lighten-4 right">Fork no GitHub</a>
             </div>
         </div>
     </footer>
 
     <script src="js/jquery-3.2.0.min.js"></script>
+    <script src="js/parser.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/lession.js"></script>
 </body>
