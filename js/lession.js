@@ -185,20 +185,6 @@ function submitResposta($button) {
     var $textarea = $($button.data().for);
     $textarea.removeClass("invalid valid");
 
-    /*if ($textarea.val() === "certo"){
-        $textarea.addClass("valid");
-        $("#next").removeClass("disabled");
-        var $append = $(document.createElement("div"));
-        $append.addClass("col s12 focus");
-        $append.append("<div class=\"final\"><p>Query SQL</p><code class=\"final\">A query SQL aparecerá aqui</code></div>");
-        $append.append("<div class=\"border final\"><table class=\"responsible-table striped centered\"><thead><tr><th>nomecli</th></tr><tbody><tr><td>João</td></tr><tr><td>Marcelo</td></tr><tr><td>(...)</td></tr></tbody></div>");
-        $(".atual").append($append);
-        //Marca a lição como concluido
-        $(".atual").data("concluido", "yes");
-        Materialize.toast("Resposta Correta!", 4000);
-        $button.addClass("disabled");
-        //$(".focus").focus();*/
-
     try{
         var parsed = parser.parse($textarea.val());
         //faz o pós processamento da query gerada
