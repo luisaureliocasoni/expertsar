@@ -36,7 +36,13 @@ try{
         $info = $info + $sessao->getAllKeys();
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
         
+        $licao = \Lib\DAO::selectById("\ExpertsAR\Licao", "Licoes", $_GET["id"]);
         
+        if ($licao === NULL){ //se a lição não for encontrada
+            http_response_code(404);
+            $render->render("404.html");
+            die();
+        }
         
         $render->render("home.html", $info);
     }else{
