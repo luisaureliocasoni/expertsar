@@ -87,7 +87,7 @@ function carregaPreviousPage() {
     //O primeiro painel a ser exibido recebe a proprieidade data-isstart="yes"
     if ($(".atual").data() !== 0 && $(".atual").data().isstart === "yes"){
         //TODO perguntar ao usuário antes de sair
-        window.location = "home.html";
+        window.location = "index.php";
         return;
     }
 
