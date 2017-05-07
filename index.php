@@ -35,6 +35,9 @@ try{
     
     if ($sessao->keyExists("logado")){
         $info = $info + $sessao->getAllKeys();
+        //seta a key de fazendo licao como null
+        $sessao->addKey("fazendoLicao", NULL);
+        
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
         
         //Carrega o total de lições
