@@ -44,27 +44,32 @@ try{
             die();
         }
         
-         //Verifica se o usuário já tinha feito essa licao
-        $cond1 = new Lib\Condicao("idLicao", "=", $_GET["id"]);
-        $cond2 = new Lib\Condicao("idUsuario", "=", $sessao->getKey("id"));
-        $cond = new Lib\Condicao($cond1, "AND", $cond2);
-        
-        $licoesConcluidas = Lib\DAO::select("\ExpertsAR\LicaoConcluida", "UsuariosLicoes", $cond);
-        
-        //se tiver feito, passa, se não vai para mais um teste
-        if ($licoesConcluidas === NULL){ //se é null, siginifca que não concluiu a licao
-            $query = "SELECT \"id\", \"nome\" FROM \"Licoes\" WHERE \"id\" > (SELECT MAX(\"idLicao\") FROM \"UsuariosLicoes\" WHERE \"idUsuario\" = {$sessao->getKey("id")}) ORDER BY \"id\";";
-            $array = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query));
-            //Pega o primeiro indice do array, que é a próxima licao a ser feita
-            //Se o id da primeira licao bater com o id da licao a ser feita, passa
-            //Caso nao seja, quer dizer que o usuário está tentando acessar uma lição mais avançada
-            //E isso não é permitido.
-            if ($array[0]["id"] !== $_GET["id"]){ //Se o id da próxima lição a ser feita não bate com o id da licao pedida
-                //redireciona
-                header("Location:index.php?error=2");
-                die();
+        //Verifica se o usuário não tinha feito nenhuma lição;
+        $cond1 = new Lib\Condicao("idUsuario", "=", $sessao->getKey("id"));
+        $licoesConcluidasUsuario = Lib\DAO::select("\ExpertsAR\LicaoConcluida", "UsuariosLicoes", $cond1);
+        if ($licoesConcluidasUsuario !== NULL){//Se o usuario ja concluiu lições
+            //Verifica se o usuário já tinha feito essa licao
+            $cond2 = new Lib\Condicao("idLicao", "=", $_GET["id"]);
+            $cond = new Lib\Condicao($cond1, "AND", $cond2);
+
+            $licoesConcluidas = Lib\DAO::select("\ExpertsAR\LicaoConcluida", "UsuariosLicoes", $cond);
+
+            //se tiver feito, passa, se não vai para mais um teste
+            if ($licoesConcluidas === NULL){ //se é null, siginifca que não concluiu a licao
+                $query = "SELECT \"id\", \"nome\" FROM \"Licoes\" WHERE \"id\" > (SELECT MAX(\"idLicao\") FROM \"UsuariosLicoes\" WHERE \"idUsuario\" = {$sessao->getKey("id")}) ORDER BY \"id\";";
+                $array = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query));
+                //Pega o primeiro indice do array, que é a próxima licao a ser feita
+                //Se o id da primeira licao bater com o id da licao a ser feita, passa
+                //Caso nao seja, quer dizer que o usuário está tentando acessar uma lição mais avançada
+                //E isso não é permitido.
+                if ($array[0]["id"] !== $_GET["id"]){ //Se o id da próxima lição a ser feita não bate com o id da licao pedida
+                    //redireciona
+                    header("Location:index.php?error=2");
+                    die();
+                }
             }
         }
+
         
         $info["licao"] = $licao;
         
