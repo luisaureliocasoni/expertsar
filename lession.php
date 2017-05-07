@@ -44,7 +44,17 @@ try{
             die();
         }
         
-        $render->render("home.html", $info);
+        $info["licao"] = $licao;
+        
+        //Busca pelas perguntas
+        $cond = new \Lib\Condicao("idLicao", "=", $_GET["id"]);
+        $perguntas = \Lib\DAO::select("\ExpertsAR\Pergunta", "Pergunta", $cond);
+        
+        $info["perguntas"] = $perguntas;
+        
+        $sessao->addKey("fazendoLicao", $_GET["id"]);
+        
+        $render->render("lession.html", $info);
     }else{
         header("Location: index.php");
     }
