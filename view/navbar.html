@@ -1,7 +1,7 @@
 {% if logado is not null %}
 <nav>
     <div class="nav-wrapper light-blue darken-3">
-        <a href="#!" class="brand-logo">ExpertsAR</a>
+        <a href="index.php" class="brand-logo">ExpertsAR</a>
         <a href="#" data-activates="navbar" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li><a class="btn" id="btMenu">Olá {{primeiroNome}}</a></li>
@@ -14,10 +14,9 @@
                 <a href="#!name"><span class="white-text name">{{nome}}</span></a>
                 <a href="#!email"><span class="white-text email">{{email}}</span></a>
             </div></li>
-            <li><a class="subheader">1 lição concluída</a></li>
-            <li><a href="" class="subheader">Restam 75% para conclusão</a></li>
+            <li><a class="waves-effect" href="index.php">Suas lições</a></li>
             <li><div class="divider"></div></li>
-            <li><a class="waves-effect" href="profile.html">Seu perfil</a></li>
+            <li><a class="waves-effect" href="profile.php">Seu perfil</a></li>
             <li><a class="waves-effect" href="logout.php">Sair</a></li>
          </ul>
     </div>
