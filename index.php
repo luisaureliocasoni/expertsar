@@ -37,9 +37,16 @@ try{
         $info = $info + $sessao->getAllKeys();
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
         
+        //Carrega o total de lições
+        $arr = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute("SELECT COUNT(*) FROM \"Licoes\""));
+        $info["totalLicoes"] = $arr[0]["count"];
+        
         //Pega todas as liçoes que o aluno concluiu
         $query = "SELECT \"id\", \"nome\" FROM \"Licoes\" WHERE \"id\" <= (SELECT MAX(\"idLicao\") FROM \"UsuariosLicoes\" WHERE \"idUsuario\" = {$sessao->getKey("id")}) ORDER BY \"id\";";
         $array = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query));
+        //Pega a quantidade de lições concluídas
+        $info["licoesConcluidas"] = count($array);
+        $info["porcentagemConcluidas"] = ($info["licoesConcluidas"] / $info["totalLicoes"])*100;
         
         $maxIdLicaoConcluida = 0;
         $i = 0;
