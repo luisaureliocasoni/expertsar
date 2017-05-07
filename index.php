@@ -30,11 +30,38 @@ try{
     
     $sessao = new \Lib\SessionManager();
     $render = new Lib\RenderTemplate("view/");
+    \Lib\DAO::setFilePathConfig("assets/conexao.ini");
     $info = [];
     
     if ($sessao->keyExists("logado")){
         $info = $info + $sessao->getAllKeys();
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
+        
+        //Pega todas as liçoes que o aluno concluiu
+        $query = "SELECT * FROM \"Licoes\" WHERE \"id\" <= (SELECT MAX(\"idLicao\") FROM \"UsuariosLicoes\" WHERE \"idUsuario\" = {$sessao->getKey("id")}) ORDER BY \"id\";";
+        $array = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query));
+        
+        $maxIdLicaoConcluida = 0;
+        $i = 0;
+        
+        if ($array !== NULL){
+            foreach ($array as $key => $value) {
+                $info["licoes"][$i] = $value; //Copia o array da instância de licao
+                $info["licoes"][$i++]["concluido"] = TRUE;
+                $maxIdLicaoConcluida = $value["id"]; //Pega o id da licao que foi concluido
+            }
+        }
+        
+        //Pega a lição seguinte a última concluida
+        $query2 = "SELECT * FROM \"Licoes\" WHERE \"id\" > $maxIdLicaoConcluida ORDER BY \"id\";";
+        $array2 = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query2));
+        
+        if ($array2 !== NULL){ //Se nao tiver nada, quer dizer que ele concluiu todas as lições
+            $info["concluiu"] = TRUE;
+        }else{ //Se tiver, pega a próxima licao
+            $info["licoes"][$i] = $array2[0];
+        }
+        
         $render->render("home.html", $info);
     }else{
         $render->render("index.html");
