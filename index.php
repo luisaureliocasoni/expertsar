@@ -38,7 +38,7 @@ try{
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
         
         //Pega todas as liçoes que o aluno concluiu
-        $query = "SELECT * FROM \"Licoes\" WHERE \"id\" <= (SELECT MAX(\"idLicao\") FROM \"UsuariosLicoes\" WHERE \"idUsuario\" = {$sessao->getKey("id")}) ORDER BY \"id\";";
+        $query = "SELECT \"id\", \"nome\" FROM \"Licoes\" WHERE \"id\" <= (SELECT MAX(\"idLicao\") FROM \"UsuariosLicoes\" WHERE \"idUsuario\" = {$sessao->getKey("id")}) ORDER BY \"id\";";
         $array = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query));
         
         $maxIdLicaoConcluida = 0;
@@ -53,10 +53,10 @@ try{
         }
         
         //Pega a lição seguinte a última concluida
-        $query2 = "SELECT * FROM \"Licoes\" WHERE \"id\" > $maxIdLicaoConcluida ORDER BY \"id\";";
+        $query2 = "SELECT \"id\", \"nome\" FROM \"Licoes\" WHERE \"id\" > $maxIdLicaoConcluida ORDER BY \"id\";";
         $array2 = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query2));
         
-        if ($array2 !== NULL){ //Se nao tiver nada, quer dizer que ele concluiu todas as lições
+        if ($array2 === NULL){ //Se nao tiver nada, quer dizer que ele concluiu todas as lições
             $info["concluiu"] = TRUE;
         }else{ //Se tiver, pega a próxima licao
             $info["licoes"][$i] = $array2[0];
