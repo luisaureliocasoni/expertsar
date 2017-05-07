@@ -1,3 +1,9 @@
+{# verifica se está em um loop, se estiver, vai contando#}
+{% if loop.index is defined %}
+{% set num = loop.index %}
+{% else %}
+{% set num = 1 %}
+{% endif %}
     <div class="row">
         <div class="col s12 final">
             <button class="btn minusculo insert tooltipped" data-tooltip="Projeção" data-for="#area1" id="btPanel0">Π</button>
@@ -24,17 +30,17 @@
         </div>
         {% if query is not null %}
         <div class="col s12 input-field">
-            <textarea id="area1" name="query" placeholder="Digite aqui sua query" class="materialize-textarea validate">{{query}}</textarea>
+            <textarea id="area{{num}}" name="query" placeholder="Digite aqui sua query" class="materialize-textarea validate">{{query}}</textarea>
         </div>
         {% else %}
         <div class="col s12 input-field">
-            <textarea id="area1" name="query" placeholder="Digite aqui sua query" class="materialize-textarea validate"></textarea>
+            <textarea id="area{{num}}" name="query" placeholder="Digite aqui sua query" class="materialize-textarea validate"></textarea>
         </div>
         {% endif %}
         <div class="col s12 center-align">
-            <button data-for="#area1" class="btn blue submit" id="submit">Submeter Resposta</button>
+            <button data-for="#area{{num}}" data-showOn="#result{{num}}" class="btn blue submit" id="submit">Submeter Resposta</button>
         </div>
     </div>
-<div id="result">
+    <div id="result{{num}}">
 
-</div>
+    </div>
