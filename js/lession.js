@@ -148,13 +148,13 @@ function tratarResultado(exito, $textarea, $button, resposta){
             var correto = $($button.data().fieldcheck).val();
             //verifica se a resposta bate
             if (correto === resposta){
-                Materialize.toast("A resposta está correta!");
+                Materialize.toast("A resposta está correta!", 4000);
                 $textarea.addClass("valid");
                 $button.addClass("disabled");
                 $(".atual").data("concluido", "yes"); //marca o painel como concluido
                 $("#next").removeClass("disabled"); //ativa o botão do proximo
             }else{
-                Materialize.toast("A resposta está incorreta!");
+                Materialize.toast("A resposta está incorreta!", 4000);
                 $textarea.addClass("invalid");
             }
         }else{ //Se não está, estamos em uma edição
