@@ -6,27 +6,27 @@
 {% endif %}
     <div class="row">
         <div class="col s12 final">
-            <button class="btn minusculo insert tooltipped" data-tooltip="Projeção" data-for="#area1" id="btPanel0">Π</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Seleção" data-for="#area1" id="btPanel1">σ</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="União" data-for="#area1" id="btPanel2">∪</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Intersecção" data-for="#area1" id="btPanel3">∩</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Diferença" data-for="#area1" id="btPanel4">-</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Agrupamento" data-for="#area1" id="btPanel5">ϒ</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Atribuição" data-for="#area1" id="btPanel6">←</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Eliminador de Duplicatas" data-for="#area1" id="btPanel7">δ</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="E lógico" data-for="#area1" id="btPanel8">⋀</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="OU lógico" data-for="#area1" id="btPanel9">⋁</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Inner Join" data-for="#area1" id="btPanel10">⨝</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Right Outer Join" data-for="#area1" id="btPanel11">⟖</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Left Outer Join" data-for="#area1" id="btPanel12">⟕</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Full Outer Join" id="btPanel13" data-for="#area1">⟗</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Produto Cartesiano" data-for="#area1" id="btPanel14">X</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Junção Natural" id="btPanel15" data-for="#area1">*</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Renomeação" id="btPanel16" data-for="#area1">ρ</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Ordenação" id="btPanel17" data-for="#area1">τ</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Menor Igual a" id="btPanel18" data-for="#area1">≤</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Menor Igual a" id="btPanel19" data-for="#area1">≥</button>
-            <button class="btn minusculo insert tooltipped" data-tooltip="Diferença" id="btPanel20" data-for="#area1">≠</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Projeção" data-for="#area{{num}}" id="btPanel0">Π</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Seleção" data-for="#area{{num}}" id="btPanel1">σ</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="União" data-for="#area{{num}}" id="btPanel2">∪</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Intersecção" data-for="#area{{num}}" id="btPanel3">∩</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Diferença" data-for="#area{{num}}" id="btPanel4">-</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Agrupamento" data-for="#area{{num}}" id="btPanel5">ϒ</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Atribuição" data-for="#area{{num}}" id="btPanel6">←</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Eliminador de Duplicatas" data-for="#area{{num}}" id="btPanel7">δ</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="E lógico" data-for="#area{{num}}" id="btPanel8">⋀</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="OU lógico" data-for="#area{{num}}" id="btPanel9">⋁</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Inner Join" data-for="#area{{num}}" id="btPanel10">⨝</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Right Outer Join" data-for="#area{{num}}" id="btPanel11">⟖</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Left Outer Join" data-for="#area{{num}}" id="btPanel12">⟕</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Full Outer Join" id="btPanel13" data-for="#area{{num}}">⟗</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Produto Cartesiano" data-for="#area{{num}}" id="btPanel14">X</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Junção Natural" id="btPanel15" data-for="#area{{num}}">*</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Renomeação" id="btPanel16" data-for="#area{{num}}">ρ</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Ordenação" id="btPanel17" data-for="#area{{num}}">τ</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Menor Igual a" id="btPanel18" data-for="#area{{num}}">≤</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Menor Igual a" id="btPanel19" data-for="#area{{num}}">≥</button>
+            <button class="btn minusculo insert tooltipped" data-tooltip="Diferença" id="btPanel20" data-for="#area{{num}}">≠</button>
         </div>
         {% if query is not null %}
         <div class="col s12 input-field">
