@@ -9,21 +9,24 @@
             <h4>Suas lições:</h4>
             <div class="row">
                 {% for licao in licoes %}
-                    {% if licao.completo is null %}
-                        <div class="card col s12 m5">
-                    {% else %}
+                    {% if licao.concluido == true %}
                         <div class="card col s12 m5 cardCompleto">
+                    {% else %}
+                        <div class="card col s12 m5 cardLicao">
                     {% endif %}
                             <div class="card-content">
                                 <span class="flow-text double">{{licao.nome}}</span>
-                                {% if licao.completo is null %}
-                                    <div class="card-action"><a href="lession.php?id={{licao.id}}">Fazer a Lição</a></div>
-                                {% else %}
+                                {% if licao.completo == true %}
                                     <div class="card-action"><a href="lession.php?id={{licao.id}}">Refazer a Lição</a></div>
+                                {% else %}
+                                    <div class="card-action"><a href="lession.php?id={{licao.id}}">Fazer a Lição</a></div>
                                 {% endif %}
                             </div>
                         </div>
                 {% endfor %}
+                {% if concluiu == true %}
+                    <div class="card col s12 green white-text center-align">Parabéns! Você concluiu todas as lições!</div>
+                {% endif %}
             </div>
             <!--div class="center-align"><a href="lession.html" class="btn">Refazer Lições</a></div-->
         </div>
