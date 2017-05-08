@@ -102,9 +102,27 @@ function carregaPreviousPage() {
 }
 
 function buildErrorMessage(e) {
-    return e.location !== undefined
-      ? "Line " + e.location.start.line + ", column " + e.location.start.column + ": " + e.message
-      : e.message;
+    var caracteresEsperados = [];
+    if (e.location !== undefined){
+        //itera na lista de caracteres esperados
+        for (var esperado in e.expected) {
+            var caractere = e.expected[esperado].text;
+            //Verifica se está na lista
+            if (caracteresEsperados.indexOf(caractere) === -1){ //nao tem
+                caracteresEsperados.push(caractere);
+            }
+        }
+        //verifica qual foi o encontrado
+        if (e.found === null){
+            e.found = "fim da entrada";
+        }
+        var str =  "Linha " + e.location.start.line + ", caracter " + e.location.start.column;
+        str += " : Esperado " + caracteresEsperados.join(", ") + " , mas foi encontrado " + e.found;
+        return str;
+    }else{
+        return e.message;
+    }
+      //"Linha " + e.location.start.line + ", caracter " + e.location.start.column + ": " + e.message;
 }
 
 //Responsável por armazenar as selects nomeadas
