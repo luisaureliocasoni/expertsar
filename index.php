@@ -34,6 +34,17 @@ try{
     $info = [];
     
     if ($sessao->keyExists("logado")){
+        
+        if (isset($_GET["error"]) && \Lib\DAOUtilis::isIntString($_GET["error"])){
+            switch ($_GET["error"]) {
+                case 2:
+                    $info["errors"] = "<p>Você estava tentando acessar uma lição mais avançada! Por favor faça outras lições para desbloquear.</p>";
+                    break;
+
+                default:
+                    break;
+            }
+        }
         $info = $info + $sessao->getAllKeys();
         //seta a key de fazendo licao como null
         $sessao->addKey("fazendoLicao", NULL);

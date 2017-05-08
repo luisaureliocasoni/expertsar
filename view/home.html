@@ -2,6 +2,7 @@
 <body>
     {% include 'navbar.html' %}
     <section class="green lighten-5 lessions">
+        {% include 'exibeInfo.html' %}
         <p class="right-align">Olá {{primeiroNome}}. Você concluiu {{licoesConcluidas}} de {{totalLicoes}} lições.</p>
         <p class="right-align">{{porcentagemConcluidas}}% concluídos.</p>
         <div class="container">
