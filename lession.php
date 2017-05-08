@@ -68,6 +68,18 @@ try{
                     die();
                 }
             }
+        }else{ //se for a primeira licao, pega todas as lições
+            $query = "SELECT \"id\", \"nome\" FROM \"Licoes\" ORDER BY \"id\";";
+            $array = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query));
+            //Pega o primeiro indice do array, que é a próxima licao a ser feita
+            //Se o id da primeira licao bater com o id da licao a ser feita, passa
+            //Caso nao seja, quer dizer que o usuário está tentando acessar uma lição mais avançada
+            //E isso não é permitido.
+            if ($array[0]["id"] !== $_GET["id"]){ //Se o id da próxima lição a ser feita não bate com o id da licao pedida
+                //redireciona
+                header("Location:index.php?error=2");
+                die();
+            }
         }
 
         
