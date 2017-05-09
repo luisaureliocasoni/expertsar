@@ -89,7 +89,14 @@ try{
         $cond = new \Lib\Condicao("idLicao", "=", $_GET["id"]);
         $perguntas = \Lib\DAO::select("\ExpertsAR\Pergunta", "Perguntas", $cond);
         
-        $info["perguntas"] = $perguntas;
+        if ($perguntas === NULL){
+            $info["perguntas"] = NULL;
+        }else{
+            $perguntasRandom = $perguntas->getArrayCopy();
+            shuffle($perguntasRandom);
+            $info["perguntas"] = $perguntasRandom;
+        }
+        
         
         $sessao->addKey("fazendoLicao", $_GET["id"]);
         
