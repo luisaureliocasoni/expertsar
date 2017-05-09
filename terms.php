@@ -40,7 +40,7 @@ try{
         
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
     }
-    $render->render("terms.html");
+    $render->render("terms.html", $info);
 } catch (Exception $ex) {
     $handler = new \Lib\ExceptionHandler($ex, basename($_SERVER['PHP_SELF']));
     $handler->run();
