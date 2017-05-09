@@ -33,6 +33,10 @@ try{
     \Lib\DAO::setFilePathConfig("assets/conexao.ini");
     $info = [];
     
+    if (isset($_GET["msgEmailEnviado"]) && $_GET["msgEmailEnviado"] == 1){
+        $info["success"] = "O email foi enviado com êxito! Responderemos em breve!";
+    }
+    
     if ($sessao->keyExists("logado")){
         
         if (isset($_GET["error"]) && \Lib\DAOUtilis::isIntString($_GET["error"])){
