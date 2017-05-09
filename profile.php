@@ -42,6 +42,7 @@ try{
         
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
         
+        
         if (isset($_GET["msg"]) && \Lib\DAOUtilis::isIntString($_GET["msg"])){
             switch ($_GET["msg"]) {
                 case 1:
