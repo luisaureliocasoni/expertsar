@@ -25,7 +25,17 @@
                         </div>
                 {% endfor %}
                 {% if concluiu == true %}
-                    <div class="card col s12 green white-text center-align">Parabéns! Você concluiu todas as lições!</div>
+                    <div class="card col s12 green white-text center-align">
+                        <div class="card-content">
+                            <p>Parabéns! Você concluiu todas as lições!</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card col s12 white black-text center-align">
+                        <div class="card-content">
+                            <p>Continue! Quanto mais você fazer, mais lições vão aparecer e mais você vai aprender!</p>
+                        </div>
+                    </div>
                 {% endif %}
             </div>
             <!--div class="center-align"><a href="lession.html" class="btn">Refazer Lições</a></div-->
