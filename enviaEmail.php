@@ -31,7 +31,9 @@ try{
     if ($sessao->keyExists("logado")){
         $email = $sessao->getKey("email");
         $nome = $sessao->getKey("nome");
+        $id = "";
     }else{
+        $id = "#contato";
         if (isset($_POST["nome"]) && isset($_POST["email"])){
             $email = $_POST["email"];
             $nome = $_POST["nome"];
@@ -58,7 +60,7 @@ try{
     $email = new Lib\Email($destino["destinatario"], $destino["nome"], $titulo, $corpo);
     $email->enviar();
     
-    header("Location: index.php?msgEmailEnviado=1");
+    header("Location: index.php?msgEmailEnviado=1$id");
 } catch (Exception $ex) {
     $handler = new \Lib\ExceptionHandler($ex, basename($_SERVER['PHP_SELF']));
     $handler->run();
