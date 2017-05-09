@@ -52,6 +52,10 @@ try{
                     $info["errors"] = "<p>Um dos campos está faltando. Revise seus dados e tente novamente.</p>";
                     break;
 
+                case 15:
+                    $info["errors"] = "<p>A senha deve ter, no mínimo 8 caracteres.</p>";
+                    break;
+                
                 case 20:
                     $info["errors"] = "<p>Senha incorreta.</p>";
                     break;
