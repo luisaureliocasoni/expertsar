@@ -25,9 +25,14 @@
                 {{licao.textoLicao}}
             {% endautoescape %}
         </div>
+        {% set total = perguntas|length %}
         {% for pergunta in perguntas %}
+            {% set porc = (loop.index / total) * 100 %}
             <div class="hide pergunta" id="pergunta{{loop.index}}">
-                <h3>Exercício {{loop.index}}</h3>
+                <h3>Exercício {{loop.index}} de {{total}}</h3>
+                <div class="progress">
+                    <div class="determinate" style="width: {{porc}}%"></div>
+                </div>
                 <p>{{pergunta.enunciado}}</p>
                 <input type="hidden" id="resp{{loop.index}}" value="{{pergunta.resposta}}"/>
                 {% include 'root/parser.html' %}
