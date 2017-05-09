@@ -42,7 +42,7 @@ class ExceptionHandler {
     
     public function run(){
         http_response_code(500);
-        
+        date_default_timezone_set("America/Campo_Grande");
         $date = date('Y-m-d H:i:s');
         
         $msgLog = sprintf("[%s] [%s]: %s%s", $date, $this->page, $this->ex, PHP_EOL);
