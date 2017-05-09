@@ -47,7 +47,12 @@ class ExceptionHandler {
         
         $msgLog = sprintf("[%s] [%s]: %s%s", $date, $this->page, $this->ex, PHP_EOL);
         
-        file_put_contents("assets/error.log", $msgLog, FILE_APPEND);
+        if (file_exists("logs/error.log")){
+            file_put_contents("logs/error.log", $msgLog, FILE_APPEND);
+        }else{
+            file_put_contents("logs/error.log", $msgLog);
+        }
+        
         
         $render = new RenderTemplate("view/");
         $render->render("500.html");
