@@ -30,7 +30,8 @@ try{
     $sessao->addKey("fazendoLicao", NULL);
     
     if ($sessao->keyExists("logado")){
-        //Aqui entra o código
+        $render = new Lib\RenderTemplate("view/");
+        $render->render("contato.html");
     }else{
         //Se não tiver logado, vai a seção de contato no indíce.
         header("Location: index.php#contato");
