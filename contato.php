@@ -28,10 +28,16 @@ try{
     require_once 'vendor/autoload.php';
     $sessao = new \Lib\SessionManager();
     $sessao->addKey("fazendoLicao", NULL);
+    $info = [];
     
     if ($sessao->keyExists("logado")){
+        $info = $info + $sessao->getAllKeys();
+        //seta a key de fazendo licao como null
+        $sessao->addKey("fazendoLicao", NULL);
+        
+        $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
         $render = new Lib\RenderTemplate("view/");
-        $render->render("contato.html");
+        $render->render("contato.html", $info);
     }else{
         //Se não tiver logado, vai a seção de contato no indíce.
         header("Location: index.php#contato");

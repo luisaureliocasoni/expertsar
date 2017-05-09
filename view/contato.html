@@ -1,0 +1,25 @@
+{% include 'header.html' %}
+<body>
+    {% include 'navbar.html' %}
+    <section class="container jumbotron green lighten-5" id="contato">
+        <div class="col s12 center-align">
+            <h3>Fale Conosco</h3>
+            
+            {% include 'exibeInfo.html' %}
+            
+            <p>Será um prazer resolver a sua dúvida</p>
+            
+            <p>Atenção: Você está logado, assim, faremos contato pelo e-mail que você informou ao criar a sua conta. </p>
+            
+            <form action="enviaEmail.php" method="post">
+                <div class="input-field">
+                    <textarea class="materialize-textarea validate" id="mensagem" name="mensagem" rows="7" placeholder="Mensagem" required=""></textarea>
+                    <label for="mensagem">Mensagem</label>
+                </div>
+                <div class="buttons__right">
+                    <button class="btn btn-lg block" type="submit">Enviar!</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% include 'footer.html' %}
