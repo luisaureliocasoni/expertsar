@@ -89,7 +89,7 @@ try{
         
         $render->render("home.html", $info);
     }else{
-        $render->render("index.html");
+        $render->render("index.html", $info);
     }
 } catch (Exception $ex) {
     $handler = new \Lib\ExceptionHandler($ex, basename($_SERVER['PHP_SELF']));
