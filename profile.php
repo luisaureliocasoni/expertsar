@@ -46,7 +46,7 @@ try{
         if (isset($_GET["msg"]) && \Lib\DAOUtilis::isIntString($_GET["msg"])){
             switch ($_GET["msg"]) {
                 case 1:
-                    $info["errors"] = "<p>Senha alterada com êxito.</p>";
+                    $info["success"] = "<p>Senha alterada com êxito.</p>";
                     break;
                 
                 case 10:
@@ -58,7 +58,7 @@ try{
                     break;
                 
                 case 20:
-                    $info["errors"] = "<p>Senha incorreta.</p>";
+                    $info["errors"] = "<p>Senha atual incorreta e/ou senhas não correspondem.</p>";
                     break;
                 
                 default:
