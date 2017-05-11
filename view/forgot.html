@@ -1,0 +1,42 @@
+{% include 'header.html' %}
+<body>
+  {% include 'navbar.html' %}
+
+  <div class="content">
+    <div class="row">
+      {% include 'exibeInfo.html' %}
+      <div class="col s12 m6 offset-m3 l4 offset-l4">
+        <div class="card green lighten-5">
+          <form action="forgot.php" method="post">
+            <div class="card-content">
+              <span class="card-title">Esqueceu a senha?</span>
+              <div class="input-field">
+                <input type="email" placeholder="E-mail" id="email" required="" name="email" class="validate">
+                <label for="email">E-mail</label>
+              </div>
+              <div class="input-field">
+                <input type="hidden" name="operando1" value="{{op1}}" />
+                <input type="hidden" name="operando2" value="{{op2}}" />
+                <input type="hidden" name="operador" value="{{operador}}" />
+                <input type="text" pattern="[\-0-9]+" placeholder="{{op1 ~ operador ~ op2}} = ?" required="" id="captcha" name="captcha" class="validate">
+                <label for="valida">{{op1 ~ operador ~ op2}} = ?</label>
+              </div>
+            </div>
+            <div class="card-action center-align" class="transparent">
+              <button class="btn" type="submit">Enviar senha</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col s12 center-align">
+        <a href="login.php" class="btn-large" id="toggle">Lembrou de sua senha?</a>
+        <a href="createConta.php" class="btn-large" id="toggle">Ainda não tem uma conta?</a>
+      </div>
+    </div>
+    
+  </div>
+
+  <script src="js/jquery-3.2.0.min.js"></script>
+  <script src="js/materialize.min.js"></script>
+</body>
+</html>
