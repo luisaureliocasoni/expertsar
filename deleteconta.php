@@ -63,7 +63,7 @@ try{
             $titulo = "ExpertsAR - Exclusão de conta";
             $corpo = "Caro $nome,<br />Comunicamos que a sua conta no site foi excluída às $date (AMT).<br/>";
             $corpo .= "Lamentamos a sua decisão. Caso você queira voltar, estaremos a sua disposição.<br/>";
-            $corpo .= "Atenciosamente,<br />Equipe ExpertsAR";
+            $corpo .= "Atenciosamente,<br />Equipe ExpertsAR<br />";
             $corpo .= "<i>Esta é uma mensagem automática, favor não responder.</i>";
             Lib\Email::setFilePathConfig("assets/configEmail.ini");
             $email = new Lib\Email($destinatario, $nome, $titulo, $corpo);

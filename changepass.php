@@ -72,7 +72,7 @@ try{
             $titulo = "ExpertsAR - Senha Alterada!";
             $corpo = "Caro $nome,<br />Comunicamos que a sua senha foi alterada no site ExpertsAR às $date (AMT).<br/>";
             $corpo .= "Se não foi você que alterou, por favor, redefina a senha na tela de login.<br/>";
-            $corpo .= "Atenciosamente,<br />Equipe ExpertsAR";
+            $corpo .= "Atenciosamente,<br />Equipe ExpertsAR<br />";
             $corpo .= "<i>Esta é uma mensagem automática, favor não responder.</i>";
             Lib\Email::setFilePathConfig("assets/configEmail.ini");
             $email = new Lib\Email($destinatario, $nome, $titulo, $corpo);
