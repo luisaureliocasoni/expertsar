@@ -32,7 +32,7 @@ require_once "../vendor/autoload.php";
 //error_reporting(0);
 
 if (isset($_POST["query"])){
-    \Lib\DAO::setFilePathConfig("../assets/conexaoLoc.ini");
+    \Lib\DAOPG::setFilePathConfig("../assets/conexaoLocApi.ini");
     $query = $_POST["query"];
     $query = trim($query);
 
@@ -53,8 +53,8 @@ if (isset($_POST["query"])){
     }
 
     try{
-        $result = Lib\DAO::execute($query);
-        $array = \Lib\DAO::transformResourceInArray($result);
+        $result = Lib\DAOPG::execute($query);
+        $array = \Lib\DAOPG::transformResourceInArray($result);
 
         echo json_encode($array);
     } catch (Exception $ex) {
