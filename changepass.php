@@ -31,16 +31,17 @@ try{
     $sessao = new \Lib\SessionManager();
     $info = [];
     if ($sessao->keyExists("logado")){
+        var_dump($sessao);
         if (isset($_POST["senha"]) && isset($_POST["senhaConfirm"]) && isset($_POST["senhaatual"])){
             $info["errors"] = "";
 
             if (strlen($_POST["senha"]) < 8 || strlen($_POST["senhaConfirm"]) < 8){
-                header("Location profile.php?msg=15");
+                header("Location: profile.php?msg=15");
                 die();
             }
 
             if ($_POST["senha"] !== $_POST["senhaConfirm"]){
-                header("Location profile.php?msg=20");
+                header("Location: profile.php?msg=20");
                 die();
             }
 
@@ -77,7 +78,7 @@ try{
             header("Location: profile.php?msg=1");
             die();
         }else{
-            header("Location profile.php?msg=10");
+            header("Location: profile.php?msg=10");
             die();
         }
     }else{
