@@ -63,11 +63,14 @@ try{
             $user->setPass(\Lib\DAOUtilis::criptografaSenha($_POST["senha"]));
             Lib\DAO::updateById($user, $sessao->getKey("id"));
             
+            date_default_timezone_set("America/Campo_Grande");
+            $date = date('Y-m-d H:i:s');
+            
             //Envia um e-mail para comunicar o envio da senha
             $destinatario = $sessao->getKey("email");
             $nome = $sessao->getKey("nome");
             $titulo = "ExpertsAR - Senha Alterada!";
-            $corpo = "Caro $nome,<br />Comunicamos que a sua senha foi alterada no site ExpertsAR.<br/>";
+            $corpo = "Caro $nome,<br />Comunicamos que a sua senha foi alterada no site ExpertsAR às $date (AMT).<br/>";
             $corpo .= "Se não foi você que alterou, por favor, redefina a senha na tela de login.<br/>";
             $corpo .= "Atenciosamente,<br />Equipe ExpertsAR";
             $corpo .= "<i>Esta é uma mensagem automática, favor não responder.</i>";
