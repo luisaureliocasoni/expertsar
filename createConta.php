@@ -60,6 +60,14 @@ try{
             $info["errors"] .= "<p>O e-mail fornecido é inválido!</p>";
         }
         
+        $cond = new Lib\Condicao("email", "=", $_POST["email"]);
+        $result = Lib\DAO::select("\ExpertsAR\Usuario", "Usuarios", $cond);
+        
+        if ($result !== NULL){
+            $info["errors"] .= "<p>O e-mail {$_POST["email"]} já está cadastrado. <a href=\"forgot.php\">Deseja gerar uma nova senha?</a></p>";
+        }
+        
+        
         if (filter_var($_POST["captcha"], FILTER_VALIDATE_INT) === FALSE){
             $info["errors"] .= "<p>A resposta do desafio fornecido é inválido!</p>";
         }
