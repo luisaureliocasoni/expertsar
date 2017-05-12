@@ -113,7 +113,6 @@ composer.phar
 sass/.sass-cache
 .sass-cache/
 
-images/
 public/
 netbeans/
 assets/*.ini
