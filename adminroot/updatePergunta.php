@@ -82,7 +82,7 @@ try{
             if($errors !== TRUE){
                 $pergunta = new \ExpertsAR\Pergunta();
                 $pergunta->setEnunciado(Lib\DAO::escapeString($_POST["enunciado"]));
-                $pergunta->setResposta(Lib\DAO::escapeString($_POST["resposta"]));
+                $pergunta->setResposta($_POST["resposta"]);
                 $pergunta->setRespostaAlgebra(Lib\DAO::escapeString($_POST["query"]));
                 
                 Lib\DAO::updateById($pergunta, $_POST["idPergunta"]);

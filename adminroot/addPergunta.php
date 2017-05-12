@@ -74,7 +74,7 @@ try{
                 $info["error"] = NULL;
                 $pergunta = new \ExpertsAR\Pergunta();
                 $pergunta->setEnunciado(Lib\DAO::escapeString($_POST["enunciado"]));
-                $pergunta->setResposta(Lib\DAO::escapeString($_POST["resposta"]));
+                $pergunta->setResposta($_POST["resposta"]);
                 $pergunta->setIdLicao($_POST["idLicao"]);
                 $pergunta->setRespostaAlgebra(Lib\DAO::escapeString($_POST["query"]));
 
