@@ -42,13 +42,20 @@ class Identificador {
      */
     private $nomeOriginal;
     public $nome = NULL;
+    const MYSQL = 1;
+    const PGSQL = 2;
     
     /**
      * Construtor
      * @param string $nome Uma string com o nome do identificador
      */
-    function __construct(string $nome) {
+    function __construct(string $nome, $type = self::MYSQL) {
         $this->nomeOriginal = $nome;
-        $this->nome = "\"$nome\"";
+        if ($type = self::MYSQL){
+            $this->nome = "`$nome`";
+        }else if ($type = self::PGSQL){
+            $this->nome = "\"$nome\"";
+        }
+        
     }
 }
