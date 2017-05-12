@@ -79,7 +79,7 @@ class DAO {
             }
             self::$conn = mysqli_connect($config["server"], $config["user"], $config["password"], $config["database"]);
             if (self::$conn === FALSE){
-                throw new \Exception("Não foi possível conectar ao Banco de Dados: ". mysqli_connect_error()." - ". mysqli_connect_errno());
+                throw new \Exception("Não foi possível conectar ao Banco de Dados: ". mysqli_connect_error(self::$conn)." - ". mysqli_connect_errno(self::$conn));
             }
         } catch (\Exception $ex) {
             throw $ex;
@@ -102,7 +102,7 @@ class DAO {
         $table = $result["table"];
         
         $query = "INSERT INTO `$table` (".implode(",", $colunas).")";
-        $query .= "VALUES (". implode(",", $valores).");";
+        $query .= " VALUES (". implode(",", $valores).");";
         
         self::execute($query);
     }
@@ -242,7 +242,7 @@ class DAO {
         $table = $result["table"];
         
         $query = "UPDATE `$table` SET ".self::generateSetString($colunas, $valores);
-        $query .= "WHERE `id` = $id;";
+        $query .= " WHERE `id` = $id;";
         
         self::execute($query);
     }
@@ -296,11 +296,11 @@ class DAO {
         try{
             $result = mysqli_query(self::$conn, $query);
         } catch (Exception $ex) {
-            throw new Exception("Erro na query: " + $ex);
+            throw new Exception("Erro na query: $query " + $ex);
         }
         
         if ($result === FALSE){
-            throw new \Exception("Erro na query: ". mysqli_connect_error()." - ". mysqli_connect_errno());
+            throw new \Exception("Erro na query: $query - ". mysqli_error(self::$conn)." - ". mysqli_errno(self::$conn));
         }
         return $result;
     }
@@ -379,5 +379,9 @@ class DAO {
         }
         
         return $array;
+    }
+    
+    public static function affectedRows() {
+        return mysqli_affected_rows(self::$conn);
     }
 }

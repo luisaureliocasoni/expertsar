@@ -42,10 +42,10 @@ class DAOUtilis {
     public static function toStr($x){
         $type = gettype($x);
         if ($type === "integer" || $type === "double"){
-            return pg_escape_string($x);
+            return DAO::escapeString($x);
         }else if ($type === "string"){
             //Constantes de string são colocados entre aspas simples
-            return "'".pg_escape_string($x)."'";
+            return "\"".DAO::escapeString($x)."\"";
         }else if ($type === "boolean") {
             return ($x ? "TRUE" : "FALSE");
         }else if ($x instanceof Identificador){

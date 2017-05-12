@@ -25,7 +25,7 @@
  * */
 
 namespace Lib;
-require_once './vendor/autoload.php';
+require_once "./vendor/autoload.php";
 use PHPUnit\Framework\TestCase as PHPUnit;
 
 /**
@@ -34,6 +34,11 @@ use PHPUnit\Framework\TestCase as PHPUnit;
  * @author root
  */
 class CondicaoTest extends PHPUnit{
+    public static function setUpBeforeClass() {
+        parent::setUpBeforeClass();
+        DAO::setFilePathConfig("assets/conexaoTest.ini");
+    }
+    
     public function testCondicaoIdentificadorNumero(){
         $condicao = new Condicao(new Identificador("teste"), "=", 85);
         $this->assertEquals("(`teste` = 85)", $condicao->toString());
@@ -41,7 +46,7 @@ class CondicaoTest extends PHPUnit{
     
     public function testCondicaoIdentificadorString(){
         $condicao = new Condicao(new Identificador("teste"), ">=", "leonardo");
-        $this->assertEquals("(`teste` >= 'leonardo')", $condicao->toString());
+        $this->assertEquals("(`teste` >= \"leonardo\")", $condicao->toString());
     }
     
     public function testCondicaoIdentificadorBoolean(){
@@ -81,7 +86,7 @@ class CondicaoTest extends PHPUnit{
         $condicao2 = new Condicao(new Identificador("nome"), "<>", "Silva");
         $condicao = new Condicao($condicao1, "AND", $condicao2);
         
-        $this->assertEquals("((`Guilherme` = 25) AND (`nome` <> 'Silva'))", 
+        $this->assertEquals("((`Guilherme` = 25) AND (`nome` <> \"Silva\"))", 
                 $condicao->toString());
     }
     
@@ -90,7 +95,7 @@ class CondicaoTest extends PHPUnit{
         $condicao2 = new Condicao(new Identificador("nome"), "<>", "Silva");
         $condicao = new Condicao($condicao1, "OR", $condicao2);
         
-        $this->assertEquals("((`Guilherme` = 25) OR (`nome` <> 'Silva'))", 
+        $this->assertEquals("((`Guilherme` = 25) OR (`nome` <> \"Silva\"))", 
                 $condicao->toString());
     }
     

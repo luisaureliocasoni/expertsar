@@ -52,9 +52,14 @@ class DAOTest extends PHPUnit{
     }
     
     public static function truncateTable(){
-        DAO::execute("TRUNCATE TABLE `Mantenedores` RESTART IDENTITY CASCADE;");
-        DAO::execute("TRUNCATE TABLE `Licoes` RESTART IDENTITY CASCADE;");
-        DAO::execute("TRUNCATE TABLE `Perguntas` RESTART IDENTITY CASCADE;");
+        DAO::execute("SET FOREIGN_KEY_CHECKS = 0; ");
+        DAO::execute("DELETE FROM `Mantenedores`;");
+        DAO::execute("DELETE FROM `Licoes`;");
+        DAO::execute("DELETE FROM `Perguntas`;");
+        DAO::execute("ALTER TABLE `Mantenedores` AUTO_INCREMENT = 1");
+        DAO::execute("ALTER TABLE `Licoes` AUTO_INCREMENT = 1");
+        DAO::execute("ALTER TABLE `Perguntas` AUTO_INCREMENT = 1");
+        DAO::execute("SET FOREIGN_KEY_CHECKS = 1; ");
     }
     
     public static function insert() {
@@ -64,7 +69,7 @@ class DAOTest extends PHPUnit{
         
         $teste2 = new \ExpertsAR\Mantenedor();
         $teste2->setEmail("abc@abc.com")->setNome("Xico Sa");
-        $teste2->setSenha("senha")->setUsuario("fulano95ABC");
+        $teste2->setSenha("senha")->setUsuario("xico5");
         
         $licao = new \ExpertsAR\Licao();
         $licao->setIdMantenedorAlterou(1)->setIdMantenedorCriou(1);
@@ -102,20 +107,20 @@ class DAOTest extends PHPUnit{
         
         $result = DAO::execute("SELECT * FROM `Mantenedores`;");
         
-        $this->assertEquals(1, pg_affected_rows($result));
+        $this->assertEquals(1, DAO::affectedRows());
     }
     
     public function testInsertionMore(){
         self::insert();
         
         $result = DAO::execute("SELECT * FROM `Mantenedores`;");
-        $this->assertEquals(2, pg_affected_rows($result));
+        $this->assertEquals(2, DAO::affectedRows());
         
         $result = DAO::execute("SELECT * FROM `Licoes`;");
-        $this->assertEquals(2, pg_affected_rows($result));
+        $this->assertEquals(2, DAO::affectedRows());
         
         $result = DAO::execute("SELECT * FROM `Perguntas`;");
-        $this->assertEquals(2, pg_affected_rows($result));
+        $this->assertEquals(2, DAO::affectedRows());
     }
     
     public function testSelectUmObjeto() {
