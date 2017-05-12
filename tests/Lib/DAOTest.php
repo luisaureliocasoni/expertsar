@@ -52,9 +52,9 @@ class DAOTest extends PHPUnit{
     }
     
     public static function truncateTable(){
-        DAO::execute("TRUNCATE TABLE \"Mantenedores\" RESTART IDENTITY CASCADE;");
-        DAO::execute("TRUNCATE TABLE \"Licoes\" RESTART IDENTITY CASCADE;");
-        DAO::execute("TRUNCATE TABLE \"Perguntas\" RESTART IDENTITY CASCADE;");
+        DAO::execute("TRUNCATE TABLE `Mantenedores` RESTART IDENTITY CASCADE;");
+        DAO::execute("TRUNCATE TABLE `Licoes` RESTART IDENTITY CASCADE;");
+        DAO::execute("TRUNCATE TABLE `Perguntas` RESTART IDENTITY CASCADE;");
     }
     
     public static function insert() {
@@ -100,7 +100,7 @@ class DAOTest extends PHPUnit{
         
         DAO::insert($teste);
         
-        $result = DAO::execute("SELECT * FROM \"Mantenedores\";");
+        $result = DAO::execute("SELECT * FROM `Mantenedores`;");
         
         $this->assertEquals(1, pg_affected_rows($result));
     }
@@ -108,13 +108,13 @@ class DAOTest extends PHPUnit{
     public function testInsertionMore(){
         self::insert();
         
-        $result = DAO::execute("SELECT * FROM \"Mantenedores\";");
+        $result = DAO::execute("SELECT * FROM `Mantenedores`;");
         $this->assertEquals(2, pg_affected_rows($result));
         
-        $result = DAO::execute("SELECT * FROM \"Licoes\";");
+        $result = DAO::execute("SELECT * FROM `Licoes`;");
         $this->assertEquals(2, pg_affected_rows($result));
         
-        $result = DAO::execute("SELECT * FROM \"Perguntas\";");
+        $result = DAO::execute("SELECT * FROM `Perguntas`;");
         $this->assertEquals(2, pg_affected_rows($result));
     }
     
@@ -253,7 +253,7 @@ class DAOTest extends PHPUnit{
     
     public function testTransformResourceInArray(){
         self::insert();
-        $resource = DAO::execute("SELECT * FROM \"Mantenedores\";");
+        $resource = DAO::execute("SELECT * FROM `Mantenedores`;");
         $array = DAO::transformResourceInArray($resource);
         
         $this->assertInstanceOf("\ArrayObject", $array);
@@ -263,7 +263,7 @@ class DAOTest extends PHPUnit{
     
     public function testTransformResourceInArrayNull(){
         self::insert();
-        $resource = DAO::execute("SELECT * FROM \"Mantenedores\" WHERE \"id\" = 50;");
+        $resource = DAO::execute("SELECT * FROM `Mantenedores` WHERE `id` = 50;");
         $array = DAO::transformResourceInArray($resource);
         
         $this->assertEquals(NULL, $array);

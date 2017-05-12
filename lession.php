@@ -56,7 +56,7 @@ try{
 
             //se tiver feito, passa, se não vai para mais um teste
             if ($licoesConcluidas === NULL){ //se é null, siginifca que não concluiu a licao
-                $query = "SELECT \"id\", \"nome\" FROM \"Licoes\" WHERE \"id\" > (SELECT MAX(\"idLicao\") FROM \"UsuariosLicoes\" WHERE \"idUsuario\" = {$sessao->getKey("id")}) ORDER BY \"id\";";
+                $query = "SELECT `id`, `nome` FROM `Licoes` WHERE `id` > (SELECT MAX(`idLicao`) FROM `UsuariosLicoes` WHERE `idUsuario` = {$sessao->getKey("id")}) ORDER BY `id`;";
                 $array = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query));
                 //Pega o primeiro indice do array, que é a próxima licao a ser feita
                 //Se o id da primeira licao bater com o id da licao a ser feita, passa
@@ -69,7 +69,7 @@ try{
                 }
             }
         }else{ //se for a primeira licao, pega todas as lições
-            $query = "SELECT \"id\", \"nome\" FROM \"Licoes\" ORDER BY \"id\";";
+            $query = "SELECT `id`, `nome` FROM `Licoes` ORDER BY `id`;";
             $array = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query));
             //Pega o primeiro indice do array, que é a próxima licao a ser feita
             //Se o id da primeira licao bater com o id da licao a ser feita, passa

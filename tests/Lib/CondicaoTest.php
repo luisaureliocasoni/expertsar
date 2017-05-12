@@ -36,17 +36,17 @@ use PHPUnit\Framework\TestCase as PHPUnit;
 class CondicaoTest extends PHPUnit{
     public function testCondicaoIdentificadorNumero(){
         $condicao = new Condicao(new Identificador("teste"), "=", 85);
-        $this->assertEquals("(\"teste\" = 85)", $condicao->toString());
+        $this->assertEquals("(`teste` = 85)", $condicao->toString());
     }
     
     public function testCondicaoIdentificadorString(){
         $condicao = new Condicao(new Identificador("teste"), ">=", "leonardo");
-        $this->assertEquals("(\"teste\" >= 'leonardo')", $condicao->toString());
+        $this->assertEquals("(`teste` >= 'leonardo')", $condicao->toString());
     }
     
     public function testCondicaoIdentificadorBoolean(){
         $condicao = new Condicao(new Identificador("teste"), "<>", TRUE);
-        $this->assertEquals("(\"teste\" <> TRUE)", $condicao->toString());
+        $this->assertEquals("(`teste` <> TRUE)", $condicao->toString());
     }
     
     public function testCondicaoOperadorInvalido(){
@@ -81,7 +81,7 @@ class CondicaoTest extends PHPUnit{
         $condicao2 = new Condicao(new Identificador("nome"), "<>", "Silva");
         $condicao = new Condicao($condicao1, "AND", $condicao2);
         
-        $this->assertEquals("((\"Guilherme\" = 25) AND (\"nome\" <> 'Silva'))", 
+        $this->assertEquals("((`Guilherme` = 25) AND (`nome` <> 'Silva'))", 
                 $condicao->toString());
     }
     
@@ -90,7 +90,7 @@ class CondicaoTest extends PHPUnit{
         $condicao2 = new Condicao(new Identificador("nome"), "<>", "Silva");
         $condicao = new Condicao($condicao1, "OR", $condicao2);
         
-        $this->assertEquals("((\"Guilherme\" = 25) OR (\"nome\" <> 'Silva'))", 
+        $this->assertEquals("((`Guilherme` = 25) OR (`nome` <> 'Silva'))", 
                 $condicao->toString());
     }
     

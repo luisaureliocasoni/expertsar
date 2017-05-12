@@ -56,11 +56,11 @@ try{
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
         
         //Carrega o total de lições
-        $arr = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute("SELECT COUNT(*) FROM \"Licoes\""));
+        $arr = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute("SELECT COUNT(*) FROM `Licoes`;"));
         $info["totalLicoes"] = $arr[0]["count"];
         
         //Pega todas as liçoes que o aluno concluiu
-        $query = "SELECT \"id\", \"nome\" FROM \"Licoes\" WHERE \"id\" <= (SELECT MAX(\"idLicao\") FROM \"UsuariosLicoes\" WHERE \"idUsuario\" = {$sessao->getKey("id")}) ORDER BY \"id\";";
+        $query = "SELECT `id`, `nome` FROM `Licoes` WHERE `id` <= (SELECT MAX(`idLicao`) FROM `UsuariosLicoes` WHERE `idUsuario` = {$sessao->getKey("id")}) ORDER BY `id`;";
         $array = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query));
         //Pega a quantidade de lições concluídas
         $info["licoesConcluidas"] = count($array);
@@ -78,7 +78,7 @@ try{
         }
         
         //Pega a lição seguinte a última concluida
-        $query2 = "SELECT \"id\", \"nome\" FROM \"Licoes\" WHERE \"id\" > $maxIdLicaoConcluida ORDER BY \"id\";";
+        $query2 = "SELECT `id`, `nome` FROM `Licoes` WHERE `id` > $maxIdLicaoConcluida ORDER BY `id`;";
         $array2 = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query2));
         
         if ($array2 === NULL){ //Se nao tiver nada, quer dizer que ele concluiu todas as lições
