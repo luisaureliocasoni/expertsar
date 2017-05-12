@@ -56,7 +56,7 @@ try{
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
         
         //Carrega o total de lições
-        $arr = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute("SELECT COUNT(*) FROM `Licoes`;"));
+        $arr = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute("SELECT COUNT(*) AS `count` FROM `Licoes`;"));
         $info["totalLicoes"] = $arr[0]["count"];
         
         //Pega todas as liçoes que o aluno concluiu
