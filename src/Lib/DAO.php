@@ -58,7 +58,7 @@ class DAO {
      */
     public static function setFilePathConfig($file) {
         if (self::$conn !== NULL){
-            pg_close(self::$conn);
+            mysqli_close(self::$conn);
             self::$conn = NULL;
         }
         self::$file = $file;
@@ -70,13 +70,16 @@ class DAO {
      */
     private static function initialize() {
         try{
+            if (self::$conn  !== NULL){
+                mysqli_close(self::$conn);
+            }
             $config = parse_ini_file(self::$file);
             if ($config === FALSE){
                 throw new \Exception("Não foi possível localizar as configurações do BD.");
             }
-            self::$conn = pg_connect("host={$config["server"]} dbname={$config["database"]} user={$config["user"]} password={$config["password"]}");
+            self::$conn = mysqli_connect($config["server"], $config["user"], $config["password"], $config["database"]);
             if (self::$conn === FALSE){
-                throw new \Exception("Não foi possível conectar ao Banco de Dados");
+                throw new \Exception("Não foi possível conectar ao Banco de Dados: ". mysqli_connect_error()." - ". mysqli_connect_errno());
             }
         } catch (\Exception $ex) {
             throw $ex;
@@ -98,7 +101,7 @@ class DAO {
         $valores = $result["valores"];
         $table = $result["table"];
         
-        $query = "INSERT INTO \"$table\" (".implode(",", $colunas).")";
+        $query = "INSERT INTO `$table` (".implode(",", $colunas).")";
         $query .= "VALUES (". implode(",", $valores).");";
         
         self::execute($query);
@@ -111,7 +114,7 @@ class DAO {
      * @throws \Exception Caso haja erro na execução do SQL
      */
     public static function removeById($id, $table){
-        $query = "DELETE FROM \"$table\" WHERE \"id\" = $id;";
+        $query = "DELETE FROM `$table` WHERE `id` = $id;";
         self::execute($query);
     }
     
@@ -126,7 +129,7 @@ class DAO {
             throw new Exception("\$cond deve ser uma instância de condição!");
         }
         
-        $query = "DELETE FROM \"$table\" WHERE ".$cond->toString();
+        $query = "DELETE FROM `$table` WHERE ".$cond->toString();
         self::execute($query);
     }
     
@@ -142,15 +145,15 @@ class DAO {
         if (!($cond instanceof Condicao)){
             throw new Exception("\$cond deve ser uma instância de condição!");
         }
-        $query = "SELECT * FROM \"$table\" WHERE ".$cond->toString().";";
+        $query = "SELECT * FROM `$table` WHERE ".$cond->toString().";";
         $result = self::execute($query);
         
-        if (pg_affected_rows($result) === 0){
+        if (mysqli_affected_rows(self::$conn) === 0){
             return NULL;
         }
         
         $objs = new \ArrayObject();
-        while ($arr = pg_fetch_array($result, null, PGSQL_ASSOC)){
+        while ($arr = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             $objs->append(self::transformArrayInObject($arr, $class));
         }
         
@@ -166,14 +169,14 @@ class DAO {
      * @throws \Exception Caso dê erro na instanciação ou na query
      */
     public static function selectById(string $class, string $table, int $id){
-        $query = "SELECT * FROM \"$table\" WHERE \"id\" = ".$id.";";
+        $query = "SELECT * FROM `$table` WHERE `id` = ".$id.";";
         $result = self::execute($query);
         
-        if (pg_affected_rows($result) === 0){
+        if (mysqli_affected_rows(self::$conn) === 0){
             return NULL;
         }
         
-        $arr = pg_fetch_array($result, null, PGSQL_ASSOC);
+        $arr = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $object = self::transformArrayInObject($arr, $class);
         
         return $object;
@@ -186,15 +189,15 @@ class DAO {
      * @return \ArrayObject|\NULL Um array com todos os objetos encontrados ou NULL caso nada for retornado
      */
     public static function selectAll(string $class, string $table){
-        $query = "SELECT * FROM \"$table\";";
+        $query = "SELECT * FROM `$table`;";
         $result = self::execute($query);
         
-        if (pg_affected_rows($result) === 0){
+        if (mysqli_affected_rows(self::$conn) === 0){
             return NULL;
         }
         
         $objs = new \ArrayObject();
-        while ($arr = pg_fetch_array($result, null, PGSQL_ASSOC)){
+        while ($arr = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             $objs->append(self::transformArrayInObject($arr, $class));
         }
         
@@ -219,7 +222,7 @@ class DAO {
         $valores = $result["valores"];
         $table = $result["table"];
         
-        $query = "UPDATE \"$table\" SET ".self::generateSetString($colunas, $valores);
+        $query = "UPDATE `$table` SET ".self::generateSetString($colunas, $valores);
         $query .= "WHERE ".$cond->toString().";";
         
         self::execute($query);
@@ -238,8 +241,8 @@ class DAO {
         $valores = $result["valores"];
         $table = $result["table"];
         
-        $query = "UPDATE \"$table\" SET ".self::generateSetString($colunas, $valores);
-        $query .= "WHERE \"id\" = $id;";
+        $query = "UPDATE `$table` SET ".self::generateSetString($colunas, $valores);
+        $query .= "WHERE `id` = $id;";
         
         self::execute($query);
     }
@@ -265,7 +268,7 @@ class DAO {
                 //Remove o get e transforma a primeira letra do atributo em minusculo
                 $attr = lcfirst(str_replace("get", "", $method->name));
                 if ($value !== \NULL || $ignoreNulls === \FALSE ){
-                    $colunas[$i] = "\"$attr\"";
+                    $colunas[$i] = "`$attr`";
                     $valores[$i] = DAOUtilis::toStr($value);
                     $i++;
                 }
@@ -288,22 +291,16 @@ class DAO {
      * @throws \Exception Caso a execução da query termine em falha
      */
     public static function execute($query) {
-        if (self::$conn  !== NULL){
-            pg_close(self::$conn);
-        }
         self::initialize();
         
-        if (self::$conn === FALSE){
-            throw new Exception("A conexão com o Banco de Dados foi mal-sucedida!");
-        }
         try{
-            $result = pg_query(self::$conn, $query);
+            $result = mysqli_query(self::$conn, $query);
         } catch (Exception $ex) {
             throw new Exception("Erro na query: " + $ex);
         }
         
         if ($result === FALSE){
-            throw new \Exception("Erro na query: "+pg_last_error(self::$conn));
+            throw new \Exception("Erro na query: ". mysqli_connect_error()." - ". mysqli_connect_errno());
         }
         return $result;
     }
@@ -314,7 +311,8 @@ class DAO {
      * @return string String escapada
      */
     public static function escapeString($str){
-        return pg_escape_string($str);
+        self::initialize();
+        return mysqli_escape_string(self::$conn, $str);
     }
 
     /**
@@ -371,12 +369,12 @@ class DAO {
      * @return \ArrayObject|NULL ArrayObject com o array transformado ou NULL caso nada for encontrado
      */
     public static function transformResourceInArray($resource){
-        if (pg_affected_rows($resource) === 0){
+        if (mysqli_affected_rows(self::$conn) === 0){
             return NULL;
         }
         
         $array = new \ArrayObject();
-        while ($arr = pg_fetch_array($resource, null, PGSQL_ASSOC)){
+        while ($arr = mysqli_fetch_array($resource, MYSQLI_ASSOC)){
             $array->append($arr);
         }
         
