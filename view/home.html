@@ -16,7 +16,7 @@
                     {% endif %}
                             <div class="card-content">
                                 <span class="flow-text double">{{licao.nome}}</span>
-                                {% if licao.completo == true %}
+                                {% if licao.concluido == true %}
                                     <div class="card-action"><a href="lession.php?id={{licao.id}}">Refazer a Lição</a></div>
                                 {% else %}
                                     <div class="card-action"><a href="lession.php?id={{licao.id}}">Fazer a Lição</a></div>
