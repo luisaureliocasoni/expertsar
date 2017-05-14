@@ -35,5 +35,5 @@ interface Controller {
      * Executa o controller
      * @param \lib\ArgsBuilder $args Argumentos a serem usados para a execução
      */
-    function execute(ArgsBuilder $args);
+    function execute($args);
 }

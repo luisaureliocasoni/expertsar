@@ -165,7 +165,7 @@ class DAOPG {
      * @return Object Se o objeto for instanciado com êxito
      * @throws \Exception Caso dê erro na instanciação ou na query
      */
-    public static function selectById(string $class, string $table, int $id){
+    public static function selectById($class, $table, $id){
         $query = "SELECT * FROM \"$table\" WHERE \"id\" = ".$id.";";
         $result = self::execute($query);
         
@@ -185,7 +185,7 @@ class DAOPG {
      * @param string $table Tabela a ser procurada
      * @return \ArrayObject|\NULL Um array com todos os objetos encontrados ou NULL caso nada for retornado
      */
-    public static function selectAll(string $class, string $table){
+    public static function selectAll($class, $table){
         $query = "SELECT * FROM \"$table\";";
         $result = self::execute($query);
         
@@ -326,7 +326,7 @@ class DAOPG {
      * @return string Com os valores convertidos
      * 
      */
-    private static function generateSetString(array $colunas, array $valores){
+    private static function generateSetString($colunas, $valores){
         if (count($colunas) != count($valores)){
             throw new \Exception("O número de colunas e de valores difere!");
         }

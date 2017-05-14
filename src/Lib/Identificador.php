@@ -49,7 +49,7 @@ class Identificador {
      * Construtor
      * @param string $nome Uma string com o nome do identificador
      */
-    function __construct(string $nome, $type = self::MYSQL) {
+    function __construct($nome, $type = self::MYSQL) {
         $this->nomeOriginal = $nome;
         if ($type = self::MYSQL){
             $this->nome = "`$nome`";

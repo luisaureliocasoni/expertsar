@@ -119,7 +119,7 @@ class DAOUtilis {
      * @param string $pass Senha a ser criptografada
      * @return string Senha criptografada
      */
-    public static function criptografaSenha(string $pass){
+    public static function criptografaSenha($pass){
         $salt = '$o2L4XFMrexe0OW1R1r6uff$';
         $hash = crypt($pass, '$2a$' . '10' . $salt);
         return $hash;

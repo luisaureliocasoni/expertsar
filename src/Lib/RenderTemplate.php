@@ -49,7 +49,7 @@ class RenderTemplate{
      * @param string $page String com o nome da página a ser renderizada
      * @param array $array Array com os dados a serem exibidos na página
      */
-    public function render(string $page, array $array = null){
+    public function render($page, $array = null){
         if ($array == null){
             echo $this->twig->render($page);
         }else{

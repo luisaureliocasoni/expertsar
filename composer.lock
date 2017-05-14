@@ -4,94 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f8d82a2f8be8a697b441fe904755a97",
+    "content-hash": "a2431a4c256c1b29075327e351a12999",
     "packages": [
-        {
-            "name": "erusev/parsedown",
-            "version": "1.6.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/erusev/parsedown.git",
-                "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/1bf24f7334fe16c88bf9d467863309ceaf285b01",
-                "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Parsedown": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Emanuil Rusev",
-                    "email": "hello@erusev.com",
-                    "homepage": "http://erusev.com"
-                }
-            ],
-            "description": "Parser for Markdown.",
-            "homepage": "http://parsedown.org",
-            "keywords": [
-                "markdown",
-                "parser"
-            ],
-            "time": "2017-03-29T16:04:15+00:00"
-        },
-        {
-            "name": "erusev/parsedown-extra",
-            "version": "0.7.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/erusev/parsedown-extra.git",
-                "reference": "0db5cce7354e4b76f155d092ab5eb3981c21258c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown-extra/zipball/0db5cce7354e4b76f155d092ab5eb3981c21258c",
-                "reference": "0db5cce7354e4b76f155d092ab5eb3981c21258c",
-                "shasum": ""
-            },
-            "require": {
-                "erusev/parsedown": "~1.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "ParsedownExtra": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Emanuil Rusev",
-                    "email": "hello@erusev.com",
-                    "homepage": "http://erusev.com"
-                }
-            ],
-            "description": "An extension of Parsedown that adds support for Markdown Extra.",
-            "homepage": "https://github.com/erusev/parsedown-extra",
-            "keywords": [
-                "markdown",
-                "markdown extra",
-                "parsedown",
-                "parser"
-            ],
-            "time": "2015-11-01T10:19:22+00:00"
-        },
         {
             "name": "jlawrence/eos",
             "version": "v3.2.2",
@@ -134,47 +48,6 @@
                 "solve"
             ],
             "time": "2016-03-02T22:35:41+00:00"
-        },
-        {
-            "name": "jralph/twig-markdown",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jralph/Twig-Markdown.git",
-                "reference": "df2eef6989b7797a3b9683fa4798d86b0f681d54"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jralph/Twig-Markdown/zipball/df2eef6989b7797a3b9683fa4798d86b0f681d54",
-                "reference": "df2eef6989b7797a3b9683fa4798d86b0f681d54",
-                "shasum": ""
-            },
-            "require": {
-                "erusev/parsedown-extra": "0.*",
-                "php": "^7.0",
-                "twig/twig": "~2"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Jralph\\Twig\\Markdown\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A simple twig markdown extension.",
-            "keywords": [
-                "markdown",
-                "parsedown",
-                "twig"
-            ],
-            "time": "2017-03-04T10:56:18+00:00"
         },
         {
             "name": "kevinlebrun/slug.php",
@@ -225,57 +98,6 @@
                 "util"
             ],
             "time": "2013-07-26T09:35:59+00:00"
-        },
-        {
-            "name": "michelf/php-markdown",
-            "version": "1.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/michelf/php-markdown.git",
-                "reference": "1f51cc520948f66cd2af8cbc45a5ee175e774220"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/1f51cc520948f66cd2af8cbc45a5ee175e774220",
-                "reference": "1f51cc520948f66cd2af8cbc45a5ee175e774220",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-lib": "1.4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Michelf": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Michel Fortin",
-                    "email": "michel.fortin@michelf.ca",
-                    "homepage": "https://michelf.ca/",
-                    "role": "Developer"
-                },
-                {
-                    "name": "John Gruber",
-                    "homepage": "https://daringfireball.net/"
-                }
-            ],
-            "description": "PHP Markdown",
-            "homepage": "https://michelf.ca/projects/php-markdown/",
-            "keywords": [
-                "markdown"
-            ],
-            "time": "2016-10-29T18:58:20+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -354,65 +176,6 @@
             "time": "2017-03-15T19:32:56+00:00"
         },
         {
-            "name": "symfony/polyfill-mbstring",
-            "version": "v1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e79d363049d1c2128f133a2667e4f4190904f7f4",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "suggest": {
-                "ext-mbstring": "For best performance"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
-                "files": [
-                    "bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill for the Mbstring extension",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "mbstring",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2016-11-14T01:06:16+00:00"
-        },
-        {
             "name": "twig/extensions",
             "version": "v1.4.1",
             "source": {
@@ -466,21 +229,20 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.3.2",
+            "version": "v1.33.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "85e8372c451510165c04bf781295f9d922fa524b"
+                "reference": "dd6ca96227917e1e85b41c7c3cc6507b411e0927"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/85e8372c451510165c04bf781295f9d922fa524b",
-                "reference": "85e8372c451510165c04bf781295f9d922fa524b",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/dd6ca96227917e1e85b41c7c3cc6507b411e0927",
+                "reference": "dd6ca96227917e1e85b41c7c3cc6507b411e0927",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0",
-                "symfony/polyfill-mbstring": "~1.0"
+                "php": ">=5.2.7"
             },
             "require-dev": {
                 "psr/container": "^1.0",
@@ -490,7 +252,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3-dev"
+                    "dev-master": "1.33-dev"
                 }
             },
             "autoload": {
@@ -525,7 +287,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-04-21T00:13:02+00:00"
+            "time": "2017-04-20T17:39:48+00:00"
         }
     ],
     "packages-dev": [
@@ -1298,16 +1060,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "6.1.2",
+            "version": "6.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "fbf2e46d5c563ee78c9b559bcbeb1c97cad6af0f"
+                "reference": "824d02024916525a36b2db21847a5ef91db9e4a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fbf2e46d5c563ee78c9b559bcbeb1c97cad6af0f",
-                "reference": "fbf2e46d5c563ee78c9b559bcbeb1c97cad6af0f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/824d02024916525a36b2db21847a5ef91db9e4a8",
+                "reference": "824d02024916525a36b2db21847a5ef91db9e4a8",
                 "shasum": ""
             },
             "require": {
@@ -1378,7 +1140,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-04-25T21:30:13+00:00"
+            "time": "2017-04-29T10:40:17+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

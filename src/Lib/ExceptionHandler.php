@@ -35,7 +35,7 @@ class ExceptionHandler {
     private $ex;
     private $page;
     
-    function __construct(\Exception $ex, string $page) {
+    function __construct($ex, $page) {
         $this->ex = $ex;
         $this->page = $page;
     }

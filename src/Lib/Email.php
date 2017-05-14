@@ -26,7 +26,7 @@ class Email
      * @param string $titulo
      * @param string $corpo
      */
-    public function __construct(string $destinatario, string $nome, string $titulo, string $corpo)
+    public function __construct($destinatario, $nome, $titulo, $corpo)
     {
         $this->destinatario = $destinatario;
         $this->titulo = $titulo;
@@ -76,7 +76,7 @@ class Email
      * Seta o caminho para buscar as configurações de e-mail
      * @param string $newFilePath O novo caminho a ser salvo
      */
-    public static function setFilePathConfig(string $newFilePath) {
+    public static function setFilePathConfig($newFilePath) {
         self::$filePathConfig = $newFilePath;
     }
     

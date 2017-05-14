@@ -50,7 +50,7 @@ class ArgsBuilder
      * @param mixed $value Valor associado
      * @return $this Referência para o próprio objeto
      */
-    public function addArg(string $nome, $value){
+    public function addArg($nome, $value){
         $this->array[$nome] = $value;
         return $this;
     }

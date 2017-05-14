@@ -51,7 +51,7 @@ class Condicao {
     /*
      * Constante de operadores válidos
      */
-    const operadores = ["E" => "AND", "OU"=> "OR", 
+    private $operadores = ["E" => "AND", "OU"=> "OR", 
         "IGUAL" => "=", "MAIOR" => ">", "MENOR" => "<", 
         "MENORIGUAL" => "<=", "MAIORIGUAL" => ">=", "DIFERENTE" => "<>"];
     
@@ -63,7 +63,7 @@ class Condicao {
      * @throws \Exception Caso haja um uso incorreto do operador AND ou OR ou se operador utilizado não estiver na lista de permitidos
      */
     function __construct($esquerdo, $operador, $direito) {
-        if (array_search($operador, self::operadores) !== FALSE){
+        if (array_search($operador, $this->operadores) !== FALSE){
             if ($operador === "AND" || $operador === "OR"){
                 if (!($esquerdo instanceof Condicao && $direito instanceof Condicao)){
                     throw new \Exception("Operador AND ou OR só pode ser usado diante de duas condições!");
