@@ -31,7 +31,6 @@ try{
     $sessao = new \Lib\SessionManager();
     $info = [];
     if ($sessao->keyExists("logado")){
-        var_dump($sessao);
         if (isset($_POST["senha"]) && isset($_POST["senhaConfirm"]) && isset($_POST["senhaatual"])){
             $info["errors"] = "";
 

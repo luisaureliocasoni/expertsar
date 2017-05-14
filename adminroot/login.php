@@ -31,7 +31,7 @@ try{
     //Verifica se preencheu o usuário e a senha
     if (isset($_POST["user"]) && isset($_POST["senha"])){
         Lib\DAO::setFilePathConfig("../assets/conexao.ini");
-        $user = pg_escape_string($_POST["user"]);
+        $user = Lib\DAO::escapeString($_POST["user"])   ;
         $cond = new Lib\Condicao("usuario", "=", $user);
         $mantenedor = Lib\DAO::select("\ExpertsAR\Mantenedor", "Mantenedores", $cond);
         if ($mantenedor === NULL){
@@ -43,7 +43,6 @@ try{
         
         $senhaDigitada = Lib\DAOUtilis::criptografaSenha($_POST["senha"]);
         if ($senhaDigitada === $mantenedor[0]->getSenha()){
-            echo "Conseguiu";
             //inicia a sessão
             session_name(md5('rootAlgebra'.$_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']));
             session_start();
