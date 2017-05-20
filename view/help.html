@@ -1,0 +1,79 @@
+{% include 'header.html' %}
+<body>
+    {% include 'navbar.html' %}
+    <div class="content">
+        <div class="row card white black-text s12">
+            <div class="card-content">
+                <h2>Ajuda</h2>
+
+                <h4 id="indice">Índice</h4>
+                <ol>
+                    <li><a href="#cadastrar">Cadastro e login</a> - Dúvidas em relação ao cadastro e login do site</li>
+                    <li><a href="#uso">Uso do site</a> - Dúvidas em relação ao uso do site</li>
+                </ol>
+
+                <div class="row card white black-text s12">
+                    <div class="card-content">
+                        <h4 id="cadastrar">Cadastro e login</h4>
+
+                        <h5>Como faço para me cadastrar?</h5>
+                        <p><a href="createConta.php">Acesse a página de inscrição (clique aqui)</a>, e forneça seu e-mail, seu nome real e sua senha, e responda ao nosso captcha. Após isso, leia e marque que você concorda com os nossos <a href="terms.php">termos de uso</a>. No final, clique em "Criar uma conta".</p>
+                        <p>Após isso, você será redirecionado para a página de login. Insira seu e-mail e sua senha cadastradas e clique em "Login".</p>
+
+                        <h5>Como faço para fazer login?</h5>
+                        <p><a href="login.php">Clique aqui</a> e informe o seu e-mail e sua senha que você cadastrou. Após isso, clique em "Login".</p>
+
+                        <h5>Esqueci a minha senha. Tem alguma solução?</h5>
+                        <p>Vá até a página de <a href="forgot.php">redefinição de senha</a> e informe o seu e-mail cadastrado. A senha será regerada e enviada pelo e-mail que foi cadastrado no sistema. <b>Atenção: A senha é criptografada antes de ser salva em nossas bases de dados. Mas, se você desejar, você pode alterar a sua senha quando você estiver logado.</b></p>
+
+                        <a href="#indice" class="btn">Índice</a>
+                    </div>
+                </div>
+
+                <div class="row card white black-text s12">
+                    <div class="card-content">
+                        <h4 id="uso">Uso do site</h4>
+
+                        <h5>Como é a página inicial?</h5>
+                        <p><a href="index.php">A sua página inicial (quando logado)</a>, mostra a lista de lições disponíveis no site, mostrando todas as lições feitas por você, além da próxima lição (se estiver disponível).</p>
+
+                        <h5>Quando aparecerão mais lições?</h5>
+                        <p>Quando você concluir a lição anterior, a próxima é desbloqueada.</p>
+                        <p>Para você saber quantas lições restam, veja no lado superior direito da sua página inicial. Ele mostrará quantas lições você concluiu, quantas lições estão disponíveis, e qual é a sua porcentagem de lições que você fez.</p>
+
+                        <h5>Para que serve o botão "OLÁ &lt;SEU NOME&gt;"?</h5>
+                        <p>Ele abre o menu principal do site. Clique (ou toque) nele para abrir.</p>
+                        <p>No menu principal, você pode acessar esta página de ajuda, a sua lista de lições, acessar a sua página de perfil (para alterar a sua senha ou excluir a sua conta), acessar a página de contato, ou sair do site.</p>
+
+                        <h5>Estou vendo um botão hambúrger ou um texto escrito <i>menu</i> (no celular). Para que serve?</h5>
+                        <p>Ele tem a mesma funcionalidade do botão "OLÁ &lt;SEU NOME&gt;". Toque nele para expandir o menu principal do site (veja pergunta anterior).</p>
+                        <p>Dica: Se você estiver em um celular, deslize da esquerda para direita para abrir o menu principal.</p>
+
+                        <h5>Como faço uma lição?</h5>
+                        <p>Clique no link <span class="orange-text">FAZER LIÇÃO</span> (se a lição não estiver feita) ou <span class="orange-text">REFAZER LIÇÃO</span> (se a lição já estiver pronta) no cartão da lição desejada. Quando carregada, a tela mostrará o texto que apresenta o conteúdo da lição. Para fazer as perguntas, vá no botão "Avançar".</p>
+                        <p>Leia o enunciado da pergunta, e depois forneça a query correspondente em Álgebra Relacional. Para inserir os caracteres especiais, posicione o cursor no lugar onde você deseja inserir ele e clique no botão correspondente ao símbolo que deseja inserir.</p>
+                        <p>Quando a sua query estiver pronta, clique no botão "Submeter Resposta", e aguarde o processamento. O sistema informará com as seguintes mensagens:</p>
+                        <ul>
+                            <li><b>Sua query possui um erro:</b> Houve um erro no processamento da query em Álgebra Relacional. Verifique a mensagem complementar (abaixo do botão de submissão) qual foi o símbolo esperado e o símbolo encontrado e corrija a sua query. Normalmente são erros sintáticos (de posicionamento e uso dos símbolos).</li>
+                            <li><b>Houve um erro na interpretação SQL da Query:</b> Isso significa que o parser conseguiu converter a query de álgebra relacional para SQL, mas o banco de dados teve um erro. Normalmente esse erro indica que você referenciou uma tabela ou uma tupla que não existe em nosso banco de dados de teste OU se você violou a regra de compatibilidade pela união OU se você referenciou a tabela duas vezes sem você dar um nome alternativo a uma delas. Verifique se este erro se encaixa em uma dessas alternativas. Para a sua comodidade, a mensagem que o banco de dados que foi retornado ao executar a query será mostrada abaixo do botão de submissão da resposta. Se você crê que a sua query está correta, mas o banco de dados está gerando erros, por favor, <a href="contato.php">contate-nos</a>.</li>
+                            <li><b>A resposta está incorreta:</b> Quer dizer que a sua query foi convertida e executada com êxito, mas a resposta não corresponde a que o exercício pede. Verifique o enunciado e o conjunto de registros retornado pela consulta e tente novamente. Se você crê que a sua query está correta, mas está dando resposta incorreta, por favor, <a href="contato.php">contate-nos</a>.</li>
+                            <li><b>A resposta está correta:</b> Indica que a sua query foi convertida e executada com êxito, e os resultados fornecidos correspondem ao conjunto de tuplas desejado no exercício.</li>
+                        </ul>
+                        <p>Você não poderá avançar, até que você acerte a resposta. Não há limite de tentativas. A lição será dada como concluída quando você acertar todas as perguntas.</p>
+
+                        <h5>Posso alterar a minha senha ou excluir a minha conta?</h5>
+                        <p>Pode. Quando estiver logado, vá a sua página de <a href="profile.php">perfil</a>, e siga as instruções desejadas.</p>
+
+                        <h5>Como faço para sair do site?</h5>
+                        <p>Clique (ou toque) no botão "OLÁ &lt;SEU NOME&gt;" ou no botão hambúrger ou no botão escrito <i>menu</i>. Após isso, clique em <b>Sair</b>.</p>
+
+                        <h5>Como faço para entrar em contato com vocês?</h5>
+                        <p><a href="contato.php">Contatos são bem-vindos. Clique aqui e nos diga a sua dúvida, sugestão ou crítica.</a></p>
+                        
+                        <p><a href="#indice" class="btn">Índice</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% include 'footer.html' %}
