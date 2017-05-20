@@ -79,7 +79,10 @@ try{
         if ($users === NULL){
             $info["errors"] .= "<p>AVISO: Não temos usuários cadastrados.</p>";
         }
-        echo json_encode($info);
+        
+        
+        $render = new Lib\RenderTemplate("../view/root");
+        $render->render("desempenho.html", $info);
     }else{
         header("Location: index.php");
     }
