@@ -43,14 +43,14 @@ class DAOPG {
      * @var string
      */
     private static $file = "../../assets/conexao.ini";
-    
+
     /**
      * Função construtora do sistema
      */
     private function __construct() {
-        
+
     }
-    
+
     /**
      * Seta o path do arquivo de configuração do DAO
      * Aviso: Caso haja uma conexão existente, ela será fechada
@@ -63,7 +63,7 @@ class DAOPG {
         }
         self::$file = $file;
     }
-    
+
     /**
      * Inicializa a conexão com o Banco de Dados
      * @throws \Exception Se o arquivo não for encontrado ou houver erro de conexão ao banco de dados
@@ -82,7 +82,7 @@ class DAOPG {
             throw $ex;
         }
     }
-    
+
     /**
      * Insere um objeto no BD
      * Esse objeto deve se referir a uma tabela no Banco de Dados, através do parâmetro
@@ -97,13 +97,13 @@ class DAOPG {
         $colunas = $result["colunas"];
         $valores = $result["valores"];
         $table = $result["table"];
-        
+
         $query = "INSERT INTO \"$table\" (".implode(",", $colunas).")";
         $query .= "VALUES (". implode(",", $valores).");";
-        
+
         self::execute($query);
     }
-    
+
     /**
      * Remove uma tupla de um determinado id da tabela
      * @param integer $id Id do elemento a ser removido
@@ -114,7 +114,7 @@ class DAOPG {
         $query = "DELETE FROM \"$table\" WHERE \"id\" = $id;";
         self::execute($query);
     }
-    
+
     /**
      * Remove tuplas de acordo com uma condição
      * @param Condicao $cond Condicao que determina quais elementos serão removidos
@@ -125,11 +125,11 @@ class DAOPG {
         if (!($cond instanceof Condicao)){
             throw new Exception("\$cond deve ser uma instância de condição!");
         }
-        
+
         $query = "DELETE FROM \"$table\" WHERE ".$cond->toString();
         self::execute($query);
     }
-    
+
     /**
      * Faz um select no banco de dados de acordo com uma condicao
      * @param string $class Nome da classe a ser instanciada
@@ -144,19 +144,19 @@ class DAOPG {
         }
         $query = "SELECT * FROM \"$table\" WHERE ".$cond->toString().";";
         $result = self::execute($query);
-        
+
         if (pg_affected_rows($result) === 0){
             return NULL;
         }
-        
+
         $objs = new \ArrayObject();
         while ($arr = pg_fetch_array($result, null, PGSQL_ASSOC)){
             $objs->append(self::transformArrayInObject($arr, $class));
         }
-        
+
         return $objs;
     }
-    
+
     /**
      * Pega um objeto pelo ID do objeto
      * @param string $class Nome da classe a ser criada
@@ -168,17 +168,17 @@ class DAOPG {
     public static function selectById($class, $table, $id){
         $query = "SELECT * FROM \"$table\" WHERE \"id\" = ".$id.";";
         $result = self::execute($query);
-        
+
         if (pg_affected_rows($result) === 0){
             return NULL;
         }
-        
+
         $arr = pg_fetch_array($result, null, PGSQL_ASSOC);
         $object = self::transformArrayInObject($arr, $class);
-        
+
         return $object;
     }
-    
+
     /**
      * Busca todos os objetos de uma tabela
      * @param string $class Classe a ser instanciada
@@ -188,19 +188,19 @@ class DAOPG {
     public static function selectAll($class, $table){
         $query = "SELECT * FROM \"$table\";";
         $result = self::execute($query);
-        
+
         if (pg_affected_rows($result) === 0){
             return NULL;
         }
-        
+
         $objs = new \ArrayObject();
         while ($arr = pg_fetch_array($result, null, PGSQL_ASSOC)){
             $objs->append(self::transformArrayInObject($arr, $class));
         }
-        
+
         return $objs;
     }
-    
+
     /**
      * Atualiza um objeto na tabela
      * @param object $obj Objeto a ser atualizado no banco
@@ -213,18 +213,18 @@ class DAOPG {
         if (!($cond instanceof Condicao)){
             throw new Exception("\$cond deve ser uma instância de condição!");
         }
-        
+
         $result = self::extractColunasAndValues($obj, $ignoreNulls);
         $colunas = $result["colunas"];
         $valores = $result["valores"];
         $table = $result["table"];
-        
+
         $query = "UPDATE \"$table\" SET ".self::generateSetString($colunas, $valores);
         $query .= "WHERE ".$cond->toString().";";
-        
+
         self::execute($query);
     }
-    
+
     /**
      * Atualiza um objeto na tabela pelo id
      * @param object $obj Objeto a ser atualizado no banco
@@ -237,14 +237,14 @@ class DAOPG {
         $colunas = $result["colunas"];
         $valores = $result["valores"];
         $table = $result["table"];
-        
+
         $query = "UPDATE \"$table\" SET ".self::generateSetString($colunas, $valores);
         $query .= "WHERE \"id\" = $id;";
-        
+
         self::execute($query);
     }
-    
-    
+
+
     /**
      * Extrai, via reflexão, as colunas e os valores de um objeto, e a sua tabela associada
      * @param object $obj Objeto a ser analisado
@@ -269,7 +269,7 @@ class DAOPG {
                     $valores[$i] = DAOUtilis::toStr($value);
                     $i++;
                 }
-                
+
             }
         }
         $table = $reflectObj->getProperty("table")->getValue($obj);
@@ -279,8 +279,8 @@ class DAOPG {
         $result["table"] = $table;
         return $result;
     }
-    
-    
+
+
     /**
      * Executa uma query SQL
      * @param string $query Query SQL a ser executada
@@ -292,22 +292,22 @@ class DAOPG {
             pg_close(self::$conn);
         }
         self::initialize();
-        
+
         if (self::$conn === FALSE){
             throw new Exception("A conexão com o Banco de Dados foi mal-sucedida!");
         }
         try{
             $result = pg_query(self::$conn, $query);
         } catch (Exception $ex) {
-            throw new Exception("Erro na query: " + $ex);
+            throw $ex;
         }
-        
+
         if ($result === FALSE){
-            throw new \Exception("Erro na query: "+pg_last_error(self::$conn));
+            throw new \Exception(pg_last_error(self::$conn));
         }
         return $result;
     }
-    
+
     /**
      * Retorna uma string escapada
      * @param string $str String a ser escapada
@@ -324,7 +324,7 @@ class DAOPG {
      * @param array $colunas Colunas da tabela
      * @param array $valores Valores da tabela
      * @return string Com os valores convertidos
-     * 
+     *
      */
     private static function generateSetString($colunas, $valores){
         if (count($colunas) != count($valores)){
@@ -339,7 +339,7 @@ class DAOPG {
         }
         return $str;
     }
-    
+
     /**
      * Transforma um array associativo em um objeto
      * @param Array $array Array associativo com os valores a serem salvos
@@ -358,13 +358,13 @@ class DAOPG {
                     $class->getMethod($setMethod)->invoke($instance, $value);
                 }
             }
-            
+
         } catch (Exception $ex) {
             throw new Exception("Houve um erro na criação da classe: ".$ex->getMessage());
         }
         return $instance;
     }
-    
+
     /**
      * Transforma um recurso em um array associativo
      * @param resource $resource Um recurso do SGBD com os resultados
@@ -374,12 +374,12 @@ class DAOPG {
         if (pg_affected_rows($resource) === 0){
             return NULL;
         }
-        
+
         $array = new \ArrayObject();
         while ($arr = pg_fetch_array($resource, null, PGSQL_ASSOC)){
             $array->append($arr);
         }
-        
+
         return $array;
     }
 }
