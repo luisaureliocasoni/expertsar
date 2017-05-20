@@ -41,6 +41,7 @@ try{
         //Carrega o total de lições
         $arr = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute("SELECT COUNT(*) AS `count` FROM `Licoes`;"));
         $totalLicoes = $arr[0]["count"];
+        $info["total"] = "Total de Lições Cadastradas: $totalLicoes.";
         
         //Pega o total de lições concluídas 
         $resource = Lib\DAO::execute("SELECT `idUsuario`,COUNT(`idLicao`) AS `LicoesConcluidas` FROM `UsuariosLicoes` GROUP BY `idUsuario`;");
