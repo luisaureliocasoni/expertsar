@@ -64,7 +64,10 @@ try{
         $array = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query));
         //Pega a quantidade de lições concluídas
         $info["licoesConcluidas"] = count($array);
-        $info["porcentagemConcluidas"] = ($info["licoesConcluidas"] / $info["totalLicoes"])*100;
+        //so faz a divisao se não tiver zero
+        if ($info["totalLicoes"] != 0){
+            $info["porcentagemConcluidas"] = ($info["licoesConcluidas"] / $info["totalLicoes"])*100;
+        }
         
         $maxIdLicaoConcluida = 0;
         $i = 0;
@@ -81,7 +84,7 @@ try{
         $query2 = "SELECT `id`, `nome` FROM `Licoes` WHERE `id` > $maxIdLicaoConcluida ORDER BY `id`;";
         $array2 = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query2));
         
-        if ($array2 === NULL){ //Se nao tiver nada, quer dizer que ele concluiu todas as lições
+        if ($array2 === NULL && $info["totalLicoes"] != 0){ //Se nao tiver nada, quer dizer que ele concluiu todas as lições
             $info["concluiu"] = TRUE;
         }else{ //Se tiver, pega a próxima licao
             $info["licoes"][$i] = $array2[0];
