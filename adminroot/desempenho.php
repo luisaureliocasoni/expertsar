@@ -80,9 +80,26 @@ try{
             $info["errors"] .= "<p>AVISO: Não temos usuários cadastrados.</p>";
         }
         
+        if (isset($_GET["type"]) && $_GET["type"] === "csv"){
+            header( 'Content-type: application/csv' );
+            header( 'Content-Disposition: attachment; filename=desempenho.csv' );
+            header( 'Content-Transfer-Encoding: binary' );
+            header( 'Pragma: no-cache');
+            
+            $out = fopen( 'php://output', 'w' );
+            foreach ( $info["users"] as $user )
+            {
+
+                fputcsv( $out, $user, ";" );
+            }
+            fclose( $out );
+            die();
+
+        }else{
+            $render = new Lib\RenderTemplate("../view/root");
+            $render->render("desempenho.html", $info);
+        }
         
-        $render = new Lib\RenderTemplate("../view/root");
-        $render->render("desempenho.html", $info);
     }else{
         header("Location: index.php");
     }
