@@ -12,6 +12,11 @@
                 {% endif %}
             {% endautoescape %}
             <div class="row">
+                <a href="desempenho.php?type=csv" class="btn blue">
+                    Salvar lista em CSV
+                </a>
+            </div>
+            <div class="row">
             {% if users is null %}
                 <p>Não temos alunos a exibir.</p>
             {% else %}
