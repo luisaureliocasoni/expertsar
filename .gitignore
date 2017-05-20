@@ -116,4 +116,5 @@ sass/.sass-cache
 public/
 netbeans/
 assets/*.ini
+assets/*.ini.txt
 logs/*.log
