@@ -81,8 +81,11 @@ try{
         }
         
         if (isset($_GET["type"]) && $_GET["type"] === "csv"){
+            date_default_timezone_set("America/Campo_Grande");
+            $date = date('Y-m-d_H-i');
+            
             header( 'Content-type: application/csv' );
-            header( 'Content-Disposition: attachment; filename=desempenho.csv' );
+            header( "Content-Disposition: attachment; filename=desempenho_$date.csv" );
             header( 'Content-Transfer-Encoding: binary' );
             header( 'Pragma: no-cache');
             
