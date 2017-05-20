@@ -66,7 +66,7 @@ try{
                 $licao->setIdMantenedorCriou($_POST["creator"]);
                 $licao->setNome(Lib\DAO::escapeString($_POST["nome"]));
                 $licao->setSlug($slug);
-                $licao->setTextoLicao(Lib\DAO::escapeString($_POST["texto"]));
+                $licao->setTextoLicao($_POST["texto"]);
                 
                 Lib\DAO::insert($licao);
                 

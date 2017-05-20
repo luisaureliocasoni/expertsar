@@ -74,7 +74,7 @@ try{
                 $licao->setIdMantenedorAlterou($_POST["updater"]);
                 $licao->setNome(Lib\DAO::escapeString($_POST["nome"]));
                 $licao->setSlug(Lib\Slugger::geraSlug($_POST["nome"]));
-                $licao->setTextoLicao(Lib\DAO::escapeString($_POST["texto"]));
+                $licao->setTextoLicao($_POST["texto"]);
                 
                 Lib\DAO::updateById($licao, $_POST["idLicao"]);
                 
