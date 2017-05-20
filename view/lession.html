@@ -33,12 +33,13 @@
                 <div class="progress">
                     <div class="determinate" style="width: {{porc}}%"></div>
                 </div>
-                <p>{{pergunta.enunciado}}</p>
+                <h5><b>{{pergunta.enunciado}}</b></h5>
+                <p><b>Instruções:</b> Digite a sua query em Álgebra Relacional no campo abaixo. Se precisar de caracteres especiais, clique no botão desejado para inserir na posição do cursor. Para ver todas as tabelas, clique em "Tabelas do Banco de Dados Locadora". Ao final, clique em "Submeter Resposta", abaixo do campo de inserção.</p>
                 <input type="hidden" id="resp{{loop.index}}" value="{{pergunta.resposta}}"/>
                 {% include 'root/parser.html' %}
             </div>
         {% endfor %}
-        
+
         <div class="hide success center-align jumbotron" data-isfinal="yes">
             <img src="images/ok.png" title="By SVG by Gregory Maxwell, simplified by Sarang (Own work) [Public domain], via Wikimedia Commons - https://commons.wikimedia.org/wiki/File%3AYes_check.svg"/>
             <h3 class="green-text">Perfeito!</h3>
