@@ -108,6 +108,12 @@ function buildErrorMessage(e) {
         for (var esperado in e.expected) {
             var caractere = e.expected[esperado].text;
             //Verifica se está na lista
+            if (caractere === " "){
+                caractere = "&lt;espaço em branco&gt;";
+            }
+            if (caractere === undefined){
+                caractere = "&lt;identificador&gt;";
+            }
             if (caracteresEsperados.indexOf(caractere) === -1){ //nao tem
                 caracteresEsperados.push(caractere);
             }
@@ -187,7 +193,7 @@ function tratarResultado(exito, $textarea, $button, resposta){
             $("input#resposta").val(null);
             $("#submitPergunta").addClass("disabled");
         }
-        
+
     }
 }
 
@@ -195,9 +201,9 @@ function submitResposta($button) {
     if ($button.data() === 0 || $button.data().for === undefined){
         throw "Qual textarea devo consultar? Deve ser definido a proprieidade data-for no botao. Nada Feito.";
     }
-    
+
     var $resultPanel = $($button.data().showon);
-    
+
     $resultPanel.html("<p>Aguarde...</p><div class=\"progress\"><div class=\"indeterminate\"></div></div>");
 
     var $textarea = $($button.data().for);
