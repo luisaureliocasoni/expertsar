@@ -1,0 +1,41 @@
+    {% include 'header.html' %}
+
+    <section class="green lighten-5 lessions">
+        <div class="container">
+            <h4>Relatório de Desempenho</h4>
+            <h5>{{total}}</h5>
+            {% autoescape false %}
+                {% if errors !== "" %}
+                    <div class="col s12 orange card">
+                        <p>{{ errors }}</p>
+                    </div>
+                {% endif %}
+            {% endautoescape %}
+            <div class="row">
+            {% if users is null %}
+                <p>Não temos alunos a exibir.</p>
+            {% else %}
+                <table class="table table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Nome do Aluno</th>
+                            <th>Lições Concluídas</th>
+                            <th>Porcentagem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{user.nome}}</td>
+                            <td>{{user.concluiu}}</td>
+                            <td>{{user.porcentagem}}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            </div>
+        </div>
+    </section>
+
+    {% include 'footer.html' %}
