@@ -210,9 +210,10 @@ function submitResposta($button) {
     $textarea.removeClass("invalid valid");
 
     try{
-        var parsed = parser.parse($textarea.val());
+        var str = parser.parse($textarea.val());
         //faz o pós processamento da query gerada
-        var str = processaQuery(parsed)+";";
+        //Não é mais necessário. O parser já cuida disso
+        //var str = processaQuery(parsed)+";";
     }catch (e){
         Materialize.toast("Sua query possui um erro!", 4000);
         $resultPanel.html("<p>"+buildErrorMessage(e)+"</p>");
@@ -228,6 +229,7 @@ function submitResposta($button) {
             $resultPanel.html("<div class=\"card final\"><p>Sua query:</p><code>"+str+"</code></div>");
             if (objs === null){
                 $resultPanel.append("<p>0 linhas afetadas. Nada a exibir.</p>");
+                tratarResultado(true, $textarea, $button, "");
                 return;
             }
             //Se não for null, cria a tabela
