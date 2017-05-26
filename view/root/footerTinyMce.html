@@ -29,7 +29,7 @@
     <script type="text/javascript">
         tinymce.init({
             selector: '#texto',
-            plugins: 'table image wordcount link code',
+            plugins: 'table image wordcount link code lists',
             menubar: false,
             //Define-se o tema da parte do container
             content_css: "/css/theme.css",
@@ -37,7 +37,7 @@
             language: "pt_BR",
             //Inclui-se aqui os botoes do toolbar, inclusive os gerados
             toolbar: [
-                'copy cut paste | undo redo | styleselect | bold italic underline sup sub pre | justifyleft justifycenter justifyright justifyfull | h2 h3 h4 | p blockquote code | link image table | alignleft aligncenter alignright',
+                'copy cut paste | undo redo | styleselect | numlist bullist | bold italic underline sup sub pre | justifyleft justifycenter justifyright justifyfull | h2 h3 h4 | p blockquote code | link image table | alignleft aligncenter alignright',
                 'bts0 bts1 bts2 bts3 bts4 bts5 bts6 bts7 bts8 bts9 bts10 bts11 bts12 bts13 bts14 bts15 bts16 bts17 bts18 bts19 bts20'
             ],
             setup: function (editor) {
