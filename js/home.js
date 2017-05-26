@@ -19,4 +19,19 @@ $(document).ready(function() {
     $("#btMenu").click(function(){
         $('.button-collapse').sideNav('show');
     });
+    
+    //Este código prevê que sistema não se deslogue de forma abrupta
+    var refreshTime = 600000; // every 10 minutes in milliseconds
+    window.setInterval( function() {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "refresh.php",
+            success: function(data) {
+            },
+            error: function(data, status, error){
+                console.log("Erro ao atualizar sessão: " + error);
+            }
+        });
+    }, refreshTime );
 })
