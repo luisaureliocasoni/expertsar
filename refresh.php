@@ -26,7 +26,7 @@
 
 
 //Apenas atualiza a sessão
-
+    
 try{
     require_once("vendor/autoload.php");
     $sessao = new \Lib\SessionManager();
