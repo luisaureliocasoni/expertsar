@@ -371,7 +371,7 @@ class DAOPG {
      * @return \ArrayObject|NULL ArrayObject com o array transformado ou NULL caso nada for encontrado
      */
     public static function transformResourceInArray($resource){
-        if (pg_affected_rows($resource) === 0){
+        if (pg_num_rows($resource) === 0){
             return NULL;
         }
 
