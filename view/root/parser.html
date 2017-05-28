@@ -10,10 +10,10 @@
                 <li>
                     <div class="collapsible-header">Tabelas do Banco de Dados Locadora</div>
                     <div class="collapsible-body">
-                        <p>cliente (<b><u>idcli</u></b>,nomecli,RG,CPF,dtnasc,dtadm,formapagto,idcliresp)</p>
+                        <p>cliente (<b><u>idcli</u></b>,nomecli,rg,cpf,dtnasc,dtadm,formapagto,idcliresp)</p>
                         <p>locacao (<b><u>idloc</u></b>, idcli, dtretirada, dtdevolprev, dtdevolreal, idct)</p>
                         <p>itemloc (<b><u>iditloc</u></b>, <u>idloc, idfil, ordfita</u>, valorlocfita)</p>
-                        <p>filme (<b><u>idfil</u></b>, <u>nomefil, ano</u>, genero, censura, produtora, pais, durminut, precoloc)  </p>
+                        <p>filme (<b><u>idfil</u></b>, <u>nomefil, ano</u>, idgen, censura, idprod, pais, durminut, precoloc)  </p>
                         <p>fita (<b><u>idfil, ordfita</u></b>, precocusto, dtaquis, estadoconserv, dub_leg)</p>
                         <p>filbaixa (<b><u>idfil, ordfita</u></b>, dtbaixa, idct)</p>
                         <p>artista (<b><u>idart</u></b>, nomeart, sexo)</p>
@@ -22,6 +22,8 @@
                         <p>conta (<b><u>idct</u></b>, dtlanc, historico, valor, dtvenc, idtpct)</p>
                         <p>contaliq (<b><u>idct</u></b>, dtliq, valorliq)  </p>
                         <p>tipoconta (<b><u>idtpct</u></b>, nometpct)</p>
+                        <p>genero (<b><u>idgen</u></b>, nomegen)</p>
+                        <p>produtora (<b><u>idprod</u></b>, nomeprod)</p>
                     </div>
                 <li>
             </ul>
