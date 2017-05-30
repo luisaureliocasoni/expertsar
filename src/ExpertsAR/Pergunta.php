@@ -82,7 +82,7 @@ class Pergunta {
     }
 
     function setRespostaAlgebra($respostaAlgebra) {
-        $this->respostaAlgebra = $respostaAlgebra;
+        $this->respostaAlgebra = str_replace(array("\\r\\n", "\\r", "\\n"), "\n", $respostaAlgebra); ;
         return $this;
     }
 
