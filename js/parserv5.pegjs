@@ -331,6 +331,7 @@ IdentifierExtended "identificador, função agregada, operação matemática em 
  //Razao: permitir o uso de funcoes agregadas. \- == -
  //SUM[teste] => SUM(TESTE)
  = _ op:FuncaoAgregada _ "[" _ id:Identifier _ "]" _ {return op+"("+id+")";}
+ / _ op:FuncaoAgregada _ "[" _ "*" _ "]" _ {return op+"(*)";}
  / _ id:SuperIdentifier _ symb:[+\-*/] _ num:Number _ {return id+" "+symb+" "+num;}
  / _ id:SuperIdentifier _ {return id;}
 
