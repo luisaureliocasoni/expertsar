@@ -302,10 +302,15 @@ SimboloCondicao "símbolo de condição"
 //Funcoes agregadas
 FuncaoAgregada "SUM, MAX, MIN, COUNT, AVG"
  = "SUM" {return "SUM";}
+ / "sum" {return "SUM";}
  / "MAX" {return "MAX";}
+ / "max" {return "MAX";}
  / "MIN" {return "MIN";}
+ / "min" {return "MIN";}
  / "AVG" {return "AVG";}
+ / "avg" {return "AVG";}
  / "COUNT" {return "COUNT";}
+ / "count" {return "COUNT";}
 
 //As regras definem uma lista de colunas
 Colunas "lista de colunas"
@@ -329,9 +334,9 @@ IdentifierVar "Variável"
 IdentifierExtended "identificador, função agregada, operação matemática em um identificador"
  //Um identificador estendido é um identificador que permite o uso de parentesis e simbolos de matematica
  //Razao: permitir o uso de funcoes agregadas. \- == -
- //SUM[teste] => SUM(TESTE)
- = _ op:FuncaoAgregada _ "[" _ id:Identifier _ "]" _ {return op+"("+id+")";}
- / _ op:FuncaoAgregada _ "[" _ "*" _ "]" _ {return op+"(*)";}
+ //SUM(teste) => SUM(TESTE)
+ = _ op:FuncaoAgregada _ "(" _ id:Identifier _ ")" _ {return op+"("+id+")";}
+ / _ op:FuncaoAgregada _ "(" _ "*" _ ")" _ {return op+"(*)";}
  / _ id:SuperIdentifier _ symb:[+\-*/] _ num:Number _ {return id+" "+symb+" "+num;}
  / _ id:SuperIdentifier _ {return id;}
 
