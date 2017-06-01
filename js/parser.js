@@ -46,11 +46,11 @@
           },
 
           any: function(expectation) {
-            return "any character";
+            return "qualquer caractere";
           },
 
           end: function(expectation) {
-            return "end of input";
+            return "fim da entrada";
           },
 
           other: function(expectation) {
@@ -117,20 +117,20 @@
           return descriptions[0];
 
         case 2:
-          return descriptions[0] + " or " + descriptions[1];
+          return descriptions[0] + " ou " + descriptions[1];
 
         default:
           return descriptions.slice(0, -1).join(", ")
-            + ", or "
+            + ", ou "
             + descriptions[descriptions.length - 1];
       }
     }
 
     function describeFound(found) {
-      return found ? "\"" + literalEscape(found) + "\"" : "end of input";
+      return found ? "\"" + literalEscape(found) + "\"" : "fim da entrada";
     }
 
-    return "Expected " + describeExpected(expected) + " but " + describeFound(found) + " found.";
+    return "Esperado " + describeExpected(expected) + " mas " + describeFound(found) + " foi encontrado.";
   };
 
   function peg$parse(input, options) {
