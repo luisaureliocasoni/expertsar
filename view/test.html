@@ -1,0 +1,38 @@
+{% include 'header.html' %}
+<body>
+    {% include 'navbar.html' %}
+        <div class="content">
+          <div class="row">
+              <div class="col s12">
+                  <form action="updatePergunta.php" method="post">
+                      <h4>Sandbox</h4>
+
+                      <p>Nesta área, você pode praticar seus conhecimentos de Álgebra Relacional. Aproveite!</p>
+
+                      {% include 'root/parser.html' %}
+                      <input type="hidden" name="resposta" id="resposta" value="{{resposta}}">
+                      <div class="row">
+                          <a href="index.php" class="btn red">Voltar para a Home</a>
+                      </div>
+                  </form>
+              </div>
+
+          </div>
+        </div>
+
+        <footer class="page-footer light-blue darken-3">
+        <div class="footer-copyright">
+            <div class="container">
+                &copy; 2017 - Luís Aurélio Casoni e Ademir Martinez Sanches
+                <a href="https://github.com/luisaureliocasoni/expertsar" class="grey-text text-lighten-4 right">Fork no GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/jquery-3.2.0.min.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/parser.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/lession.js"></script>
+</body>
+</html>
