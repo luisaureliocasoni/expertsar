@@ -13,14 +13,18 @@ Criar um Objeto de Aprendizagem para Álgebra Relacional.
 
 ## Como fazer o deploy?
 
-Você precisará do PostgreSQL e do MySQL como bancos de dados. **Por que isso? ** Pois a nossas hospedagens não suportam bancos PostgreSQL, e o MySQL não suporta EXCEPT e INTERSECT (previsto na versão 10.3 do MariaDB).
+Você precisará do PostgreSQL e do MySQL como bancos de dados. **Por que isso?** Pois a nossas hospedagens não suportam bancos PostgreSQL, e o MySQL não suporta EXCEPT e INTERSECT (previsto na versão 10.3 do MariaDB).
 
-Use o arquivo ``compile.sh`` para gerar o css dos arquivos sass.
+Na pasta sql, você encontra os scripts para geração dos bancos de dados. O arquivo _algebraMySQL.sql_ gera o banco de dados de manutenção do site. Enquanto que os scripts da pasta _sqlLocadoraScripts_ geram o banco de dados de teste (onde as consultas em Álgebra Relacional são rodadas), no PostgreSQL.
+
+Use o arquivo ``compile.sh`` para gerar o css dos arquivos SASS.
 
 Nos arquivos do parser (parserv\*.pegjs), você precisará do [peg.js](https://pegjs.org/) para compilar e gerar o novo parser. Rode o seguinte comando para obtê-lo:
 `` pegjs --format globals  --export-var parser parser.pegjs``
 
 Instale o [Composer](https://getcomposer.org/) e rode o comando ``composer install --dev``.
+
+Na pasta adminroot você encontra o arquivo _generateFirstManager.php_. Rode esse script no navegador, para gerar o primeiro mantenedor. P.S.: Esse script só é executado quando não tem nenhum mantenedor cadastrado no sistema.
 
 ## Criadores
 
