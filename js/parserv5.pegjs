@@ -165,6 +165,21 @@
         }
 
     }
+    
+    function montaJoin(rel1, rel2, col1, col2, symb){
+    	if (col1 == null || col2 == null){
+        	var on = "";
+        }else{
+        	var on = " ON "+col1+" = "+col2;
+        }
+        if (rel1.trim().search("SELECT") === 0){
+        	rel1 = "("+rel1+")alias"+selects++;
+        }
+        if (rel2.trim().search("SELECT") === 0){
+        	rel2 = "("+rel2+")alias"+selects++;
+        }
+        return rel1+symb+rel2+on;
+    }
 
 }
 
@@ -224,10 +239,10 @@ Relacao
    {return nome+","+rel}
  //Join: Cliente ⟗ (idcli = idcliloc) Resto
  / _ nome1:Identifier _ symb:SimboloJoin _ "(" _ col1:SuperIdentifier _ "=" _ col2:SuperIdentifier _ ")" _ rel:Relacao _
-   {return "("+nome1+symb+rel+" ON "+col1+" = "+col2+")";}
+   {return montaJoin(nome1,rel,col1,col2,symb);;}
  //Cliente * Resto
  / _ nome1:Identifier _ "*" _ rel:Relacao _
-   {return nome1 + " NATURAL JOIN " + rel;}
+   {return montaJoin(nome1,rel,null,null," NATURAL JOIN ");}
  //ρ z (Resto)
  / _ "ρ" _ novoNome:Identifier _ "(" _ rel:Relacao _ ")" _
    {return montaRenomeacao(novoNome,rel);}
@@ -262,7 +277,8 @@ Condicao
 
 //Um dos tipos existentes
 Tipo
- = SuperIdentifier
+ = "null" {return "null";}
+ / SuperIdentifier
  / Float
  / Integer
  / String
