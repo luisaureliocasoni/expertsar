@@ -118,3 +118,6 @@ netbeans/
 assets/*.ini
 assets/*.ini.txt
 logs/*.log
+
+# ignora arquivos de configuração do phinx
+phinx.php
