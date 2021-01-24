@@ -6,8 +6,9 @@
         "twig/twig": "1.33.2",
         "twig/extensions": "^1.4",
         "phpmailer/phpmailer": "^5.2",
-	"kevinlebrun/slug.php": "^1.0",
-        "jlawrence/eos": "^3.2"
+	    "kevinlebrun/slug.php": "^1.0",
+        "jlawrence/eos": "^3.2",
+        "robmorgan/phinx": "^0.12.5"
     },
     "license": "MIT",
     "authors": [
