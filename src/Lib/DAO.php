@@ -371,11 +371,11 @@ class DAO {
     /**
      * Transforma um recurso em um array associativo
      * @param resource $resource Um recurso do SGBD com os resultados
-     * @return \ArrayObject|NULL ArrayObject com o array transformado ou NULL caso nada for encontrado
+     * @return \ArrayObject|array ArrayObject com o array transformado ou NULL caso nada for encontrado
      */
     public static function transformResourceInArray($resource){
         if (mysqli_affected_rows(self::$conn) === 0){
-            return NULL;
+            return [];
         }
 
         $array = new \ArrayObject();

@@ -27,18 +27,18 @@
 
 try{
     require_once("vendor/autoload.php");
-    
+
     $sessao = new \Lib\SessionManager();
     $render = new Lib\RenderTemplate("view/");
     \Lib\DAO::setFilePathConfig("assets/conexao.ini");
     $info = [];
-    
+
     if (isset($_GET["msgEmailEnviado"]) && $_GET["msgEmailEnviado"] == 1){
         $info["success"] = "O email foi enviado com êxito! Responderemos em breve!";
     }
-    
+
     if ($sessao->keyExists("logado")){
-        
+
         if (isset($_GET["error"]) && \Lib\DAOUtilis::isIntString($_GET["error"])){
             switch ($_GET["error"]) {
                 case 2:
@@ -52,13 +52,13 @@ try{
         $info = $info + $sessao->getAllKeys();
         //seta a key de fazendo licao como null
         $sessao->addKey("fazendoLicao", NULL);
-        
+
         $info["primeiroNome"] = explode(" ", $_SESSION["nome"])[0];
-        
+
         //Carrega o total de lições
         $arr = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute("SELECT COUNT(*) AS `count` FROM `Licoes`;"));
         $info["totalLicoes"] = $arr[0]["count"];
-        
+
         //Pega todas as liçoes que o aluno concluiu
         $query = "SELECT `id`, `nome` FROM `Licoes` WHERE `id` <= (SELECT MAX(`idLicao`) FROM `UsuariosLicoes` WHERE `idUsuario` = {$sessao->getKey("id")}) ORDER BY `id`;";
         $array = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query));
@@ -68,10 +68,10 @@ try{
         if ($info["totalLicoes"] != 0){
             $info["porcentagemConcluidas"] = ($info["licoesConcluidas"] / $info["totalLicoes"])*100;
         }
-        
+
         $maxIdLicaoConcluida = 0;
         $i = 0;
-        
+
         if ($array !== NULL){
             foreach ($array as $key => $value) {
                 $info["licoes"][$i] = $value; //Copia o array da instância de licao
@@ -79,17 +79,17 @@ try{
                 $maxIdLicaoConcluida = $value["id"]; //Pega o id da licao que foi concluido
             }
         }
-        
+
         //Pega a lição seguinte a última concluida
         $query2 = "SELECT `id`, `nome` FROM `Licoes` WHERE `id` > $maxIdLicaoConcluida ORDER BY `id`;";
         $array2 = \Lib\DAO::transformResourceInArray(\Lib\DAO::execute($query2));
-        
+
         if ($array2 === NULL && $info["totalLicoes"] != 0){ //Se nao tiver nada, quer dizer que ele concluiu todas as lições
             $info["concluiu"] = TRUE;
         }else{ //Se tiver, pega a próxima licao
             $info["licoes"][$i] = $array2[0];
         }
-        
+
         $render->render("home.html", $info);
     }else{
         $render->render("index.html", $info);
