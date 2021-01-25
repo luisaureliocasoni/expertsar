@@ -40,21 +40,25 @@ class DAO {
     private static $conn;
     /**
      * Representa um caminho para o arquivo de configurações do sistema
+     *
+     * Agora pega do phinx
      * @var string
+     * @deprecated
      */
     private static $file = "../../assets/conexao.ini";
-    
+
     /**
      * Função construtora do sistema
      */
     private function __construct() {
-        
+
     }
-    
+
     /**
      * Seta o path do arquivo de configuração do DAO
      * Aviso: Caso haja uma conexão existente, ela será fechada
      * @param type $file Path para o arquivo ini de configuração
+     * @deprecated
      */
     public static function setFilePathConfig($file) {
         if (self::$conn !== NULL){
@@ -63,7 +67,7 @@ class DAO {
         }
         self::$file = $file;
     }
-    
+
     /**
      * Inicializa a conexão com o Banco de Dados
      * @throws \Exception Se o arquivo não for encontrado ou houver erro de conexão ao banco de dados
@@ -73,11 +77,12 @@ class DAO {
             if (self::$conn  !== NULL){
                 mysqli_close(self::$conn);
             }
-            $config = parse_ini_file(self::$file);
+            $config_array = require __DIR__."/../../db/mysql/phinx.php";
+            $config = $config_array['environments'][$config_array['environments']['default_environment']];
             if ($config === FALSE){
                 throw new \Exception("Não foi possível localizar as configurações do BD.");
             }
-            self::$conn = mysqli_connect($config["server"], $config["user"], $config["password"], $config["database"]);
+            self::$conn = mysqli_connect($config["host"], $config["user"], $config["pass"], $config["name"]);
             if (self::$conn === FALSE){
                 throw new \Exception("Não foi possível conectar ao Banco de Dados: ". mysqli_connect_error(self::$conn)." - ". mysqli_connect_errno(self::$conn));
             }
@@ -85,7 +90,7 @@ class DAO {
             throw $ex;
         }
     }
-    
+
     /**
      * Insere um objeto no BD
      * Esse objeto deve se referir a uma tabela no Banco de Dados, através do parâmetro
@@ -100,13 +105,13 @@ class DAO {
         $colunas = $result["colunas"];
         $valores = $result["valores"];
         $table = $result["table"];
-        
+
         $query = "INSERT INTO `$table` (".implode(",", $colunas).")";
         $query .= " VALUES (". implode(",", $valores).");";
-        
+
         self::execute($query);
     }
-    
+
     /**
      * Remove uma tupla de um determinado id da tabela
      * @param integer $id Id do elemento a ser removido
@@ -117,7 +122,7 @@ class DAO {
         $query = "DELETE FROM `$table` WHERE `id` = $id;";
         self::execute($query);
     }
-    
+
     /**
      * Remove tuplas de acordo com uma condição
      * @param Condicao $cond Condicao que determina quais elementos serão removidos
@@ -128,11 +133,11 @@ class DAO {
         if (!($cond instanceof Condicao)){
             throw new Exception("\$cond deve ser uma instância de condição!");
         }
-        
+
         $query = "DELETE FROM `$table` WHERE ".$cond->toString();
         self::execute($query);
     }
-    
+
     /**
      * Faz um select no banco de dados de acordo com uma condicao
      * @param string $class Nome da classe a ser instanciada
@@ -147,19 +152,19 @@ class DAO {
         }
         $query = "SELECT * FROM `$table` WHERE ".$cond->toString().";";
         $result = self::execute($query);
-        
+
         if (mysqli_affected_rows(self::$conn) === 0){
             return NULL;
         }
-        
+
         $objs = new \ArrayObject();
         while ($arr = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             $objs->append(self::transformArrayInObject($arr, $class));
         }
-        
+
         return $objs;
     }
-    
+
     /**
      * Pega um objeto pelo ID do objeto
      * @param string $class Nome da classe a ser criada
@@ -171,17 +176,17 @@ class DAO {
     public static function selectById($class, $table, $id){
         $query = "SELECT * FROM `$table` WHERE `id` = ".$id.";";
         $result = self::execute($query);
-        
+
         if (mysqli_affected_rows(self::$conn) === 0){
             return NULL;
         }
-        
+
         $arr = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $object = self::transformArrayInObject($arr, $class);
-        
+
         return $object;
     }
-    
+
     /**
      * Busca todos os objetos de uma tabela
      * @param string $class Classe a ser instanciada
@@ -191,19 +196,19 @@ class DAO {
     public static function selectAll($class, $table){
         $query = "SELECT * FROM `$table`;";
         $result = self::execute($query);
-        
+
         if (mysqli_affected_rows(self::$conn) === 0){
             return NULL;
         }
-        
+
         $objs = new \ArrayObject();
         while ($arr = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             $objs->append(self::transformArrayInObject($arr, $class));
         }
-        
+
         return $objs;
     }
-    
+
     /**
      * Atualiza um objeto na tabela
      * @param object $obj Objeto a ser atualizado no banco
@@ -216,18 +221,18 @@ class DAO {
         if (!($cond instanceof Condicao)){
             throw new Exception("\$cond deve ser uma instância de condição!");
         }
-        
+
         $result = self::extractColunasAndValues($obj, $ignoreNulls);
         $colunas = $result["colunas"];
         $valores = $result["valores"];
         $table = $result["table"];
-        
+
         $query = "UPDATE `$table` SET ".self::generateSetString($colunas, $valores);
         $query .= "WHERE ".$cond->toString().";";
-        
+
         self::execute($query);
     }
-    
+
     /**
      * Atualiza um objeto na tabela pelo id
      * @param object $obj Objeto a ser atualizado no banco
@@ -240,14 +245,14 @@ class DAO {
         $colunas = $result["colunas"];
         $valores = $result["valores"];
         $table = $result["table"];
-        
+
         $query = "UPDATE `$table` SET ".self::generateSetString($colunas, $valores);
         $query .= " WHERE `id` = $id;";
-        
+
         self::execute($query);
     }
-    
-    
+
+
     /**
      * Extrai, via reflexão, as colunas e os valores de um objeto, e a sua tabela associada
      * @param object $obj Objeto a ser analisado
@@ -272,7 +277,7 @@ class DAO {
                     $valores[$i] = DAOUtilis::toStr($value);
                     $i++;
                 }
-                
+
             }
         }
         $table = $reflectObj->getProperty("table")->getValue($obj);
@@ -282,8 +287,8 @@ class DAO {
         $result["table"] = $table;
         return $result;
     }
-    
-    
+
+
     /**
      * Executa uma query SQL
      * @param string $query Query SQL a ser executada
@@ -292,19 +297,19 @@ class DAO {
      */
     public static function execute($query) {
         self::initialize();
-        
+
         try{
             $result = mysqli_query(self::$conn, $query);
         } catch (Exception $ex) {
             throw new Exception("Erro na query: $query " + $ex);
         }
-        
+
         if ($result === FALSE){
             throw new \Exception("Erro na query: $query - ". mysqli_error(self::$conn)." - ". mysqli_errno(self::$conn));
         }
         return $result;
     }
-    
+
     /**
      * Retorna uma string escapada
      * @param string $str String a ser escapada
@@ -322,7 +327,7 @@ class DAO {
      * @param array $colunas Colunas da tabela
      * @param array $valores Valores da tabela
      * @return string Com os valores convertidos
-     * 
+     *
      */
     private static function generateSetString($colunas, $valores){
         if (count($colunas) != count($valores)){
@@ -337,7 +342,7 @@ class DAO {
         }
         return $str;
     }
-    
+
     /**
      * Transforma um array associativo em um objeto
      * @param Array $array Array associativo com os valores a serem salvos
@@ -356,13 +361,13 @@ class DAO {
                     $class->getMethod($setMethod)->invoke($instance, $value);
                 }
             }
-            
+
         } catch (Exception $ex) {
             throw new Exception("Houve um erro na criação da classe: ".$ex->getMessage());
         }
         return $instance;
     }
-    
+
     /**
      * Transforma um recurso em um array associativo
      * @param resource $resource Um recurso do SGBD com os resultados
@@ -372,15 +377,15 @@ class DAO {
         if (mysqli_affected_rows(self::$conn) === 0){
             return NULL;
         }
-        
+
         $array = new \ArrayObject();
         while ($arr = mysqli_fetch_array($resource, MYSQLI_ASSOC)){
             $array->append($arr);
         }
-        
+
         return $array;
     }
-    
+
     public static function affectedRows() {
         return mysqli_affected_rows(self::$conn);
     }

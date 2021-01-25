@@ -41,6 +41,7 @@ class DAOPG {
     /**
      * Representa um caminho para o arquivo de configurações do sistema
      * @var string
+     * @deprecated
      */
     private static $file = "../../assets/conexao.ini";
 
@@ -55,6 +56,7 @@ class DAOPG {
      * Seta o path do arquivo de configuração do DAO
      * Aviso: Caso haja uma conexão existente, ela será fechada
      * @param type $file Path para o arquivo ini de configuração
+     * @deprecated
      */
     public static function setFilePathConfig($file) {
         if (self::$conn !== NULL){
@@ -70,11 +72,12 @@ class DAOPG {
      */
     private static function initialize() {
         try{
-            $config = parse_ini_file(self::$file);
+            $config_array = require __DIR__."/../../db/postgres/phinx.php";
+            $config = $config_array['environments'][$config_array['environments']['default_environment']];
             if ($config === FALSE){
                 throw new \Exception("Não foi possível localizar as configurações do BD.");
             }
-            self::$conn = pg_connect("host={$config["server"]} dbname={$config["database"]} user={$config["user"]} password={$config["password"]}");
+            self::$conn = pg_connect("host={$config["host"]} dbname={$config["name"]} user={$config["user"]} password={$config["pass"]}");
             if (self::$conn === FALSE){
                 throw new \Exception("Não foi possível conectar ao Banco de Dados");
             }
