@@ -4,7 +4,7 @@
     <section class="green lighten-5 lessions">
         {% include 'exibeInfo.html' %}
         {% if totalLicoes != 0 %}
-            <p class="right-align">Olá {{primeiroNome}}. Você concluiu {{licoesConcluidas}} de {{totalLicoes}} lições.</p>
+            <p class="right-align">Olá{{ ' ' }}{{primeiroNome}}. Você concluiu{{ ' ' }}{{licoesConcluidas}} de{{ ' ' }}{{totalLicoes}} lições.</p>
             <p class="right-align">{{porcentagemConcluidas}}% concluídos.</p>
 
             <div class="container">
