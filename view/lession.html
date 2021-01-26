@@ -25,20 +25,23 @@
                 {{licao.textoLicao}}
             {% endautoescape %}
         </div>
+
+        {% if perguntas != null %}
         {% set total = perguntas|length %}
         {% for pergunta in perguntas %}
-            {% set porc = (loop.index / total) * 100 %}
-            <div class="hide pergunta" id="pergunta{{loop.index}}">
-                <h3>Exercício {{loop.index}} de {{total}}</h3>
-                <div class="progress">
-                    <div class="determinate" style="width: {{porc}}%"></div>
-                </div>
-                <h5><b>{{pergunta.enunciado}}</b></h5>
-                <p><b>Instruções:</b> Digite a sua query em Álgebra Relacional no campo abaixo. Se precisar de caracteres especiais, clique no botão desejado para inserir na posição do cursor. Para ver todas as tabelas, clique em "Tabelas do Banco de Dados Locadora". Ao final, clique em "Submeter Resposta", abaixo do campo de inserção.</p>
-                <input type="hidden" id="resp{{loop.index}}" value="{{pergunta.resposta}}"/>
-                {% include 'root/parser.html' %}
+        {% set porc = (loop.index / total) * 100 %}
+        <div class="hide pergunta" id="pergunta{{loop.index}}">
+            <h3>Exercício {{loop.index}} de {{total}}</h3>
+            <div class="progress">
+                <div class="determinate" style="width: {{porc}}%"></div>
             </div>
+            <h5><b>{{pergunta.enunciado}}</b></h5>
+            <p><b>Instruções:</b> Digite a sua query em Álgebra Relacional no campo abaixo. Se precisar de caracteres especiais, clique no botão desejado para inserir na posição do cursor. Para ver todas as tabelas, clique em "Tabelas do Banco de Dados Locadora". Ao final, clique em "Submeter Resposta", abaixo do campo de inserção.</p>
+            <input type="hidden" id="resp{{loop.index}}" value="{{pergunta.resposta}}"/>
+            {% include 'root/parser.html' %}
+        </div>
         {% endfor %}
+        {% endif %}
 
         <div class="hide success center-align jumbotron" data-isfinal="yes">
             <img src="images/ok.png" title="By SVG by Gregory Maxwell, simplified by Sarang (Own work) [Public domain], via Wikimedia Commons - https://commons.wikimedia.org/wiki/File%3AYes_check.svg"/>
