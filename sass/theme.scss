@@ -69,16 +69,31 @@ header{
     color: #0000FF;
 }
 
+.card{
+    .card-content{
+        .card-action{
+            padding: 16px 4px !important;
+        }
+    }
+}
+
+.cardLicao{
+    @extend .white, .grey-text;
+    color: #3F3F3F !important;
+}
+
 .cardLicao:hover{
     @extend .grey, .lighten-5;
 }
 
 .cardCompleto{
     @extend .green, .white-text;
+    color: #FFFFFF !important;
 }
 
-.cardCompleto:hover{
+.cardCompleto:hover, .cardCompleto:active{
     @extend .green, .lighten-1;
+    text-decoration: none;
 }
 
 .minusculo{

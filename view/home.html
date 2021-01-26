@@ -5,26 +5,37 @@
         {% include 'exibeInfo.html' %}
         {% if totalLicoes != 0 %}
             <p class="right-align">Olá{{ ' ' }}{{primeiroNome}}. Você concluiu{{ ' ' }}{{licoesConcluidas}} de{{ ' ' }}{{totalLicoes}} lições.</p>
-            <p class="right-align">{{porcentagemConcluidas}}% concluídos.</p>
+            <p class="right-align">{{porcentagemConcluidas|round(2, 'floor')}}% concluídos.</p>
+            <div class="row">
+                <div class="col s12 m3 offset-m9" style="display: flex; flex-direction: row; align-items: center">
+                    <div class="progress" style="width: 92%; display: inline-block">
+                        <div class="determinate" style="width: {{porcentagemConcluidas|round(0, 'floor')}}%"></div>
+                    </div>
+                    <i class="material-icons" style="display: inline; margin-left: 3px">assignment_turned_in</i>
+                </div>
+            </div>
+
 
             <div class="container">
                 <h4>Suas lições:</h4>
                 <div class="row">
                     {% for licao in licoes %}
-                        {% if licao.concluido == true %}
+                        <a href="lession.php?id={{licao.id}}" class="text-white">
+                            {% if licao.concluido == true %}
                             <div class="card col s12 m5 cardCompleto">
-                        {% else %}
+                            {% else %}
                             <div class="card col s12 m5 cardLicao">
-                        {% endif %}
+                            {% endif %}
                                 <div class="card-content">
                                     <span class="flow-text double">{{licao.nome}}</span>
                                     {% if licao.concluido == true %}
-                                        <div class="card-action"><a href="lession.php?id={{licao.id}}">Refazer a Lição</a></div>
+                                    <div class="card-action">Refazer a Lição</div>
                                     {% else %}
-                                        <div class="card-action"><a href="lession.php?id={{licao.id}}">Fazer a Lição</a></div>
+                                    <div class="card-action">Fazer a Lição</div>
                                     {% endif %}
                                 </div>
                             </div>
+                        </a>
                     {% endfor %}
                     {% if concluiu == true %}
                         <div class="card col s12 green white-text center-align">
